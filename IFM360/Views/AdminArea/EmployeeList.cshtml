@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewData["Title"] = "EmployeeList";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<div class="row px-2 px-md-5">
+    <div class="header my-3">
+        <h3 class="text-center">Manage Employee</h3>
+    </div>
+    <div class="body mb-3">
+
+
+        <div class="form">
+            <div class="row mt-4">
+
+                <div class="col-md-12">
+                    <a href="~/AdminArea/Employee" class="btn btn-myColor">Add New Employee</a>
+                    <a href="~/AdminArea/EmployeeBulkUpload" class="btn btn-myColor">Bulk Upload EmployeeData</a>
+                </div>
+
+            </div>
+            <div class="row mt-4">
+            <div class="col-md-4">
+                <input type="text" class="form-control" id="filterInput2" placeholder="Search Here.." />
+               
+            </div>
+            <div class="col-md-4 ms-auto">
+                    <button class="btn btn-myColor float-end" onclick="Downloadexcel()">Download Employee Data</button>
+            </div>
+            </div>
+            <div class="table-responsive shadow-sm rounded mt-2">
+                <table id="data-table" class="table table-striped align-middle text-center">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>S. No.</th>
+                            <th>Emp Name</th>
+                            <th>Emp Email</th>
+                            <th>Emp Mobile</th>
+                            <th>Emp Department</th>
+                            <th>Action</th>
+                           
+                        </tr>
+                    </thead>
+                    <tbody id="content">
+                       
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+<script src="~/js/AdminArea/EmployeeList.js" asp-append-version="true"></script>

@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewData["Title"] = "Dashboard - Employee";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<div class="m-md-2 m-3">
+    <h3 class="text-center">Dashboard</h3>
+    <marquee style="color:green;font-weight:bold;" onmouseover="stop()" onmouseout="start()">Please wear Mask & use Hand sanitizer for your safety and well being. Always keep displaying your Company ID Card while in Office Premises.</marquee>
+    
+ @*    <p>Below is the list of Today's Visitors -</p> *@
+    <hr/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <div class="container mt-4">
+        <h5 class="mb-3 text-primary fw-bold">Today's Visitors</h5>
+        <div class="table-responsive shadow-sm rounded">
+            <table class="table table-striped align-middle text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th>S. No.</th>
+                        <th>Visitor Id</th>
+                        <th>Visitor Name</th>
+                        <th>Phone</th>
+                        <th>Company</th>
+                        <th>Type</th>
+                        <th>Temperature</th>
+                        <th>Check In</th>
+                        <th>Status</th>
+                        <th>Invited</th>
+                        <th colspan="2">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="content">
+                   
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img id="modalImage" src="" alt="Visitor Photo" class="img-fluid" style="max-height: 400px;" width="100%;" height="100%;">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/EmployeeArea/Upcoming.js" asp-append-version="true"></script>

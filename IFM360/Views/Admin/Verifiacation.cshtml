@@ -1,0 +1,48 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .otp input {
+        width: 60px;
+        height: 60px;
+        font-size: xx-large;
+    }
+</style>
+<div class="row px-5">
+    <div class="header my-3">
+        <h5 class="text-center">Verification</h5>
+    </div>
+    <div class="top-header text-center my-4">
+        <img src="Assets/images/ifmlogo.png" alt="head-logo" class="img-fluid" width="130" height="none"
+             style="max-height: 60px;">
+    </div>
+    <div class="header text-center">
+        <h2>Please verify OTP sent to</h2>
+        <h2>your number!</h2>
+    </div>
+    <div class="row my-3 px-5">
+        <div class="col-6 mx-auto my-4
+                        ">
+
+            <div class="otp d-flex justify-content-between mb-3">
+                <input type="text" id="otp1" maxlength="1" class="form-control text-center">
+                <input type="text" id="otp2" maxlength="1" class="form-control text-center">
+                <input type="text" id="otp3" maxlength="1" class="form-control text-center">
+                <input type="text" id="otp4" maxlength="1" class="form-control text-center">
+            </div>
+            <p class="text-center">Haven't received OTP?<a href="#" class="text-danger">Resend Code</a></p>
+            <button type="submit" class="btn form-control my-5"
+                    style="background-color: #1E3A5F;  color: white;">
+                Continue
+            </button>
+        </div>
+    </div>
+    <!-- Footer work -->
+    <div class="footer">
+        <div class="footer-content text-center mb-4 text-secondary opacity-75">
+            <p class="fs-6 fw-semibold m-0">Powered by <span>IFM360</span></p>
+            <p class="fs-6 fw-semibold m-0">www.ifm360.in</p>
+        </div>
+
+    </div>
+</div>

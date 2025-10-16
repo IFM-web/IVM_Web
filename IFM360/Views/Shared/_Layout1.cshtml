@@ -1,0 +1,193 @@
+﻿@{
+    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor httpContextAccessor
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]  - IFM360</title>
+    
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />  
+      <link rel="stylesheet" href="~/css/IFMstyleSheet.css" />
+     <link rel="icon" type="image/png" href="~/upload/logo/logo.png">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+          integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer" />
+
+<style>
+   
+
+       
+   </style>
+</head>
+<body>
+
+    <div class="container-fluid px-0 overflow-y-scroll overflow-hidden">
+        <div class="row gx-0">
+            <!-- Add a button for toggling on phones -->
+            <button class="btn d-md-none mb-2" onclick="toggleSidebar()" style="width:3rem; color: #1E3A5F; margin:1rem; border:1px solid #1E3A5F">☰</button>
+
+            <div class="col-md-3 mb-md-3">
+                <!-- sidebar work -->
+                <div id="sidebar" class="sidebar d-none d-md-flex flex-column mb-3" style="overflow-y:auto">
+                    <button class="btn btn-danger d-md-none mb-2" onclick="toggleSidebar()">X</button>
+
+                    <a href="#" class="d-block text-center mb-3">
+                        <img src="~/upload/logo/ifmlogo.png" alt="IFM360" class="img-fluid" style="max-height: 60px;" />
+                    </a>
+                    <p class="fs-5 fw-semibold m-0 text-center" style="color:darkslateblue"> <i class="fa fa-user"></i> Welcome <span id="visitorName">@httpContextAccessor.HttpContext.Session.GetString("adminname")</span></p>
+                    
+                    <hr style="height: 2px; background-color: #1E3A5F; border: none;" />
+                    <nav class=" flex-grow-1">
+                        <a asp-controller="Admin" class="dropdown-item" asp-action="Index" style="display: block; text-decoration: none;">
+                            <i class="fa-solid fa-home"></i>
+                            &nbsp; Home
+                        </a>
+                       @*  <a asp-controller="Admin" asp-action="VisitorCheckin" style="display: block; text-decoration: none;">
+                            <i class="fa-solid fa-arrow-right-to-bracket"></i> &nbsp;
+                            Check In
+                        </a> *@
+                        <div class="dropdown-sidebar">
+<a href="#" class="sidebar-link d-flex justify-content-between align-items-center" onclick="toggleDropdown(event)">
+<span>
+<i class="fa-solid fa-arrow-right-to-bracket"></i> &nbsp; Check In
+</span>
+<i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+</a>
+<ul class="dropdown-items list-unstyled ps-4" style="display: none;">
+<li>
+<a class="sidebar-link" asp-controller="Admin" asp-action="SendOTP">First Time Visitor</a>
+</li>
+<li>
+<a class="sidebar-link" asp-controller="Admin" asp-action="SearchInviteCode">Invited Visitor</a>
+</li>
+<li>
+<a class="dropdown-item" asp-controller="Admin" asp-action="RepeatedSendOTP">Registered Visitor</a>
+</li>
+</ul>
+</div>
+
+                        <div class="dropdown-sidebar2">
+                            <a href="#" class="sidebar-link d-flex justify-content-between align-items-center" onclick="toggleDropdown(event)">
+                                <span>
+                                    <i class="fa-solid fa-arrow-right-from-bracket fa-rotate-180"></i> &nbsp; Check Out
+                                </span>
+                                <i class="fa-solid fa-chevron-down dropdown-arrow rotate-180"></i>
+                            </a>
+                            <ul class="dropdown-items list-unstyled ps-4" style="display: none;">
+                                <li>
+                                    <a class="sidebar-link" asp-controller="CheckOut" asp-action="CheckOutByPhone">Check Out By Phone Number</a>
+                                </li>
+                                <li>
+                                    <a class="sidebar-link" asp-controller="CheckOut" asp-action="CheckOutByCard">Check Out By Card Number</a>
+                                </li>
+                                
+                            </ul>
+                        </div>
+
+
+                      @*   <a asp-controller="Admin" asp-action="Checkout" class="dropdown-item" style="display: block; text-decoration: none;">
+                            <i class="fa-solid fa-arrow-right-from-bracket fa-rotate-180"></i> &nbsp; Check Out
+                        </a> *@
+                        <a asp-controller="Admin" class="dropdown-item" asp-action="VisitorDashboard" style="display: block; text-decoration: none;">
+                            <i class="fa-solid fa-clipboard-list"></i> &nbsp; Visitor Dashboard
+                        </a>
+                        <a asp-controller="Admin" class="dropdown-item" asp-action="PreInvitedDashboard" style="display: block; text-decoration: none;">
+                            <i class="fa-solid fa-clipboard-check"></i> &nbsp; Todays  Pre Invited Visitors
+                        </a>
+                       @*  <a asp-controller="Admin" asp-action="Index" style="display: block; text-decoration: none;">
+                            <i class="fa-solid fa-gear"></i>
+                            &nbsp; Settings
+                        </a> *@
+
+                        <a asp-controller="Home" asp-action="Logout" class="d-block text-decoration-none mt-auto "><i class="fa-solid fa-power-off"></i> &nbsp; Logout</a>
+                    </nav>
+                 
+                </div>
+            </div>
+            <div class="col-md-9">
+    <div class="container">
+                    <div id="loader" class="loader-overlay">
+                        <div class="spinner"></div>
+                    </div>
+        <main role="main" class="pb-3">
+                        <input type="hidden" id="EmailId" value="@httpContextAccessor.HttpContext.Session.GetString("EmailId")" />
+                        <input type="hidden" id="Password" value="@httpContextAccessor.HttpContext.Session.GetString("Password")" />
+            @RenderBody()
+        </main>
+    </div>
+    </div>
+    </div>
+    </div>
+   
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <script>
+     function toggleDropdown(event) {
+         document.querySelectorAll(".dropdown-items").forEach(link => {
+             console.log(link)
+           link.style.display = "none";
+        });
+
+         const toggle = event.currentTarget; // <a> tag
+         const dropdown = toggle.nextElementSibling; // <ul> element
+         const arrowIcon = toggle.querySelector('.dropdown-arrow'); // <i class="dropdown-arrow">
+ 
+         // Toggle dropdown visibility
+         if (dropdown.style.display === "block") {
+             dropdown.style.display = "none";
+
+             toggle.classList.remove("open");
+         } else {
+             dropdown.style.display = "block";
+             toggle.classList.add("open");
+         }
+ 
+         // Toggle arrow rotation (handled by CSS)
+         if (arrowIcon) {
+
+             
+             arrowIcon.classList.toggle("rotate-up");
+                 // toggle.classList.add("open");
+         }
+
+            if(!arrowIcon.classList.contains("rotate-up")){
+                       dropdown.style.display = "none";
+
+                toggle.classList.remove("open");
+            }
+               console.log("arrow="+arrowIcon.classList.contains("rotate-up"));
+           
+     }
+
+       
+        document.addEventListener("DOMContentLoaded", function () {
+            let currentUrl = window.location.pathname.toLowerCase();
+
+            document.querySelectorAll(".sidebar-link, .dropdown-item").forEach(link => {
+                let href = link.getAttribute("href")?.toLowerCase();
+
+                if (href && currentUrl.includes(href)) {
+                    link.classList.add("active");
+
+                    
+                    let parentDropdown = link.closest(".dropdown-items");
+                    if (parentDropdown) {
+                        parentDropdown.style.display = "block";
+                    }
+                }
+            });
+        });
+
+
+</script>
+</body>
+</html>

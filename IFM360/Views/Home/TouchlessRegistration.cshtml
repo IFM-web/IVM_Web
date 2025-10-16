@@ -1,0 +1,184 @@
+﻿@{
+    ViewData["Title"] = "Welcome To IVM Solution ";
+    Layout = null;
+    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor httpContextAccessor
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+    #qrimage {
+        width: 230px;
+        text-align: center;
+        margin: auto;
+    }
+
+        #qrimage img {
+            width: 200px;
+        }
+
+</style>
+<div class="row px-5">
+    <div class="top-header text-center mt-5">
+        <img src="data:image/png;base64,@httpContextAccessor.HttpContext.Session.GetString("Companylogo")" alt="head-logo" class="img-fluid" width="20%">
+    </div>
+    <div class="header text-center mb-2">
+        <h2>@httpContextAccessor.HttpContext.Session.GetString("CompanyName") Welcomes You!</h2>
+
+    </div>
+
+
+
+
+    <div class="body">
+        @if (TempData["Message"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Alert!</strong> @TempData["Message"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        <button class="btn w-100 py-3 d-flex  mb-3 justify-content-between align-items-center "
+                style=" background-color: rgb(64 223 63 / 25%);; color: black;">
+            <span class="d-flex gap-3 align-items-center">
+                <i class="fa-solid fa-arrow-right-from-bracket fa-lg text-success"></i>
+                <p class="fs-6 fw-semibold m-0">Ready to Check In</p>
+            </span>
+            @* <i class="fas fa-angle-right"></i> *@
+        </button>
+
+        <div class="row align-items-stretch mb-3">
+            <div class="col-6">
+                <div class="card h-100 p-4">
+
+
+                    <a href="~/Admin/SendOTP" class="text-decoration-none text-dark">
+                        <div class="card-body text-center p-0">
+                            <svg width="48" height="49" viewBox="0 0 48 49" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M32 42.5V38.5C32 36.3783 31.1571 34.3434 29.6569 32.8431C28.1566 31.3429 26.1217 30.5 24 30.5H10C7.87827 30.5 5.84344 31.3429 4.34315 32.8431C2.84285 34.3434 2 36.3783 2 38.5V42.5M40 16.5V28.5M46 22.5H34M25 14.5C25 18.9183 21.4183 22.5 17 22.5C12.5817 22.5 9 18.9183 9 14.5C9 10.0817 12.5817 6.5 17 6.5C21.4183 6.5 25 10.0817 25 14.5Z" stroke="#003666" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            @* <i class="fa-regular fa-user fa-3x mb-3" style="color: #1E3A5F;"></i> *@
+                            <p class="fs-6 fw-bold">First Time Visitor</p>
+                        </div>
+                    </a>
+
+
+                </div>
+            </div>
+
+            <div class="col-6">
+                <div class="card h-100 p-4">
+                    <a href="~/Admin/SearchInviteCode" class="text-decoration-none text-dark">
+                        <div class="card-body text-center p-0">
+                            @* <i class="fa-regular fa-envelope fa-3x mb-3" style="color: #1E3A5F;"></i> *@
+                            <svg width="49" height="49" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6.5 10.5L22.0442 22.59C23.4887 23.7134 25.5113 23.7134 26.9558 22.59L42.5 10.5M10.9 40.5H38.1C40.3402 40.5 41.4603 40.5 42.316 40.064C43.0686 39.6805 43.6805 39.0686 44.064 38.316C44.5 37.4603 44.5 36.3402 44.5 34.1V14.9C44.5 12.6598 44.5 11.5397 44.064 10.684C43.6805 9.93139 43.0686 9.31947 42.316 8.93597C41.4603 8.5 40.3402 8.5 38.1 8.5H10.9C8.65979 8.5 7.53968 8.5 6.68404 8.93597C5.93139 9.31947 5.31947 9.93139 4.93597 10.684C4.5 11.5397 4.5 12.6598 4.5 14.9V34.1C4.5 36.3402 4.5 37.4603 4.93597 38.316C5.31947 39.0686 5.93139 39.6805 6.68404 40.064C7.53968 40.5 8.65979 40.5 10.9 40.5Z" stroke="#003666" stroke-width="2.5" />
+                            </svg><p class="fs-6 fw-bold">Invited Visitor</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-stretch mb-3">
+            <div class="col-6">
+                <div class="card h-100 p-4">
+                    <a href="~/Admin/RepeatedSendOTP" class="text-decoration-none text-dark">
+                        <div class="card-body text-center p-0">
+                            @* <i class="fa-solid fa-rotate-right fa-3x mb-3" style="color: #1E3A5F;"></i> *@
+                            <svg width="40" height="38" viewBox="0 0 40 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15.5 8H10C5.58172 8 2 11.5817 2 16V28C2 32.4183 5.58172 36 10 36H30C34.4183 36 38 32.4183 38 28V16C38 11.5817 34.4183 8 30 8H27.875M12 14L16.5858 9.41421C17.3668 8.63317 17.3668 7.36684 16.5858 6.58579L12 2" stroke="#003666" stroke-width="2.5" stroke-linecap="round" />
+                            </svg>  <p class="fs-6 fw-bold">Registered Visitor</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-6">
+                <div class="card h-100 p-4" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="QRCODE('sadjhgk')">
+                    <div class="card-body text-center p-0">
+                        <i class="fa-solid fa-qrcode fa-3x mb-3" style="color: #1E3A5F;"></i>
+                        <p class="fs-6 fw-bold">QR Code</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+     
+    </div>
+
+
+    <!-- Footer work -->
+    <div class="footer">
+        <div class="footer-content text-center mb-4 text-secondary opacity-75">
+            <p class="fs-6 fw-semibold m-0">Powered by <span>IFM360</span></p>
+            <p class="fs-6 fw-semibold m-0">www.ifm360.in</p>
+        </div>
+
+    </div>
+
+
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">QR Code</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+
+                <div class="modal-body">
+                    <div id="qrimage">
+                        <img src="" />
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer" />
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+<script type="text/javascript">
+            function openModal() {
+                  document.getElementById("exampleModal").show();
+            }
+            function closeModal() {
+              document.getElementById("myModal").classList.add("hidden");
+            }
+
+
+
+        async function QRCODE(Id) {
+
+            try {
+                    const resp=await fetch(`https://ifm360.in/ivmapi/api/QRCode/SiteQRCode?emailID=ifmrecp%40gmail.com&password=Admin%40123`);
+                    const data= await resp.json();
+                    console.log(data);
+                        const qrDataUrl = await QRCode.toDataURL(data[0].QRURL,{
+          errorCorrectionLevel: "H",
+          type: "image/png",
+          quality: 1,
+          margin: 1,
+          scale: 10
+        });
+
+                            $("#qrimage img").attr("src",qrDataUrl)
+                    openModal()
+            } catch (err) {
+                console.error("Failed to generate PDF with QR", err);
+            }
+
+    }
+</script>
+
+

@@ -1,0 +1,165 @@
+﻿
+@{
+    ViewData["Title"] = "Report";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .stats-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .box {
+            flex: 1;
+            padding: 10px;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+            .box.green {
+                background-color: #28a745;
+            }
+
+            .box.orange {
+                background-color: #fd7e14;
+            }
+
+            .box h3 {
+                margin: 0;
+                font-size: 24px;
+            }
+
+            .box p {
+                margin: 5px 0 0;
+                font-size: 14px;
+                color: white;
+            }
+
+        .tabs {
+            margin-bottom: 20px;
+        }
+
+            .tabs button {
+                padding: 10px 20px;
+                margin-right: 5px;
+                border: 1px solid #ccc;
+                background-color: white;
+                color:#FFF;
+                cursor: pointer;
+                border-radius: 4px 4px 0 0;
+            }
+
+                
+        .date-range {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+            .date-range input[type="date"] {
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 25px;
+                outline: none;
+            }
+
+        .search-button {
+            background-color: green;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+        }
+
+        .download-links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+            .download-links a {
+                text-decoration: none;
+                color: #007bff;
+                font-weight: bold;
+            }
+    </style>
+</head>
+<body>
+
+    <h2 class="text-center">Report</h2>
+
+    <div class="stats-container mt-4">
+        <div class="box green">
+            <h3>@ViewBag.CheckIn</h3>
+            <p>Check-In</p>
+        </div>
+        <div class="box orange">
+            <h3>@ViewBag.CheckOut</h3>
+            <p>Check-Out</p>
+        </div>
+        <div class="box green">
+            <h3>@ViewBag.Invited</h3>
+            <p>Invited</p>
+        </div>
+        <div class="box orange">
+            <h3>@ViewBag.Accepted</h3>
+            <p>Accepted</p>
+        </div>
+        <div class="box green">
+            <h3>@ViewBag.Rejected</h3>
+            <p>Rejected</p>
+        </div>
+        <div class="box orange">
+            <h3>@ViewBag.Waiting</h3>
+            <p>Waiting</p>
+        </div>
+    </div>
+
+    <div class="tabs">
+        <button onclick="GetDataistStatus(1)" style="background-color: #28a745;">Accepted</button>
+        <button onclick="GetDataistStatus(2)" style="background-color: Red;">Rejected</button>
+        <button onclick="GetDataistStatus(3)" style="background-color: #fd7e14;">Wait</button>
+    </div>
+
+    <div class="date-range">
+        <label>Select Date Range-</label>
+        <input type="date" id="startDate" >
+        <input type="date" id="endDate" >
+        <button class="btn btn-myColor" onclick="GetDataist()"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
+
+    <div class="download-links">
+        <button class="btn btn-myColor" onclick="ExcelDownload()"> Download Visitor Data</button>
+        <button class="btn btn-myColor" onclick="GetAllData()">📥 All Visitor Data</button>
+    </div>
+
+    <div id="HidDivAlldata" class="d-none"></div>
+    <div id="PrintDiv" class="mt-4"></div>
+
+    <script defer src="~/js/AdminArea/Report.js" asp-append-version="true"></script>
+    <script defer src="~/js/Utitly.js" asp-append-version="true"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+
+</body>
+</html>
+
+

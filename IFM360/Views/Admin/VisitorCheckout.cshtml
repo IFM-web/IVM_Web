@@ -1,0 +1,61 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+<div class="row px-5">
+    <div class="header my-3">
+        <h5 class="text-center">Visitor Details</h5>
+    </div>
+    <div class="body mb-3">
+        <div class="form">
+            <div class="row">
+                <div class="col-6 mb-3">
+                    <label for="txtname" class="form-label">Full Name</label>
+                    <input type="text" id="txtname" class="form-control">
+                </div>
+                <div class="col-6 mb-3">
+                    <label for="txtmobile" class="form-label">Mobile Number</label>
+                    <input type="text" class="form-control" id="txtmobile">
+                </div>
+                <div class="col-6 mb-3">
+                    <label for="txtvisit" class="form-label">Last Visit</label>
+                    <input type="date" class="form-control" id="txtvisit">
+                </div>
+                <div class="col-6 mb-3">
+                    <label for="txttime" class="form-label">Time</label>
+                    <input type="time" class="form-control" name="" id="txttime">
+                </div>
+
+                <label class="form-label">Uploaded Documents</label>
+                <div class="col-6 mb-4">
+                    <div id="preview1" class="border" style="height: 150px; background-color: #f8f9fa;">
+                    </div>
+                </div>
+                <div class="col-6 mb-4">
+                    <div id="preview2" class="border" style="height: 150px; background-color: #f8f9fa;">
+                    </div>
+                </div>
+
+                <div class="col-6 my-3">
+                    <button type="button" class="btn form-control"
+                            style="border: 1px solid #1E3A5F; color: #1E3A5F;">
+                        Not Me
+                    </button>
+                </div>
+                <div class="col-6 my-3">
+                    <button type="submit" class="btn form-control "
+                            style="background-color: #1E3A5F; color: white;">
+                        Check Out
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer work -->
+    <div class="footer">
+        <div class="footer-content text-center mb-4 text-secondary opacity-75">
+            <p class="fs-6 fw-semibold m-0">Powered by <span>IFM360</span></p>
+            <p class="fs-6 fw-semibold m-0">www.ifm360.in</p>
+        </div>
+
+    </div>
+</div>

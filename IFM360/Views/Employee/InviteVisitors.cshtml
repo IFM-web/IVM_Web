@@ -1,0 +1,270 @@
+﻿@using Newtonsoft.Json
+
+@{
+    ViewData["Title"] = "Invite Visitors";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor contextAccessor;
+    var employeeJson = JsonConvert.SerializeObject(ViewBag.EmployeeList);
+
+    var visitorIdFlag = contextAccessor.HttpContext.Session.GetString("employee_visitor_id_flag");
+    var visitorPhotoFlag = contextAccessor.HttpContext.Session.GetString("employee_visitor_photo_flag");
+    var nameFlag = contextAccessor.HttpContext.Session.GetString("employee_name_flag");
+    var mobileNoFlag = contextAccessor.HttpContext.Session.GetString("employee_mobile_no_flag");
+    var companyNameFlag = contextAccessor.HttpContext.Session.GetString("employee_company_name_flag");
+    var cardNumberFlag = contextAccessor.HttpContext.Session.GetString("employee_card_number_flag");
+    var temperatureFlag = contextAccessor.HttpContext.Session.GetString("employee_temperature_flag");
+    var employee_purpose_flag = contextAccessor.HttpContext.Session.GetString("employee_purpose_flag");
+    var additionalDetailsFlag = contextAccessor.HttpContext.Session.GetString("employee_additional_details_flag");
+    var visitorTypeFlag = contextAccessor.HttpContext.Session.GetString("employee_type_of_visitor_flag");
+
+    
+}
+
+
+<style>
+    .camera-icon {
+        font-size: 24px;
+        cursor: pointer;
+        color: #007bff;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+
+    .preview-container {
+        position: relative;
+        height: 300px;
+        /* background-color: #f8f9fa; */
+        border: 2px dashed #d1d5db;
+        border-color: #16314f;
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .upload-icon {
+        width: 40px;
+        height: 40px;
+        background: url('https://img.icons8.com/ios/50/camera--v1.png') no-repeat center;
+        background-size: contain;
+        position: relative;
+        margin-bottom: 8px;
+    }
+
+    .upload-plus {
+        position: absolute;
+        top: 118px;
+        left: calc(50% - 12px);
+        background-color: #003366;
+        color: white;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        font-weight: bold;
+        border: 2px solid #fff;
+        box-shadow: 0 0 2px rgba(0,0,0,0.2);
+    }
+
+    .upload-label {
+        text-align: center;
+        font-size: 14px;
+        font-weight: 500;
+        color: #111827;
+        margin-top: 6px;
+    }
+    .form label{
+        font-weight: bold;
+    }
+</style>
+<div class="row px-5">
+    <div class="header my-3">
+        <h3 class="text-center">Invite New Visitor</h3>
+    </div>
+    <div class="body mb-3">
+        <h4> Details</h4>
+        <hr />
+        <div class="form">
+            <div class="row">
+
+                @if (nameFlag == "1")
+                {
+
+                    <div class="col-md-6 mb-3">
+                        <label for="txtVName" class="form-label">Visitor Name</label>
+                        <input type="text" id="txtVName" name="Visitor Name" class="form-control mandatory text-uppercase">
+                        </div>}
+                @if (mobileNoFlag == "1")
+                {
+                    <div class="col-md-6 mb-3">
+                        <label for="txtPhone" class="form-label">Visitor Mobile Number</label>
+                        <input type="text" id="txtphone" name="Visitor Mobile Number" class="form-control mandatory text-uppercase">
+                    </div>
+                }
+
+                <div class="col-md-6 mb-3">
+                    <label for="txtVEmail" class="form-label">Visitor Email Id</label>
+                    <input type="text" id="txtvemail" name="Visitor Email Id" class="form-control text-uppercase mandatory">
+                </div>
+
+                @if (companyNameFlag=="1"){
+                <div class="col-md-6 mb-3">
+                    <label for="txtCompaby" class="form-label">From Company</label>
+                    <input type="text" id="txtcompany" name="From Company" class="form-control text-uppercase mandatory">
+                </div>
+                }
+                
+                <div class="col-md-6 mb-3">
+                    <label for="txtLocation" class="form-label">Location Name</label>
+                    <input type="text" id="txtLocation" name="Location Name" class="form-control  mandatory">
+                </div>
+                @if (visitorTypeFlag == "1")
+                {
+                    <div class="col-md-6 mb-3">
+                        <label for="typeofvisitor" class="form-label">Type Of Visitor</label>
+                    <select class="form-control mandatory" name="Type Of Visitor" id="typeofvisitor">
+                        <option value="0">Select</option>
+
+                    </select>
+                </div>}
+                @if (employee_purpose_flag == "1")
+                {
+                    <div class="col-md-6 mb-3">
+                        <label for="txtPurposeVisit" class="form-label">Purpose Of Visit</label>
+                        <select class="form-control mandatory" name="Purpose Of Visit" id="Purposetovisit">
+                            <option value="0">Select</option>
+
+                        </select>
+                    </div>
+                }
+                @*  <div class="col-md-6 mb-3" style="position:relative">
+                    <label for="txtWhomeMeet" class="form-label">Whom To Meet</label>
+                    <input type="hidden" class="form-control  " id="txtWhomeMeet">
+                    <input type="text" id="employeeSearch" name="Whom To Meet" class="form-control mandatory" placeholder="Search employee..." autocomplete="off" />
+                    <ul id="suggestions" class="list-group mt-2" style="display:none; position:absolute; z-index:999;width:100%;overflow-y: scroll;
+    max-height: 200px;"></ul>
+                </div> *@
+                   
+                        <div class="col-md-6 mb-3">
+                    <label for="Hour" class="form-label">Select Hours</label>
+                            <select class="form-control mandatory" name="Hour"  id="txthour">
+                        <option value="0">Select Hour</option>
+                        <option value="6">06</option>
+                        <option value="7">07</option>
+                        <option value="8">08</option>
+                        <option value="9">09</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        <option value="21">21</option>
+                        <option value="22">22</option>
+
+
+                            </select>
+                        </div>
+                   
+                        <div class="col-md-6 mb-3">
+                    <label for="txtmin" class="form-label">Select Minutes</label>
+                    <select name="Minutes" class="form-control mandatory" id="txtmin">
+                        <option value="0">Select Minutes</option>
+                        <option value="00">00</option>
+                        <option value="15">15</option>
+                        <option value="30">30</option>
+                        <option value="45">45</option>
+
+
+                            </select>
+                        </div>
+                    
+                   
+                        <div class="col-md-6 mb-3">
+                    <label for="txtDate" class="form-label">Date</label>
+                            <input type="date" min="@DateTime.Today.ToString("yyyy-MM-dd")" class="form-control mandatory" name="Date" id="txtDate">
+                        </div>
+                    
+                    
+                
+                <div class="col-md-12 my-3">
+                    <button onclick="addNewVisitor()" class="btn btn-danger w-25">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+@* <script>
+
+    const employees = @Html.Raw(employeeJson);
+    const input1 = document.getElementById("employeeSearch");
+    const inputHid = document.getElementById("txtWhomeMeet");
+    const suggestionBox = document.getElementById("suggestions");
+
+    input1.addEventListener("input", function () {
+        const value = this.value.toLowerCase().trim();
+        console.log(value);
+        suggestionBox.innerHTML = "";
+
+        if (!value) {
+            suggestionBox.style.display = "none";
+            return;
+        }
+
+         const matches = employees.filter(emp =>
+        emp.EmpName.toLowerCase().includes(value));
+
+         const matche1 = employees.filter(emp =>
+        emp.EmpName.toLowerCase()==(value));
+
+        if(matche1.length==0){
+            inputHid.value='';
+        }
+
+        matches.forEach(emp => {
+            const li = document.createElement("li");
+            li.className = "list-group-item";
+            li.innerHTML = `<strong>${emp.EmpName}</strong><br/>
+                            <small>${emp.Designation} — ${emp.Company}</small>`;
+            li.style.cursor = "pointer";
+
+            li.onclick = () => {
+                input1.value = emp.EmpName;
+                inputHid.value=emp.Id;
+                suggestionBox.style.display = "none";
+            };
+
+            suggestionBox.appendChild(li);
+        });
+
+        suggestionBox.style.display = matches.length ? "block" : "none";
+    });
+
+    suggestionBox.addEventListener("click", function (e) {
+        if (!input1.contains(e.target) && !suggestionBox.contains(e.target)) {
+            console.log(e.target);
+            suggestionBox.style.display = "none";
+        }
+    });
+</script>
+ *@
+<script src="~/js//EmployeeArea/PreInviteVisistor.js" asp-append-version="true"></script>
+
+
+
+

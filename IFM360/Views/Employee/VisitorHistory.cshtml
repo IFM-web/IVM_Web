@@ -1,0 +1,133 @@
+﻿@{
+    ViewData["Title"] = "VisitorHistory";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor contextAccessor;
+
+
+    var visitorIdFlag = contextAccessor.HttpContext.Session.GetString("employee_visitor_id_flag");
+    var visitorPhotoFlag = contextAccessor.HttpContext.Session.GetString("employee_visitor_photo_flag");
+    var nameFlag = contextAccessor.HttpContext.Session.GetString("employee_name_flag");
+    var mobileNoFlag = contextAccessor.HttpContext.Session.GetString("employee_mobile_no_flag");
+    var companyNameFlag = contextAccessor.HttpContext.Session.GetString("employee_company_name_flag");
+    var cardNumberFlag = contextAccessor.HttpContext.Session.GetString("employee_card_number_flag");
+    var temperatureFlag = contextAccessor.HttpContext.Session.GetString("employee_temperature_flag");
+    var additionalDetailsFlag = contextAccessor.HttpContext.Session.GetString("employee_additional_details_flag");
+    var visitorTypeFlag = contextAccessor.HttpContext.Session.GetString("employee_type_of_visitor_flag");
+}
+
+<style>
+    table tr th {
+        /* you can add styles here */
+    }
+</style>
+
+<div class="gy-0 m-0 mx-3">
+    <div class="row my-3 ">
+        <h3 class="text-center">Visitor History</h3>
+
+        <!-- Hidden fields to store flags -->
+        <input type="hidden" id="employee_visitor_id_flag" value="@visitorIdFlag" />
+        <input type="hidden" id="employee_visitor_photo_flag" value="@visitorPhotoFlag" />
+        <input type="hidden" id="employee_name_flag" value="@nameFlag" />
+        <input type="hidden" id="employee_mobile_no_flag" value="@mobileNoFlag" />
+        <input type="hidden" id="employee_company_name_flag" value="@companyNameFlag" />
+        <input type="hidden" id="employee_card_number_flag" value="@cardNumberFlag" />
+        <input type="hidden" id="employee_temperature_flag" value="@temperatureFlag" />
+        <input type="hidden" id="employee_additional_details_flag" value="@additionalDetailsFlag" />
+        <input type="hidden" id="employee_type_of_visitor_flag" value="@visitorTypeFlag" />
+
+    
+        <div class="col-md-3">
+                <label class="form-label">From Date </label>
+            <input type="date" class="form-control" id="startDate" /></div>
+        <div class="col-md-3">
+            <label class="form-label">To Date </label>
+            <input type="date" class="form-control" id="endDate" /></div>
+        <div class="col-1 pt-4">
+            <button type="button" class="btn btn-success form-control mt-2" onclick="visitorList()">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="row my-3">
+       <hr/>
+        <div class="table-responsive shadow-sm rounded overflow-x-auto">
+            <table class="table table-striped border shadow-sm rounded">
+                <thead class="table-dark" style=" color:white;">
+                    <tr>
+                        <th>S.No.</th>
+                        @if (visitorIdFlag == "1")
+                        {
+                            <th onclick="visitor_id_popup()">Visitor ID</th>
+                        }
+                        @if (visitorPhotoFlag == "1")
+                        {
+                            <th>Visitor Image</th>
+                        }
+                        @if (nameFlag == "1")
+                        {
+                            <th>Guest Name</th>
+                        }
+                        @if (mobileNoFlag == "1")
+                        {
+                            <th>Guest Phone</th>
+                        }
+                        @if (companyNameFlag == "1")
+                        {
+                            <th>Guest Company</th>
+                        }
+                        @if (cardNumberFlag == "1")
+                        {
+                            <th>Card Number</th>
+                        }
+                        @if (temperatureFlag == "1")
+                        {
+                            <th>Temperature</th>
+                        }
+                        @if (additionalDetailsFlag == "1")
+                        {
+                            <th>Check In Time</th>
+                        }
+                        @if (additionalDetailsFlag == "1")
+                        {
+                            <th>Check Out Time</th>
+                        }
+                        @if (visitorTypeFlag == "1")
+                        {
+                            <th>Visitor Type</th>
+                        }
+                        @if (additionalDetailsFlag == "1")
+                        {
+                            <th>Is Invited</th>
+                        }
+                        @if (additionalDetailsFlag == "1")
+                        {
+                            <th>Status</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody id="visitorHistory-body">
+                    <!-- Visitor rows will be populated dynamically -->
+                </tbody>
+            </table>
+
+            <!-- Image View Modal -->
+            <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content text-center">
+                        <div class="modal-header">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <img id="modalImage" src="" alt="Visitor Photo" class="img-fluid" style="max-height: 400px;" width="100%;" height="100%;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="~/js/EmployeeArea/VisitorHistory.js" asp-append-version="true"></script>

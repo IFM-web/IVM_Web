@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewData["Title"] = "PrintPass";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor httpContextAccessor
+}
+
+<div class="row px-5 ">
+
+    <div class="top-header text-center">
+        <img src="data:image/png;base64,@httpContextAccessor.HttpContext.Session.GetString("Companylogo")" alt="head-logo" class="img-fluid" width="20%">
+    </div>
+
+    <div class="row mt-3 px-5">
+        <div class="col-7 mx-auto">
+            <div class="d-flex justify-content-end">
+                <a class="btn  " style="background-color:#dc1541; color:white; margin-right:10px;" href="~/AdminArea/Home">
+                    <i class="fa fa-close"></i>
+                </a>
+                <button class="btn " style="background-color:#1E3A5F; color:white;" onclick="PrintPass()">
+                    <i class="fa fa-print"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row mb-3 px-5" id="visitorCard">
+        <div class="col-7 mx-auto my-4" style="border:1px solid black">
+            <div class="row">
+
+                <div class="col-12 text-center text-uppercase fs-5 fw-bold" style="background-color:black; color:white;overflow:hidden">Visitor Gate Pass</div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-12 text-center">IFM 360 Tech Pvt Ltd</div>
+            </div>
+
+            <div class="row">
+                <div class="col-8 text-uppercase pe-0">
+                    <p class="m-0"><span class="fw-bold">Name :- </span><span id="txtname">@ViewBag.visitor_name</span></p>
+                    <p class="m-0"><span class="fw-bold">Company :- </span><span id="txtcompany">@ViewBag.visitor_company</span></p>
+                    <p class="m-0"><span class="fw-bold">Mobile No :- </span> <span id="txtphone">@ViewBag.visitor_phone</span></p>
+                    <p class="m-0"><span class="fw-bold">Whom to meet :- </span> <span id="txtmeet">@ViewBag.WhomToMeetName</span></p>
+
+                    @*  <p class="m-0"><span class="fw-bold">Temprature :- </span> <span id="txttemp"></span></p> *@
+                    @if (httpContextAccessor.HttpContext.Session.GetString("laptop_flag") == "1")
+                    {
+                        <p class="m-0"><span class="fw-bold">Laptop Serial Number :- </span> <span id="txtlaptop">@ViewBag.LaptopSerialNo</span></p>
+                    }
+                    @if (httpContextAccessor.HttpContext.Session.GetString("vehicle_flag") == "1")
+                    {
+                        <p class="m-0">
+                            <span class="fw-bold">
+                                Vehicle Number :-
+                            </span> <span id="txtVehicle">@ViewBag.VehicleNo</span>
+                        </p>
+                    }
+                    <p class="m-0"><span class="fw-bold">Remarks :- </span> <span id="txtremarks">@ViewBag.visitor_devices_list</span></p>
+                    <p class="m-0"><span class="fw-bold">Date of Issue :- </span> <span id="txtdate">@ViewBag.visitor_checkIn</span></p>
+
+
+                </div>
+              
+                    <div class="col-4">
+                        <img id="photo" alt="Photo" src="data:image/png;base64,@ViewBag.VisitorPhoto" class="img-fluid" width="130" style="height:8rem;">
+                    </div>
+              
+                <div class="d-flex justify-content-between align-items-center">
+                    <img src="~/upload/logo/ivmlogo.jfif" alt="Qr-Code" class="img-fluid" width="50"> <p>
+                        Powered by IFM360 (www.ifm360.in)
+                    </p>
+                    <img src="~/upload/logo/IFMQRCode.png" alt="Qr-Code" class="img-fluid" width="50">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+<script src="~/js/AdminArea/PrintPassAdmin.js" asp-append-version="true"></script>

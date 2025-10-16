@@ -1,0 +1,204 @@
+﻿
+@{
+    Layout = null;
+  
+}
+
+
+
+
+<!DOCTYPE html>
+
+<html class="no-js" data-ng-app="tutorialWebApp">
+<head>
+    <!-- Meta-Information -->
+    <title>Create Pin - iVM360</title>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <link rel="icon" type="image/png" href="~/upload/logo/logo.png">
+    <!-- Vendor: Bootstrap Stylesheets http://getbootstrap.com -->
+    <!-- Our Website CSS Styles -->
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+  
+    <link href="~/css/sass.css" rel="stylesheet" />
+    <link href="~/css/main.css" rel="stylesheet" />
+    <link href="~/css/responsive.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        .feilded input[type="button"] {
+        background: #ff5f5f none repeat scroll 0 0;
+        border: medium none;
+        -webkit-border-radius: 25px;
+        -moz-border-radius: 25px;
+        -ms-border-radius: 25px;
+        -o-border-radius: 25px;
+        border-radius: 25px;
+        color: #ffffff;
+        float: left;
+        font-family: Montserrat;
+        font-size: 12px;
+       margin-top:20px;
+        padding: 14px 30px;}
+
+        div.feild  input[type="text"] {
+            border: 1px solid #e6eaea;
+            -webkit-border-radius: 30px;
+            -moz-border-radius: 30px;
+            -ms-border-radius: 30px;
+            -o-border-radius: 30px;
+            border-radius: 30px;
+            float: left;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+            padding: 13px 30px;
+            /* width: 71%; */
+            width: 100%;
+        }
+      
+</style>
+</head>
+<body>
+
+    <div class="account-user-sec" style="overflow-y: auto;">
+        <div class="account-sec">
+            <div class="account-top-bar">
+                <div class="container">
+                    <div class="logo">
+
+                        <a href="#/" title="">
+                            <img src="~/upload/logo/logo.png" style="width: 10%; margin-top: -4%; margin-bottom: -4%;" />&nbsp;&nbsp;
+                            <span style="color: blue; font-size: large;">iVM</span>
+                            <span style="color: red; font-size: large;">360</span>
+                        </a>
+                    </div>
+                    <ul class="account-header-link">
+                        <li><a title="" href="">Register</a></li>
+                        <li><a title="" href="~/Home/Login">Login</a></li>
+                        <li><a title="">Schedule a Demo</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="acount-sec">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="account-detail">
+                                <ul>
+                                    <li>
+                                        <h3><i class="fa  fa-television"></i>Keep everything Sync</h3>
+                                        <p>Dnim eiusmod high life accusamus terry </br>richardson ado squid.</p>
+                                    </li>
+                                    <li>
+                                        <h3><i class="fa-regular fa-map"></i>Emails & Calendars is with you</h3>
+                                        <p>Dnim eiusmod high life accusamus terry </br>richardson ado squid.</p>
+                                    </li>
+                                    <li>
+                                        <h3><i class="fa-regular fa-map"></i>Simple Elegant & Super Fast</h3>
+                                        <p>Dnim eiusmod high life accusamus terry </br>richardson ado squid.</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="contact-sec">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="widget-title">
+                                            <h3>Create Employee Login PIN </h3>
+                                            <span>Fill your detail to get in</span>
+                                        </div>
+                                        <!-- Widget title -->
+                                        <div class="account-form">
+                                            
+                                                <div class="aspNetHidden">
+                                                   
+                                                </div>
+
+                                                <div class="aspNetHidden">
+
+                                                  
+                                                </div>
+                                                <div class="row">
+                                                    <div id="DivEmail" class="feild col-md-12">
+                                                        <input name="email" type="text" id="email" placeholder="Official Email ID" required="" />
+                                                    </div>
+                                                    <div id="DivOTP" class="feild col-md-12" style="display:none" >
+                                                    <input name="OTP" type="text" onkeypress="return isNumberKey(event)" oninput="if(this.value.length > 4) this.value = this.value.slice(0,4);" id="OTP" placeholder="4 Digits OTP" required="" />
+                                                    </div>
+                                                    <div id="DivPIN" class="feild col-md-12" style="display:none">
+                                                    <input name="email" onkeypress="return isNumberKey(event)" oninput="if(this.value.length > 4) this.value = this.value.slice(0,4);" type="text" id="NewPin" placeholder="4 Digits PIN" required="" />
+                                                    </div>
+                                                <div id="divsendOtp" class="feilded col-md-12">
+                                                    <input type="button" name="btnSendOTP" onclick="SendMail()" value="Send OTP on Email" style="background: darkslateblue; color:white" />
+                                                    </div>
+                                                <div id="divChangePIn" class="feilded col-md-12" style="display:none">
+                                                    <input type="button" name="btnSendOTP" onclick="ChangePin()" value="Change PIN" style="background: darkslateblue; color:white" />
+                                                    </div>
+
+
+                                                </div>
+                                            
+                                        </div>
+                                        <div class="more-option">
+                                            <span>OR</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="creat-an-account">
+                                            <span>Do you have an Login PIN?</span>
+                                            <a href="~/Home/EmployeeLogin" title="" style="background: darkslateblue;">Login Now</a>
+
+                                        </div>
+                                        <!-- Create an account -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer>
+                <div class="container">
+                    <p>©@DateTime.Now.Year  V19 Softech Pvt. Ltd.  </p>
+                </div>
+            </footer>
+        </div>
+        <!-- Account Sec -->
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="~/js/CreatePin.js" asp-append-version="true"></script>
+  
+    <script type="text/javascript">
+        function mylogin() {
+            //debugger;
+            if (email.value.length > 0) {
+                var emailValid = ValidateEmail(email.value);
+                if (emailValid == true) {
+                    return true;
+                } else {
+                    document.getElementById("email").focus();
+                    return false;
+                }
+            } else {
+                document.getElementById("email").focus();
+                return false;
+            }
+        }
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode != 46 && charCode > 31
+                && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
+    </script>
+
+</body>
+</html>
+
+
+

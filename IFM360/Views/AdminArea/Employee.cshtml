@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewData["Title"] = "Employee";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="row px-2 px-md-5">
+    <div class="header my-3">
+        <h3 class="text-center">Manage Employee</h3>
+    </div>
+    <div class="body mb-3">
+        <input hidden id="EMpId" value="@ViewBag.Id" />
+
+        <div class="form">
+            <div class="row mt-4">
+
+
+                <div class="col-md-6 mb-3">
+                    <label>Employee Name</label>
+                    <input type="text" id="txtEName" name="Employee Name" placeholder="Employee Name" class="form-control mandatory">
+                </div>
+
+
+                <div class="col-md-6 mb-3">
+                    <label>Employee Email Id</label>
+                    <input type="text" id="txtEmail" name="Employee Email Id" placeholder="Employee Eamil Id" class="form-control mandatory">
+                </div>
+
+
+                <div class="col-md-6 mb-3">
+                    <label>Employee Mobile No.</label>
+                    <input type="text" id="txtMobile" name="Employee Mobile No." oninput="onlynuber(this)" maxlength="10" placeholder="Employee Mobile No." class="form-control mandatory">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                   <label>Employee Department</label>
+                    <select class="form-control mandatory" id="txtdept" name="Employee Department">
+    <option value="0">Select Employee Department</option>
+                        @if (ViewBag.Department != null)
+                        {
+                            foreach (var e in ViewBag.Department as List<SelectListItem>)
+                            {
+                                <option value="@e.Value">@e.Text</option>
+                            }
+                        }
+                    </select>
+                </div>
+
+
+
+
+
+
+
+                <div class="col-md-12">
+                    <button onclick="Insert()" id="btnsave" class="btn btn-myColor">Add New Employee</button>
+                    <button onclick="ClearData()" class="btn btn-myColor">Clear</button>
+                    <a href="~/AdminArea/EmployeeList" class="btn btn-myColor">Employee List</a>
+                </div>
+
+
+
+               
+            </div>
+           
+
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<script src="~/js/AdminArea/Employee.js" asp-append-version="true"></script>

@@ -1,0 +1,44 @@
+﻿
+
+@{
+    ViewData["Title"] = "CheckOut By Phone";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+       @inject Microsoft.AspNetCore.Http.IHttpContextAccessor httpContextAccessor
+}
+<div class="row px-5">
+    <div class="header my-3">
+        @* <h5 class="text-center">Check Out</h5> *@
+    </div>
+    <div class="top-header text-center mt-2">
+     <img src="data:image/png;base64,@httpContextAccessor.HttpContext.Session.GetString("Companylogo")" alt="head-logo" class="img-fluid" width="20%" >
+    </div>
+    <div id="checkDetails">
+    </div>
+
+    <div class="ShowSection">
+    <div class="text-center">
+        <h2>Enter your register Mobile</h2>
+        <h2>number to check-out!</h2>
+    </div>
+    <div class="row my-3 px-md-5">
+        <div class="col-md-6 mx-auto my-md-4
+                        ">
+            <label for="txtphoneno">Enter Mobile Number </label>
+            <input type="text" id="txtphoneno" class="form-control">
+            <button onclick="SearchPhone()" class="btn form-control my-5"
+                    style="background-color: #1E3A5F;  color: white;">
+                Continue
+            </button>
+        </div>
+    </div>
+    </div>
+    <!-- Footer work -->
+    <div class="footer">
+        <div class="footer-content text-center mb-4 text-secondary opacity-75">
+            <p class="fs-6 fw-semibold m-0">Powered by <span>IFM360</span></p>
+            <p class="fs-6 fw-semibold m-0">www.ifm360.in</p>
+        </div>
+
+    </div>
+</div>
+<script defer src="~/js/CheckOut.js" asp-append-version="true"></script>

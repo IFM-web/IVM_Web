@@ -1,0 +1,109 @@
+﻿
+@{
+    ViewData["Title"] = "CheckIn";
+}
+
+<div class="row px-5">
+    <div class="header my-3">
+        <h5 class="text-center">Visitor Details</h5>
+    </div>
+    <div class="body mb-3">
+        <p>Personal Details</p>
+        <div class="form">
+            <div class="row">
+                @{
+                    if (ViewBag.name_flag == 1)
+                    {
+                        <div class="col-6 mb-3">
+                            <label for="txtname" class="form-label">Full Name</label>
+                            <input type="text" id="txtname" class="form-control">
+                        </div>
+                    }
+                    if (ViewBag.company_name_flag==1)
+                    {
+                        <div class="col-6 mb-3">
+                            <label for="txtCompaby" class="form-label">From Company</label>
+                            <input type="text" class="form-control">
+                        </div>
+                    }
+
+                    if (ViewBag.whom_to_meet_flag == "1"){
+                <div class="col-6 mb-3">
+                    <label for="txtWhomeMeet" class="form-label">Whom to meet</label>
+                    <input type="text" class="form-control" id="txtWhomeMeet">
+                </div>
+                    }
+                    if (ViewBag.purpose_flag == 1){
+                <div class="col-6 mb-3">
+                    <label for="txtPurposeVisit" class="form-label">Purpose to visit</label>
+                   <select class="form-control">
+                   <option value="0">Select</option>
+                   </select>
+                   </div>
+                    }
+                    if (ViewBag.card_number_flag == 1)
+                    {
+                        <div class="col-6 mb-3">
+                            <label for="txtCardNumber" class="form-label">Enter Card Number</label>
+                    <input type="text" class="form-control" name="" id="txtCardNumber">
+                        </div>
+                    }
+                    if (ViewBag.laptop_flag == 1)
+                    {
+                        <div class="col-6 mb-3">
+                            <label for="txtLaptopNumber" class="form-label">
+                        Enter laptop serial no
+                        (optional)
+                    </label>
+                    <input type="text" class="form-control" name="" id="txtLaptopNumber">
+                        </div>
+                    }
+                    if (ViewBag.disclaimer_flag == 1)
+                    {
+                                           
+                    <div class="col-6 mb-3">
+                    <label for="txtremark" class="form-label">Enter Remark (optional)</label>
+                    <input type="text" class="form-control" name="" id="txtremark">
+                </div>
+                    }
+                    if (ViewBag.temperature_flag==1){
+                <div class="col-6 mb-3">
+                    <label for="txttemperature" class="form-label">
+                        Temperature in celsius /
+                        Fahrenheit
+                    </label>
+                    <input type="text" class="form-control" name="" id="txttemperature">
+                </div>
+                    }
+                    if (ViewBag.vehicle_flag == 1)
+                    {
+                        <div class="col-6 mb-3">
+                            <label for="txttemperature" class="form-label">
+                                Vechicle
+                            </label>
+                            <input type="text" class="form-control" name="" id="txttemperature">
+                        </div>
+                    }
+                <label for="txtdocuments">Upload Documents</label>
+                <div class="col-6 mb-4">
+                    <input type="file" class="form-control" id="txtdocuments">
+                </div>
+                <div class="col-6 mb-4">
+                    <input type="file" class="form-control" id="txtdocuments">
+                </div>
+                <div class="col-6 my-3">
+                    <label class="form-control d-flex gap-3">
+                        <input type="checkbox" id="terms" style="width: 25px;" />
+                        <p class="checkbox-text m-0 " style="font-size: smaller;">
+                            By clicking the checkbox you accept all the ifm360 terms and conditions.
+                        </p>
+                    </label>
+                </div>
+                }
+                <div class="col-6 my-3">
+                    <button type="submit" class="btn btn-danger form-control">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

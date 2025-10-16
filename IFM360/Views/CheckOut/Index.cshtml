@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewData["Title"] = "Check Out Home";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor httpContextAccessor
+}
+
+    <style>
+    #checkoutbtn a{
+    display: block;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    color: #ffffff;
+    background-color: #1E3A5F;
+    border: 1px solid #ffffff;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    text-align:center;
+    font-weight:bold;
+    }
+    #checkoutbtn a:hover{
+            background-color: red;
+            
+    }
+    </style>
+
+
+<div class="row px-5">
+
+    <div class="top-header text-center">
+        <div class="top-header text-center mt-4">
+            <img src="data:image/png;base64,@httpContextAccessor.HttpContext.Session.GetString("Companylogo")" alt="head-logo" class="img-fluid" width="20%">
+        </div>
+        <h3>@httpContextAccessor.HttpContext.Session.GetString("CompanyName")</h3>
+    </div>
+
+  
+       
+        <div class="row mt-md-3 px-md-5">
+            <div class="col-md-12 mx-auto mt-md-4
+                        " id="checkoutbtn">
+            <a class="d-block text-decoration-none mt-auto" href="~/CheckOut/CheckOutByPhone">Check Out By Phone Number</a>
+            <a class="d-block text-decoration-none mt-auto" href="~/CheckOut/CheckOutByCard">Check Out By Card Number</a>
+              
+            </div>
+        </div>
+  
+    <!-- Footer work -->
+   @*  <div class="footer">
+        <div class="footer-content text-center mb-4 text-secondary opacity-75">
+            <p class="fs-6 fw-semibold m-0">Powered by <span>IFM360</span></p>
+            <p class="fs-6 fw-semibold m-0">www.ifm360.in</p>
+        </div>
+
+    </div> *@
+</div>

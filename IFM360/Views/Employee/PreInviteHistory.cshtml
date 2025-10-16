@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "Pre Invite History";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<div class="row px-5">
+    <div class="header my-3">
+
+    <h3 class="text-center">Pre Invite History</h3>
+   </div>
+  
+   <div class="col-md-3">
+       <div class="form-group">
+           <label>From Date</label>
+           <input type="date" id="txtfromdate" class="form-control" />
+       </div>
+   </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <label>To Date</label>
+            <input type="date" id="txttodate" class="form-control" />
+        </div>
+    </div>
+   <div class="col-md-3">
+       <div class="form-group mt-4">
+            <button class="btn btn-success" onclick="PreInviteHistory()">Search</button>
+       </div>
+   </div>
+
+    <div class="container mt-4">
+    
+        <div class="table-responsive shadow-sm rounded">
+            <table class="table table-striped align-middle text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th>S. No.</th>
+                        <th>Invite Code</th>
+                        <th>Guest Name</th>
+                        <th>Guest Phone</th>
+                        <th>Guest Email</th>
+                        <th>Address</th>
+                       
+                        <th>Date</th>
+                        <th>Time</th>
+                        
+                        @* <th>Status</th> *@
+                      
+                    </tr>
+                </thead>
+                <tbody id="content">
+                </tbody>
+            </table>
+        </div>
+    </div>
+   </div>
+   <script src="~/js/EmployeeArea/PreInviteHistory.js" asp-append-version="true"></script>

@@ -1,0 +1,96 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+/* Sidebar common link style */
+.sidebar-link {
+    display: block;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    color: #ffffff;
+    background-color: #1E3A5F;
+    border: 1px solid #ffffff;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+}
+
+    /* Hover effect */
+    .sidebar-link:hover {
+        background-color: #3b5a8f;
+        color: #fff;
+    }
+
+/* Right arrow icon (in Check In link) */
+.dropdown-arrow {
+    font-size: 0.8rem;
+    margin-left: auto;
+    transition: transform 0.3s ease;
+}
+
+/* Dropdown items (inside Check In) */
+.dropdown-items a {
+    padding-left: 25px; /* indent child items */
+    font-size: 0.95rem;
+}
+
+/*.dropdown-arrow {
+    margin-left: auto;
+    transition: transform 0.3s ease;
+}
+*/
+.rotate-up {
+    transform: rotate(180deg);
+}
+
+
+.btn-myColor {
+    background-color: #1E3A5F !important;
+    color:#ffff !important;
+}
+
+
+/* Scrollbar Styling for WebKit Browsers */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #1E3A5F; /* green */
+    border-radius: 10px;
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #1e7e34;
+    }
+
+/* Scrollbar Styling for Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #1E3A5F #f1f1f1;
+}

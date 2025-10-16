@@ -1,0 +1,317 @@
+﻿
+@using Newtonsoft.Json
+@{
+    ViewData["Title"] = "Invited Visitor";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+    var employeeJson = JsonConvert.SerializeObject(ViewBag.EmployeeList);
+
+}
+<style>
+    .camera-icon {
+        font-size: 24px;
+        cursor: pointer;
+        color: #007bff;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+
+    .preview-container {
+        position: relative;
+        height: 300px;
+        /* background-color: #f8f9fa; */
+        border: 2px dashed #d1d5db;
+        border-color: #16314f;
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .upload-icon {
+        width: 40px;
+        height: 40px;
+        background: url('https://img.icons8.com/ios/50/camera--v1.png') no-repeat center;
+        background-size: contain;
+        position: relative;
+        margin-bottom: 8px;
+    }
+
+    .upload-plus {
+        position: absolute;
+        top: 118px;
+        left: calc(50% - 12px);
+        background-color: #003366;
+        color: white;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        font-weight: bold;
+        border: 2px solid #fff;
+        box-shadow: 0 0 2px rgba(0,0,0,0.2);
+    }
+
+    .upload-label {
+        text-align: center;
+        font-size: 14px;
+        font-weight: 500;
+        color: #111827;
+        margin-top: 6px;
+    }
+</style>
+<div class="row px-5">
+    <div class="header my-3">
+        <h3 class="text-center">Visitor Details</h3>
+    </div>
+    <div class="body mb-3">
+        <h4>Personal Details</h4>
+        <div class="form">
+            <div class="row">
+      
+                @{
+                    if (ViewBag.name_flag == "1")
+                    {
+                        <div class="col-md-6 mb-3">
+                            <label for="txtname"  class="form-label">Full Name</label>
+                            <input type="text" disabled id="txtname" name="Full Name" class="form-control text-uppercase mandatory">
+                        </div>
+                    }
+                    if (ViewBag.mobile_no_flag == "1")
+                    {
+                        <div class="col-md-6 mb-3">
+                            <label for="txtPhone"  class="form-label">Phone Number</label>
+                            <input type="text" disabled id="txtphone"  name="Phone Number" class="form-control mandatory text-uppercase">
+                        </div>
+                    }
+                    if (ViewBag.company_name_flag == "1")
+                    {
+                        <div class="col-md-6 mb-3">
+                            <label for="txtCompaby" class="form-label">From Company</label>
+                            <input type="text" disabled id="txtcompany" name="From Company" class="form-control mandatory text-uppercase">
+                        </div>
+                    }
+
+                    if (ViewBag.card_number_flag != null && ViewBag.card_number_flag.ToString() == "1")
+
+                    {
+                        <div class="col-md-6 mb-3" style="position:relative">
+                            <label for="txtWhomeMeet" class="form-label">Whom To Meet</label>
+                            <input type="hidden" class="form-control mandatory" name="Whom To Meet" id="txtWhomeMeet">
+                            <input type="text" disabled id="employeeSearch" class="form-control " placeholder="Search employee..." autocomplete="off" />
+                            <ul id="suggestions" class="list-group mt-2" style="display:none; position:absolute; z-index:999;width:100%;overflow-y: scroll;
+            max-height: 200px;"></ul>
+                        </div>
+                    }
+                    if (ViewBag.purpose_flag == "1")
+                    {
+                        <div class="col-md-6 mb-3">
+                            <label for="txtPurposeVisit"  class="form-label">Purpose Of Visit</label>
+                            <select class="form-control mandatory" name="Purpose Of Visit" disabled id="Purposetovisit">
+                                <option value="0">Select</option>
+
+                            </select>
+                        </div>
+                    }
+                    if (ViewBag.type_of_visitor_flag == "1")
+                    {
+                        <div class="col-md-6 mb-3">
+                            <label for="typeofvisitor"  class="form-label">Type Of Visitor</label>
+                            <select class="form-control mandatory" name="Type Of Visitor" disabled id="typeofvisitor">
+                                <option value="0">Select</option>
+                                 
+                            </select>
+                        </div>
+                    }
+                    // if (ViewBag.otp_verification_flag == 1)
+                    // {
+                    //     <div class="col-md-6 mb-3">
+                    //         <label for="txtMobileNumber" class="form-label">Enter Mobile Number</label>
+                    //         <input type="text" class="form-control" maxlength="10" oninput="onlynuber(this)" name="" id="txtMobileNumber">
+                    //     </div>
+                    // }
+                    if (ViewBag.card_number_flag == "1")
+                    {
+                        <div class="col-md-6 mb-3">
+                            <label for="txtCardNumber" class="form-label">Card Number</label>
+                            <input type="text" class="form-control mandatory" name="Card Number" id="txtCardNumber">
+                        </div>
+                    }
+                    if (ViewBag.laptop_flag == "1")
+                    {
+                        <div class="col-md-6 mb-3">
+                            <label for="txtLaptopNumber" class="form-label">
+                                Laptop Serial Number
+                            </label>
+                            <input type="text" class="form-control mandatory text-uppercase" name="Laptop Serial Number" id="txtLaptopNumber">
+                        </div>
+                    }
+                    
+                    if (ViewBag.temperature_flag == "1")
+                    {
+                        <div class="col-md-6 mb-3">
+                            <label for="Temperature" class="form-label">
+                                Temperature in Celsius / Fahrenheit
+                            </label>
+                            <input type="text" class="form-control mandatory" name="Temperature" id="txttemperature">
+                        </div>
+                    }
+                    if (ViewBag.vehicle_flag == "1")
+                    {
+                        <div class="col-md-6 mb-3">
+                            <label for="Vechicle" class="form-label">
+                                Vehicle Number
+                            </label>
+                            <input type="text" class="form-control mandatory" name="Vechicle" id="Vechicle">
+                        </div>
+                    }
+                    if (ViewBag.additional_details_flag == "1")
+                    {
+
+                        <div class="col-md-6 mb-3">
+                            <label for="txtremark" class="form-label">Additional Details (If Any)</label>
+                            <input type="text" class="form-control text-uppercase" name="" id="txtremark">
+                        </div>
+                    }
+
+                    <div class="row m-0 p-0">
+                        @if (ViewBag.visitor_photo_flag == "1")
+                        {
+                            <div class="col-md-6 mb-4">
+                                <!-- <label class="form-label">Upload your photo</label> -->
+                                <div id="preview1" class=" preview-container d-flex align-items-center text-center justify-content-center"
+                                     onclick="openCameraModal('preview1','PhotoImage')">
+                                    <input type="hidden" id="PhotoImage" class="mandatory" name="Photo" value="" />
+                                    <div class="upload-icon"></div>
+
+                                    <div class="upload-plus">+</div>
+                                    <div class="upload-label text-uppercase">Upload your photo</div>
+                                </div>
+                            </div>
+                        }
+                        @if (ViewBag.visitor_id_flag == "1")
+                        {
+
+                            <div class="col-md-6 mb-4">
+                                <!-- <label class="form-label">Upload your Id</label> -->
+                                <div id="preview2" class=" preview-container d-flex align-items-center text-center justify-content-center"
+                                     onclick="openCameraModal('preview2','IdImage')">
+                                    <input type="hidden" id="IdImage" class="mandatory" name="Id Card" value="" />
+                                    <div class="upload-icon"></div>
+                                    <div class="upload-plus">+</div>
+                                    <div class="upload-label text-uppercase">Upload your Id</div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    if (ViewBag.disclaimer_flag == "1")
+                    {
+                        <div class="row">
+                            <div class="col-12 my-3">
+                                <label class="form-control d-flex gap-3">
+                                    <input type="checkbox" id="terms" name="Checked Terms" class="mandatory" style="width: 25px;" />
+                                    <p class="checkbox-text m-0 " style="font-size: smaller;">
+                                        By clicking the checkbox you accept all terms and conditions.
+                                    </p>
+                                </label>
+                            </div>
+                        </div>
+                    }
+                }
+                <div class="col-md-6 my-3">
+                    <button onclick="addNewVisitorfinaly()" class="btn btn-danger form-control">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="cameraModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="cameraModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Take a Photo</h5>
+                <button type="button" class="btn " onclick="switchCamera()"><i class="fa-solid fa-rotate"></i></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        onclick="stopCamera()"></button>
+            </div>
+            <div class="modal-body text-center">
+                <video id="video" width="420" autoplay></video>
+                <canvas id="canvas" style="display: none;"></canvas>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="captureImage()">Capture</button>
+                <button class="btn btn-secondary" data-bs-dismiss="modal"
+                        onclick="stopCamera()">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<script>
+
+    const employees = @Html.Raw(employeeJson);
+    const input1 = document.getElementById("employeeSearch");
+    const inputHid = document.getElementById("txtWhomeMeet");
+    const suggestionBox = document.getElementById("suggestions");
+
+    input1.addEventListener("input", function () {
+        const value = this.value.toLowerCase().trim();
+        console.log(value);
+        suggestionBox.innerHTML = "";
+
+        if (!value) {
+            suggestionBox.style.display = "none";
+            return;
+        }
+
+         const matches = employees.filter(emp =>
+        emp.EmpName.toLowerCase().includes(value));
+
+         const matche1 = employees.filter(emp =>
+        emp.EmpName.toLowerCase()==(value));
+
+        if(matche1.length==0){
+            inputHid.value='';
+        }
+
+        matches.forEach(emp => {
+            const li = document.createElement("li");
+            li.className = "list-group-item";
+            li.innerHTML = `<strong>${emp.EmpName}</strong><br/>
+                            <small>${emp.Designation} — ${emp.Company}</small>`;
+            li.style.cursor = "pointer";
+
+            li.onclick = () => {
+                input1.value = emp.EmpName;
+                inputHid.value=emp.Id;
+                suggestionBox.style.display = "none";
+            };
+
+            suggestionBox.appendChild(li);
+        });
+
+        suggestionBox.style.display = matches.length ? "block" : "none";
+    });
+
+    suggestionBox.addEventListener("click", function (e) {
+        if (!input1.contains(e.target) && !suggestionBox.contains(e.target)) {
+            console.log(e.target);
+            suggestionBox.style.display = "none";
+        }
+    });
+</script>
+<script src="~/js/Invitedvisitor.js" asp-append-version="true"></script>
+
+

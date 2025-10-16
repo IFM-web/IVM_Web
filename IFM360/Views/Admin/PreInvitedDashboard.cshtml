@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "PreInvited Dashboard";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor httpContextAccessor
+
+}
+
+<div class="row px-5">
+   
+    <div class="top-header text-center">
+        <img src="data:image/png;base64,@httpContextAccessor.HttpContext.Session.GetString("Companylogo")" alt="head-logo" class="img-fluid" width="20%">
+    </div>
+    <h3 class="text-center">Todays  Pre Invited Visitors -@DateTime.Today.ToString("dd MMM yyyy")</h3>
+    <div class="row my-3" style="overflow-y:auto">
+        <div class="col-12" >
+            <table class=" table table-striped text-center" >
+                <thead style="background-color:#1E3A5F; color:white;">
+                    <tr>
+                        <th>S.No</th>
+                        <th>Invite Code</th>
+                        <th>Visitor Name</th>
+                        <th>Visitor Phone</th>
+                        <th>Visitor Company</th>
+                        <th>Meeting Time</th>
+                        <th>Host Name</th>
+                        <th>Host Department</th>
+                    </tr>
+                </thead>
+                <tbody id="PrintDiv"></tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="~/js/preinviteddashboard.js"></script>

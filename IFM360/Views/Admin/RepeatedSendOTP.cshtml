@@ -1,0 +1,116 @@
+﻿@{
+    ViewData["Title"] = "Login To Check In ";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+     @inject Microsoft.AspNetCore.Http.IHttpContextAccessor httpContextAccessor
+}
+<style>
+    .otp input {
+        width: 5rem;
+        height: 5rem;
+        font-size: xx-large;
+    }
+</style>
+<div class="row px-5">
+   
+    <div class="top-header text-center mt-5">
+       <img src="data:image/png;base64,@httpContextAccessor.HttpContext.Session.GetString("Companylogo")" alt="head-logo" class="img-fluid" width="20%" >
+    </div>
+    <div class="header text-center">
+        <h2>Please login to proceed to the check-in!</h2>
+
+    </div>
+    <div class="row my-3 px-5">
+        <div class="col-md-6 mx-auto my-4">
+         
+
+            <label for="txtphoneno">Enter Mobile Number </label>
+            <input type="text" oninput="onlynuber(this)" maxlength="10" id="txtphoneno" class="form-control">
+            <input type="hidden" id="otp_varify" value="@httpContextAccessor.HttpContext.Session.GetString("otp_verification_flag")">
+            <button class="btn form-control my-5" onclick="SendOTP()"
+                    style="background-color: #1E3A5F;  color: white;">
+                Continue
+            </button>
+        </div>
+    </div>
+    <!-- Footer work -->
+    <div class="footer">
+        <div class="footer-content text-center mb-4 text-secondary opacity-75">
+            <p class="fs-6 fw-semibold m-0">Powered by <span>IFM360</span></p>
+            <p class="fs-6 fw-semibold m-0">www.ifm360.in</p>
+        </div>
+
+    </div>
+</div>
+<div class="modal fade" id="VarifyModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <h3>Please Verify OTP Sent To Your Number</h3>
+
+                <div class="otp d-flex justify-content-between mt-3 mx-2">
+                    <input type="text" id="otp1" maxlength="1" class="form-control text-center" oninput="handleInput(this)" data-index="1" onkeydown="handleBackspace(this, event)">
+                    <input type="text" id="otp2" maxlength="1" class="form-control text-center" oninput="handleInput(this)" data-index="2" onkeydown="handleBackspace(this, event)">
+                    <input type="text" id="otp3" maxlength="1" class="form-control text-center" oninput="handleInput(this)" data-index="3" onkeydown="handleBackspace(this, event)">
+                    <input type="text" id="otp4" maxlength="1" class="form-control text-center" oninput="handleInput(this)" data-index="4" onkeydown="handleBackspace(this, event)">
+                </div>
+                <p class="text-end mt-2">Haven't received OTP?<a href="#" class="text-danger" id="resendBtn" onclick="Resend()">Resend Code</a></p>
+                <div class="d-flex">
+                    <button onclick="VarifyModalClose()" class="btn form-control mt-2"
+                            style="background-color: red;  color: white;">
+                        Close
+                    </button>
+                    <button onclick="varifyopt()" class="btn form-control mt-2"
+                            style="background-color: #1E3A5F;  color: white;">
+                        Continue
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+    const onlynuber = (e) => {
+        const regex = /^\d+$/;
+        if (!regex.test(e.value)) {
+            e.value = '';
+        }
+
+
+    }
+
+    function handleInput(element) {
+        element.value = element.value.replace(/[^0-9]/g, '');
+
+        if (element.value.length === 1) {
+            let currentIndex = parseInt(element.getAttribute('data-index'));
+            if (currentIndex < 4) {
+                let next = element.nextElementSibling;
+                if (next && next.tagName === "INPUT") {
+                    next.focus();
+                }
+            }
+        }
+    }
+
+    function handleBackspace(element, event) {
+        if (event.key === "Backspace" && element.value === "") {
+            let currentIndex = parseInt(element.getAttribute('data-index'));
+            if (currentIndex > 1) {
+                let prevIndex = currentIndex - 1;
+                let prevInput = document.querySelector(`input[data-index='${prevIndex}']`);
+                if (prevInput) {
+                    prevInput.focus();
+                }
+            }
+        }
+    }
+</script>
+<script src="~/js/repeatotpsend.js"></script>
+
+
+

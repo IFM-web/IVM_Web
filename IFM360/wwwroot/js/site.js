@@ -51,6 +51,18 @@ async function validation() {
 }
 
 
+function Validation() {
+    let msg = "";
+    $(".mandatory").each(function () {
+        if ($(this).val() == "" || $(this).val() == "0") {
+            var name = $(this).attr("name");
+            msg += name + " Required !!\n";
+        }
+    });
+    if ($("#txtWhomeMeet").val() == "" && $("#employeeSearch").val() != "")
+        msg += "Whom to Meet is invalid !!\n"
+    return msg;
+}
 function CreateTableFromArray2(arrItems, divid) {
 
     let col = [];

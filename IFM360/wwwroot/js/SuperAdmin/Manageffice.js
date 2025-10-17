@@ -1,38 +1,35 @@
-﻿$(document).ready(() => {
-   offocelist();
-})
+﻿
+const addOffice = () => {
+    let officeName = $("#txtofficename").val();
+    let Address = $("#txtofficeAddress").val();
+    let State = $("#txtofficState").val();
+    let isSpace = $("#isSpace").val();
 
-const offocelist = () => {
+    var val = Validation();
+    if (val != "") {
+        alert(val);
+        return;
+    }
+ 
     $.ajax({
-        url: localStorage.getItem("Url") + "/SuperAdmin/GetManageOffices",
-        type: "Get",
-        data: {},
+        url: localStorage.getItem("Url") + "/SuperAdmin/addOffice",
+        type: "Post",
+        data: {
+            OfficeName: officeName,
+            Id: $("#HidId").val(),
+            State:State,
+            Address: Address,
+            IsShared: isSpace
+        },
         success: (resp) => {
             var result = JSON.parse(resp);
             console.log(result);
-            let tr = "";
-            $("#content").empty();
-            for (let i in result) {
-                tr += `<tr>
-                <td>${Number(i)+1}</td>
-                <td class="d-none">${result[i].location_id}</td>
-                <td>${result[i].location_name}</td>
-                <td>${result[i].address}</td>
-                <td>${result[i].state_city}</td>
-                <td>${result[i].IsSharedSpace}</td>
-                <td>${result[i].TotalAdmin || 0}</td>
-                <td>${result[i].totalReception || 0}</td>
-                <td>${result[i].creationdate}</td>
-                <td><button  class="btn btn-success">Click Here</button></td>
-                <td><button class="btn btn-success">Click Here</button></td>
-                <td></td>
-                <td> <button class="btn btn-success" onclick="Edit('${result[i].location_id}','${result[i].department_name}')">Edit</button>
-                <button class="btn btn-danger" onclick="DeleteDepartment(${result[i].location_id})">Delete</button></td>
-             
-             </tr>
-                `
+
+            alert(result[0].message);
+            if (result[0].MessageID == 1) {
+                window.location.href = localStorage.getItem("Url") + "/SuperAdmin/ManageOfficesList";
             }
-            $("#content").append(tr);
+         
         },
         error: (error) => {
             console.log(error)
@@ -42,55 +39,7 @@ const offocelist = () => {
     });
 }
 
-const AddDepartment = () => {
-    let deptname = $("#txtDepartment").val();
-   
-    if (deptname == "") {
-        alert("Department Name Required !!")
-        return;
-    }
-    $.ajax({
-        url: localStorage.getItem("Url") + "/AdminArea/InsertDepartment",
-        type: "Post",
-        data: { DeptName: deptname,Id:$("#HidId").val()},
-        success: (resp) => {
-            var result = JSON.parse(resp);
-            console.log(result);
-            alert(result[0].MessageString);
-            clear();
-            DepartmentList();
-        },
-        error: (error) => {
-            console.log(error)
-        }
 
-
-    });
-}
-
-const DeleteDepartment = (Id) => {
-    clear();
-    let val = confirm("Are you sure you want to delete this record?");
-    if (!val) {
-        return;
-    }
-    $.ajax({
-        url: localStorage.getItem("Url") + "/AdminArea/DeleteDepartment",
-        type: "Post",
-        data: { Id: Id },
-        success: (resp) => {
-            var result = JSON.parse(resp);
-            console.log(result);
-            alert(result[0].MessageString);
-            DepartmentList();
-        },
-        error: (error) => {
-            console.log(error)
-        }
-
-
-    });
-}
 
 const Edit = (Id,Name) => {
     $("#HidId").val(Id);

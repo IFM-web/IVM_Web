@@ -1,0 +1,68 @@
+﻿
+@{
+    ViewData["Title"] = "Create Reception";
+    Layout = "~/Views/Shared/_LayoutSuperAdmin.cshtml";
+}
+
+<div class="row px-2 px-md-5">
+    <div class="header my-3">
+        <h3 class="text-center">Manage Reception</h3>
+    </div>
+    <div class="body mb-3">
+
+        <input hidden value="@ViewBag.locationId" id="locationId" />
+        <div class="form">
+            <div class="row mt-4">
+                <div class="col-md-6 mb-3">
+                    <input hidden id="HidId" value="0" />
+                    <label>Reception Email Id</label>
+                    <input type="text" id="EmailId" name="Reception Email Id" class="form-control mandatory">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Reception Mobile Number</label>
+                    <input type="text" id="mobnumber" name="Reception Mobile Number" class="form-control mandatory">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Reception First Name</label>
+                    <input type="text" id="firstname" name="Reception First Name" class="form-control mandatory">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Reception Last Name</label>
+                    <input type="text" id="lastname" name="Reception Last Name" class="form-control mandatory">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Reception Password</label>
+                    <input type="password" id="Password" name="Password" class="form-control mandatory">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Confirm Password</label>
+                    <input type="text" id="ConfirmPassword" name="Confirm Password" class="form-control mandatory">
+                </div>
+
+
+                <div class="col-md-12 mt-4">
+
+                    <a href="~/SuperAdmin/CreateReceptionList/@ViewBag.locationId" id="btnname" class="btn btn-myColor">Show All Reception  Logins</a>
+
+                    <button onclick="addReception()" id="btnname" class="btn btn-myColor">Create Reception  Login</button>
+
+                </div>
+            </div>
+            @* <p>Below is the list of Department-</p>
+            <hr /> *@
+
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<script src="~/js/SuperAdmin/CreateReception.js" asp-append-version="true"></script>
+<script src="~/js/site.js"></script>
+

@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewData["Title"] = "Department";
+    ViewData["Title"] = "Manage Offices";
     Layout = "~/Views/Shared/_LayoutSuperAdmin.cshtml";
 }
 
@@ -66,6 +66,9 @@
         color: #111827;
         margin-top: 6px;
     }
+    table thead th{
+        word-wrap:none;
+    }
 
     .form label {
         font-weight: bold;
@@ -73,21 +76,18 @@
 </style>
 <div class="row px-2 px-md-5">
     <div class="header my-3">
-        <h3 class="text-center">Manage Department</h3>
+        <h3 class="text-center">Manage Offices</h3>
     </div>
     <div class="body mb-3">
-      
+
 
         <div class="form">
             <div class="row mt-4">
 
-              
-                    <div class="col-md-4 mb-3">
-                        <input hidden id="HidId" value="0" />
-                    <input type="text" id="txtDepartment" name="Department Name" placeholder="Department Name" class="form-control mandatory">
-                    </div>
-                    <div class="col-md-4">
-                    <button onclick="AddDepartment()" id="btnname" class="btn btn-danger">Add New Department</button>
+
+                <div class="col-md-4 mt-4">
+                    <a href="~/SuperAdmin/ManageOffices" id="btnname" class="btn btn-myColor">Add New Office</a>
+                    <p>Total No. of Reception Logins : @ViewBag.Total</p>
                 </div>
             </div>
             @* <p>Below is the list of Department-</p>
@@ -97,20 +97,29 @@
                     <thead class="table-dark">
                         <tr>
                             <th>S. No.</th>
-                           <th>Department Name</th>
+                            <th>Office Name</th>
+                            <th>Office Address</th>
+                            <th>Office State</th>
+                            <th>Is Shared Space</th>
+                            <th>Admin Logins</th>
+                            <th>Reception Logins</th>
+                            <th>Creation Date</th>
+                            <th>Manage Admin</th>
+                            <th>Manage Reception</th>
+                            <th>Manage Company</th>
                             <th colspan="2">Action</th>
                         </tr>
                     </thead>
                     <tbody id="content">
                     </tbody>
                 </table>
+            </div>
         </div>
     </div>
-</div>
 
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
- <script src="~/js/SuperAdmin/SuperAdminDepartment.js" asp-append-version="true"></script> 
+ <script src="~/js/SuperAdmin/ManageOfficesList.js" asp-append-version="true"></script> 
 
 
 

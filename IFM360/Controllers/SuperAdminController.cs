@@ -1,17 +1,14 @@
-﻿using Humanizer;
-using IFM360.AuthFilter;
+﻿using IFM360.AuthFilter;
 using IFM360.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.VisualBasic;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using Newtonsoft.Json;
 using NPOI.HSSF.UserModel;
-using NPOI.SS.Formula.Functions;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 namespace IFM360.Controllers
@@ -57,8 +54,36 @@ namespace IFM360.Controllers
         }
 
 
-        public IActionResult Company() => View();
-        public IActionResult CompanyList() => View();
+        public IActionResult Company(string Id)
+        {
+            ViewBag.locationId = Id;
+            return View();
+        }
+        public IActionResult CompanyList(string Id)
+        {
+            ViewBag.locationId = Id;
+            return View();
+        }
+
+        public JsonResult GetCompanylist(string Id)
+        {
+            var ds = _db.Fill($"exec udp_GetCompanyLogins '{Emailid}','{Password}',@LocationID='{Id}'");
+            return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+        }
+
+        public JsonResult AddCompany(string Id, int locatinid, string CName, string CAddress)
+        {
+            var ds = _db.Fill($"exec udp_AddCompany  @BranchEmail='{Emailid}',@BranchPassword='{Password}',@CName='{CName}',@CAddress='{CAddress}',@LocationAutoID='{locatinid}'");
+            return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+        }
+
+        public JsonResult DeleteCompany(string Id)
+        {
+            var ds = _db.Fill($"exec udp_DeleteCompany '{Emailid}','{Password}',@CmpId='{Id}'");
+            return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+        }
+
+
         public IActionResult CreateAdmin(string Id)
         {
             ViewBag.locationId = Id;
@@ -74,6 +99,9 @@ namespace IFM360.Controllers
             var ds = _db.Fill($"exec udp_DeleteAdmin '{Emailid}','{Password}',@BranchId='{Id}'");
             return Json(JsonConvert.SerializeObject(ds.Tables[0]));
         }
+
+
+
         [HttpPost]
        public JsonResult AddAdmin(string Id, int locatinid, string Mobile,string AdminName,string AdminEmail,string AdminPassword)
         {
@@ -91,6 +119,8 @@ namespace IFM360.Controllers
             var ds = _db.Fill($"exec udp_AddAdmin  @BranchEmail='{Emailid}',@BranchPassword='{Password}',@AName='{AdminName}',@AEmail='{AdminEmail}',@AMobile='{Mobile}',@APwd='{_db.GetMD5(AdminPassword)}',@DefaultOTP='{DefaultOTP}',@LocationAutoID='{locatinid}'");
             return Json(JsonConvert.SerializeObject(ds.Tables[0]));
         }
+
+    
         public IActionResult CreateAdminList(string Id) {
             ViewBag.locationId = Id;
           return View();
@@ -112,6 +142,28 @@ namespace IFM360.Controllers
             return Json(JsonConvert.SerializeObject(ds.Tables[0]));
         }
 
+        public JsonResult DeleteReception(string Id)
+        {
+            var ds = _db.Fill($"exec udp_DeleteRecption '{Emailid}','{Password}',@BranchId='{Id}'");
+            return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+        }
+
+        public JsonResult AddReception(string Id, int locatinid, string Mobile, string Name, string RecEmail, string RecPassword)
+        {
+            string no = Mobile;
+            string[] numberArray = new string[no.Length];
+            int counter = 0;
+
+            for (int i = 0; i < no.Length; i++)
+            {
+                numberArray[i] = no.Substring(counter, 1);
+                counter++;
+            }
+            string DefaultOTP;
+            DefaultOTP = Convert.ToString(numberArray[0]) + Convert.ToString(numberArray[1]) + Convert.ToString(numberArray[8]) + Convert.ToString(numberArray[9]);
+            var ds = _db.Fill($"exec udp_AddReception  @BranchEmail='{Emailid}',@BranchPassword='{Password}',@AName='{Name}',@AEmail='{RecEmail}',@AMobile='{Mobile}',@APwd='{_db.GetMD5(RecPassword)}',@DefaultOTP='{DefaultOTP}',@LocationAutoID='{locatinid}'");
+            return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+        }
 
         public IActionResult ManageOfficesList()
         {
@@ -135,12 +187,48 @@ namespace IFM360.Controllers
 
         public JsonResult GetManageVisitorType()
         {
-            var ds = _db.Fill($"exec udp_GetLocations '{Emailid}','{Password}'");
+            var ds = _db.Fill($"exec udp_GetVisitorTypeSA '{Emailid}','{Password}'");
+            return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+        }
+        [HttpPost]
+        public JsonResult AddVisitorType(int Id, string Name)
+        {
+            var ds = _db.Fill($"exec udp_InsertVisitorType '{Emailid}','{Password}','{Name}'");
             return Json(JsonConvert.SerializeObject(ds.Tables[0]));
         }
         public IActionResult ManageNotifications()
         {
             return View();
+        }
+
+
+        public JsonResult GetManageNotifications()
+        {
+            var ds = _db.Fill($"exec udp_GetNotificationsSA '{Emailid}','{Password}'");
+            return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+        }
+
+
+        public JsonResult DeleteNotifications(string Id)
+        {
+            var ds = _db.Fill($"exec udp_DeleteNotification '{Emailid}','{Password}',@AutoID='{Id}'");
+            return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+        }
+
+        [HttpPost]
+        public JsonResult addNotifications(string Id,string Notifications)
+        {
+            if (Id == "0")
+            {
+                var ds = _db.Fill($"exec udp_InsertNotification @BranchEmail='{Emailid}',@BranchPassword='{Password}',@Notification='{Notifications}'");
+                return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+            }
+            else
+            {
+                var ds = _db.Fill($"exec udp_UpdateNotification @BranchEmail='{Emailid}',@BranchPassword='{Password}',@Notification='{Notifications}',@AutoID='{Id}'");
+                return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+            }
+          
         }
 
         public IActionResult PrintPass(string Id)

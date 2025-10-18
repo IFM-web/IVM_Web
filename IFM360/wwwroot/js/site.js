@@ -219,6 +219,13 @@ function CreateTableFromArray2(arrItems, divid) {
 
 }
 
+const onlynuber = (e) => {
+    const regex = /^\d+$/;
+    if (!regex.test(e.value)) {
+        e.value = '';
+    }
+
+}
 
 
 $('#filterInput').on('keyup', function () {

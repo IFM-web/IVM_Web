@@ -78,13 +78,13 @@
 
         <div class="form">
             <div class="row mt-4">
-
+                <input hidden id="HidId" value="0" />
                 <div class="col-md-12 mb-3">
                     <textarea id="txtNotifications" name="Notifications Details" placeholder="Notifications Details" class="form-control mandatory"></textarea>
                 </div>
 
                 <div class="col-md-4">
-                    <button onclick="AddDepartment()" id="btnname" class="btn btn-danger">Submit Notifications</button>
+                    <button onclick="addNotification()" id="btnname" class="btn btn-danger">Submit Notifications</button>
                 </div>
             </div>
             @* <p>Below is the list of Department-</p>
@@ -107,7 +107,7 @@
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-@* <script src="~/js//AdminArea/Department.js" asp-append-version="true"></script> *@
+<script src="~/js/SuperAdmin/ManageNotification.js" asp-append-version="true"></script>
 
 
 

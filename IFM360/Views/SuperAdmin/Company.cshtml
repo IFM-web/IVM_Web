@@ -5,4 +5,46 @@
 }
 
 
+<div class="row px-2 px-md-5">
+    <div class="header my-3">
+        <h3 class="text-center">Manage Compnay</h3>
+    </div>
+    <div class="body mb-3">
+
+        <input hidden value="@ViewBag.locationId" id="locationId" />
+        <div class="form">
+            <div class="row mt-4">
+                <div class="col-md-6 mb-3">
+                    <input hidden id="HidId" value="0" />
+                    <label>Compnay Name</label>
+                    <input type="text" id="CompnayName" name="Compnay Name" class="form-control mandatory">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Compnay Address</label>
+                    <input type="text" id="CompnayAddress" name="Compnay Address" class="form-control mandatory">
+                </div>
+
+              
+                <div class="col-md-12 mt-4">
+
+                    <a href="~/SuperAdmin/CompanyList/@ViewBag.locationId" id="btnname" class="btn btn-myColor">Show All Compnay  Logins</a>
+
+                    <button onclick="AddCompnay()" id="btnname" class="btn btn-myColor">Create Compnay  Login</button>
+
+                </div>
+            </div>
+            @* <p>Below is the list of Department-</p>
+            <hr /> *@
+
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<script src="~/js/SuperAdmin/Company.js" asp-append-version="true"></script>
+<script src="~/js/site.js"></script>
+
 

@@ -16,12 +16,12 @@
                 <div class="col-md-6 mb-3">
                     <input hidden id="HidId" value="0" />
                     <label>Reception Email Id</label>
-                    <input type="text" id="EmailId" name="Reception Email Id" class="form-control mandatory">
+                    <input type="text" id="RedEmailId" name="Reception Email Id" class="form-control mandatory">
                 </div>
 
                 <div class="col-md-6 mb-3">
                     <label>Reception Mobile Number</label>
-                    <input type="text" id="mobnumber" name="Reception Mobile Number" class="form-control mandatory">
+                    <input type="text" id="mobnumber" oninput="onlynuber(this)"  maxlength="10" name="Reception Mobile Number" class="form-control mandatory">
                 </div>
 
                 <div class="col-md-6 mb-3">
@@ -36,7 +36,7 @@
 
                 <div class="col-md-6 mb-3">
                     <label>Reception Password</label>
-                    <input type="password" id="Password" name="Password" class="form-control mandatory">
+                    <input type="password" id="RecPassword" name="Password" class="form-control mandatory">
                 </div>
 
                 <div class="col-md-6 mb-3">
@@ -49,7 +49,7 @@
 
                     <a href="~/SuperAdmin/CreateReceptionList/@ViewBag.locationId" id="btnname" class="btn btn-myColor">Show All Reception  Logins</a>
 
-                    <button onclick="addReception()" id="btnname" class="btn btn-myColor">Create Reception  Login</button>
+                    <button onclick="AddReception()" id="btnname" class="btn btn-myColor">Create Reception  Login</button>
 
                 </div>
             </div>

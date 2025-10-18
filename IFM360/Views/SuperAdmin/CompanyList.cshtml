@@ -6,3 +6,54 @@
 
 
 
+
+<style>
+
+
+
+    table thead th {
+        word-wrap: none;
+    }
+
+</style>
+<div class="row px-2 px-md-5">
+    <div class="header my-3">
+        <h3 class="text-center">Company Admin </h3>
+    </div>
+    <div class="body mb-3">
+
+
+        <div class="form">
+            <div class="row mt-4">
+
+                <input hidden value="@ViewBag.locationId" id="locationId" />
+
+                <div class="col-md-4 mt-4">
+                    <a href="~/SuperAdmin/Company/@ViewBag.locationId" id="btnname" class="btn btn-myColor">Create New Company Login</a>
+
+                </div>
+            </div>
+            @* <p>Below is the list of Department-</p>
+            <hr /> *@
+            <div class="table-responsive shadow-sm rounded mt-4">
+                <table class="table table-striped align-middle text-center">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>S. No.</th>
+                            <th>Company Name </th>
+                            <th>Company Address </th>                 
+                            <th>Creation Date</th>
+
+                            <th colspan="2">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="content">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <script src="~/js/SuperAdmin/ConpanyList.js" asp-append-version="true"></script>

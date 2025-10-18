@@ -1,10 +1,10 @@
-﻿const addAdmin = () => {
-    let AdminEmailId = $("#AdminEmailId").val();
+﻿const AddReception = () => {
+    let EmailId = $("#RedEmailId").val();
     let locationId = $("#locationId").val();
-    let adminmobnumber = $("#adminmobnumber").val();
-    let adminfirstname = $("#adminfirstname").val();
-    let adminlastname = $("#adminlastname").val();
-    let adminPassword = $("#adminPassword").val();
+    let mobnumber = $("#mobnumber").val();
+    let firstname = $("#firstname").val();
+    let lastname = $("#lastname").val();
+    let RecPassword = $("#RecPassword").val();
     let ConfirmPassword = $("#ConfirmPassword").val();
 
     var val = Validation();
@@ -14,15 +14,15 @@
     }
 
     $.ajax({
-        url: localStorage.getItem("Url") + "/SuperAdmin/AddAdmin",
+        url: localStorage.getItem("Url") + "/SuperAdmin/AddReception",
         type: "Post",
         data: {
             locatinid: locationId,
             Id: $("#HidId").val(),
-            Mobile: adminmobnumber,
-            AdminName: adminfirstname + " " + adminlastname,
-            AdminEmail: AdminEmailId,
-            AdminPassword:ConfirmPassword
+            Mobile: mobnumber,
+            Name: firstname + " " + lastname,
+            RecEmail: EmailId,
+            RecPassword:ConfirmPassword
         },
         success: (resp) => {
             var result = JSON.parse(resp);
@@ -30,7 +30,7 @@
 
             alert(result[0].message);
             if (result[0].MessageID == 1) {
-                window.location.href = localStorage.getItem("Url") + "/SuperAdmin/CreateAdminList/" + locationId;
+                window.location.href = localStorage.getItem("Url") + "/SuperAdmin/CreateReceptionList/" + locationId;
             }
 
         },

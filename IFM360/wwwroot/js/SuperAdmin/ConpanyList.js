@@ -1,10 +1,10 @@
 ﻿$(document).ready(() => {
-    offocelist();
+    GetCompanylist();
 })
 
-const offocelist = () => {
+const GetCompanylist = () => {
     $.ajax({
-        url: localStorage.getItem("Url") + "/SuperAdmin/GetReceptionlist",
+        url: localStorage.getItem("Url") + "/SuperAdmin/GetCompanylist",
         type: "Get",
         data: { Id: $("#locationId").val()},
         success: (resp) => {
@@ -13,15 +13,16 @@ const offocelist = () => {
             let tr = "";
             $("#content").empty();
             for (let i in result) {
+                var obj = result[i];
                 tr += `<tr>
                 <td>${Number(i) + 1}</td>
              
-                <td>${result[i].admin_name}</td>
-                <td>${result[i].admin_email}</td>
-                <td>${result[i].admin_mobile}</td>
-                <td>${result[i].created_date}</td>        
-                <td> <button class="btn btn-success" onclick="Edit('${result[i].location_id}','${result[i].department_name}')">Edit</button>
-                <button class="btn btn-danger" onclick="DeleteAdmin(${result[i].branch_id})">Delete</button></td>
+                <td>${result[i].SubCompanyName}</td>
+                <td>${result[i].SubCompanyAddress}</td>
+         
+                <td>${result[i].Creationdate}</td>        
+                <td> <button class="btn btn-success" onclick="Edit('${result[i].SubCompanyId}',`${JSON.stringify({ ...result[i] })}`)">Edit</button>
+                <button class="btn btn-danger" onclick="DeleteCompany(${result[i].SubCompanyId})">Delete</button></td>
              
              </tr>
                 `
@@ -36,21 +37,21 @@ const offocelist = () => {
     });
 }
 
-const DeleteAdmin = (Id) => {
+const DeleteCompany = (Id) => {
 
     let val = confirm("Are you sure you want to delete this record?");
     if (!val) {
         return;
     }
     $.ajax({
-        url: localStorage.getItem("Url") + "/SuperAdmin/DeleteReception",
+        url: localStorage.getItem("Url") + "/SuperAdmin/DeleteCompany",
         type: "Get",
         data: { Id: Id },
         success: (resp) => {
             var result = JSON.parse(resp);
             console.log(result);
             alert(result[0].MessageString);
-            offocelist();
+            GetCompanylist();
         },
         error: (error) => {
             console.log(error)
@@ -58,4 +59,9 @@ const DeleteAdmin = (Id) => {
 
 
     });
+}
+
+const Edit = (LocationId, e) => {
+
+    console.log(e.SubCompanyId);
 }

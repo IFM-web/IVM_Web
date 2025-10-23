@@ -1,10 +1,21 @@
 ﻿
 @{
-    ViewData["Title"] = "Employee BulkUpload";
+    ViewData["Title"] = "Employee BulkUpload-SuperAdmin";
     Layout = "~/Views/Shared/_LayoutSuperAdmin.cshtml";
 }
 
+<style>
+    #ExcelBtn {
+        height: max-content;
+        color: white;
+        background: #dc133f;
+        border: none;
+        border-radius: 6px;
+        padding: 5px 8px;
+    }
 
+    }
+</style>
 <div class="row px-2 px-md-5">
     <div class="header my-3">
         <h3 class="text-center">Manage Employee</h3>
@@ -16,6 +27,19 @@
          
             <div class="row mt-4">
                 <div class="col-md-4">
+                    <label>Select Office</label>
+                    <select class="form-control" id="office">
+                        <option value="0">Select</option>
+                        @if (ViewBag.office is not null)
+                        {
+                            foreach (var e in ViewBag.office as IList<SelectListItem>)
+                            {
+                                <option value="@e.Value">@e.Text</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-md-4">
                     <label>Excel File</label>
                     <input class="form-control" id="excelFile" type="file" />
                 </div>
@@ -23,18 +47,18 @@
                 <div class="col-md-12 mt-4">
                     <a href="~/Sample/Employee_Sample_Data_Sheet.xlsx" class="btn btn-myColor">Download Sample Employee Data</a>
                     <button class="btn btn-myColor" id="btnexcelsave">Upload Employee Data</button>
-                    <a href="~/AdminArea/EmployeeList" class="btn btn-myColor">Close</a>
+                    <a href="~/SuperAdmin/EmployeeList" class="btn btn-myColor">Close</a>
                 </div>
 
             </div>
-       
-            <div id="FormatDiv" class="mt-4"></div>
+            <div id="list" class="row mt-3"></div>
+            <div id="FormatDiv"></div>
         </div>
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+<script src="~/js/SuperAdmin/ManageEmployeeUpload.js" asp-append-version="true"></script>
 
-<script src="~/js/AdminArea/EmployeeUpload.js" asp-append-version="true"></script>
-<script src="~/js/site.js"></script>
 
 

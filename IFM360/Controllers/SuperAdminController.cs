@@ -1,5 +1,6 @@
 ﻿using IFM360.AuthFilter;
 using IFM360.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using Newtonsoft.Json;
@@ -312,13 +313,15 @@ namespace IFM360.Controllers
 
             return View();
         }
+      
         public IActionResult EmployeeBulkUpload()
         {
+            ViewBag.office = _db.PopulateDropDown(@$"exec udp_GetOffices '{Emailid}','{Password}'");
             return View();
         }
         public JsonResult GetEmployeeList()
         {
-            var ds = _db.Fill($"udp_GetEmployeeListAdmin '{Emailid}','{Password}'");
+            var ds = _db.Fill($"udp_GetEmployeeListSA '{Emailid}','{Password}'");
             return Json(JsonConvert.SerializeObject(ds.Tables[0]));
         }
         public JsonResult GetEmployeesingle(string Id)
@@ -362,7 +365,7 @@ namespace IFM360.Controllers
 
         public JsonResult GetVisitorHistoryList(string Sdate, string Edate)
         {
-            var ds = _db.Fill($"exec udp_GetVisitorHistoryAdmin @BranchEmail='{Emailid}',@BranchPassword='{Password}',@FromDate='{Sdate}',@ToDate='{Edate}'");
+            var ds = _db.Fill($"exec udp_GetVisitorHistory @BranchEmail='{Emailid}',@BranchPassword='{Password}',@FromDate='{Sdate}',@ToDate='{Edate}'");
             return Json(JsonConvert.SerializeObject(ds.Tables[0]));
 
         }
@@ -373,7 +376,7 @@ namespace IFM360.Controllers
         }
         public JsonResult GetPreInviteVisitor(string Sdate, string Edate)
         {
-            var ds = _db.Fill($"exec udp_GetPreInviteVisitorsAdmin @BranchEmail='{Emailid}',@BranchPassword='{Password}',@FromDate='{Sdate}',@ToDate='{Edate}'");
+            var ds = _db.Fill($"exec udp_GetPreInviteV2VisitorsAdmin @BranchEmail='{Emailid}',@BranchPassword='{Password}',@FromDate='{Sdate}',@ToDate='{Edate}'");
             return Json(JsonConvert.SerializeObject(ds.Tables[0]));
 
         }
@@ -412,7 +415,7 @@ namespace IFM360.Controllers
         #region Report
         public IActionResult Report()
         {
-            var ds = _db.Fill($"udp_GetReportValuesAdmin '{Emailid}','{Password}'");
+            var ds = _db.Fill($"udp_GetReportValues '{Emailid}','{Password}'");
             ViewBag.CheckIn = ds.Tables[0].Rows[0]["CheckIN"];
             ViewBag.CheckOut = ds.Tables[0].Rows[0]["CheckOut"];
             ViewBag.Accepted = ds.Tables[0].Rows[0]["Accepted"];
@@ -424,19 +427,19 @@ namespace IFM360.Controllers
 
         public JsonResult GetAllVisitorDataAdmin()
         {
-            var ds = _db.Fill($"udp_GetAllVisitorDataAdmin '{Emailid}','{Password}'");
+            var ds = _db.Fill($"udp_GetAllVisitorData '{Emailid}','{Password}'");
             return Json(JsonConvert.SerializeObject(ds.Tables[0]));
         }
 
         public JsonResult GetDateRangeVisitorListAdmin(string Sdate, string Edate)
         {
-            var ds = _db.Fill($"udp_GetDateRangeVisitorListAdmin @BranchEmail='{Emailid}',@BranchPassword='{Password}',@FromDate='{Sdate}',@ToDate='{Edate}'");
+            var ds = _db.Fill($"udp_GetDateRangeVisitorList @BranchEmail='{Emailid}',@BranchPassword='{Password}',@FromDate='{Sdate}',@ToDate='{Edate}'");
             return Json(JsonConvert.SerializeObject(ds.Tables[0]));
         }
 
         public JsonResult GetReportDetailsAdmin(string Sdate, string Edate, int Flag)
         {
-            var ds = _db.Fill($"udp_GetReportDetailsAdmin @BranchEmail='{Emailid}',@BranchPassword='{Password}',@FromDate='{Sdate}',@ToDate='{Edate}',@Flag='{Flag}'");
+            var ds = _db.Fill($"udp_GetReportDetails @BranchEmail='{Emailid}',@BranchPassword='{Password}',@FromDate='{Sdate}',@ToDate='{Edate}',@Flag='{Flag}'");
             return Json(JsonConvert.SerializeObject(ds.Tables[0]));
         }
         #endregion
@@ -466,7 +469,7 @@ namespace IFM360.Controllers
             {
                 string sqlQuery = string.Empty;
                 IFormFile file = Request.Form.Files[0];
-                string Type = Request.Form["Type"].ToString();
+                string Office = Request.Form["office"].ToString();
                 string folderName = "wwwroot";
                 string extension = Path.GetExtension(file.FileName);
                 string filename = Path.GetFileNameWithoutExtension(file.FileName);
@@ -548,7 +551,7 @@ namespace IFM360.Controllers
 
                             cmd.Parameters.AddWithValue("@BranchEmail", Emailid);
                             cmd.Parameters.AddWithValue("@BranchPassword", Password);
-                            cmd.Parameters.AddWithValue("@Office", HttpContext.Session.GetString("locationid"));
+                            cmd.Parameters.AddWithValue("@Office", Office);
                             filename = file.FileName;
                             if (System.IO.File.Exists(fullPath))
                             {

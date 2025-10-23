@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewData["Title"] = "EmployeeList";
+    ViewData["Title"] = "Employee List";
     Layout = "~/Views/Shared/_LayoutSuperAdmin.cshtml";
 }
 
@@ -16,8 +16,8 @@
             <div class="row mt-4">
 
                 <div class="col-md-12">
-                    <a href="~/AdminArea/Employee" class="btn btn-myColor">Add New Employee</a>
-                    <a href="~/AdminArea/EmployeeBulkUpload" class="btn btn-myColor">Bulk Upload EmployeeData</a>
+                    <a href="~/SuperAdmin/Employee" class="btn btn-myColor">Add New Employee</a>
+                    <a href="~/SuperAdmin/EmployeeBulkUpload" class="btn btn-myColor">Bulk Upload EmployeeData</a>
                 </div>
 
             </div>
@@ -30,7 +30,7 @@
                     <button class="btn btn-myColor float-end" onclick="Downloadexcel()">Download Employee Data</button>
             </div>
             </div>
-            <div class="table-responsive shadow-sm rounded ">
+            <div class="table-responsive shadow-sm rounded  mt-2">
                 <table id="data-table" class="table table-striped align-middle text-center">
                     <thead class="table-dark">
                         <tr>
@@ -54,4 +54,4 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
-@* <script src="~/js/AdminArea/EmployeeList.js" asp-append-version="true"></script> *@
+ <script src="~/js/SuperAdmin/ManageEmployeeList.js" asp-append-version="true"></script>

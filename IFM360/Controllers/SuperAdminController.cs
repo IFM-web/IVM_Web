@@ -55,9 +55,10 @@ namespace IFM360.Controllers
         }
 
 
-        public IActionResult Company(string Id)
+        public IActionResult Company(string Id,string? ComId)
         {
             ViewBag.locationId = Id;
+            ViewBag.ComId = ComId;
             return View();
         }
         public IActionResult CompanyList(string Id)
@@ -72,10 +73,24 @@ namespace IFM360.Controllers
             return Json(JsonConvert.SerializeObject(ds.Tables[0]));
         }
 
+        public JsonResult GetCompanysingle(string Id)
+        {
+            var ds = _db.Fill($"exec udp_GetSingleCompanyLogins @Id='{Id}'");
+            return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+        }
+
         public JsonResult AddCompany(string Id, int locatinid, string CName, string CAddress)
         {
-            var ds = _db.Fill($"exec udp_AddCompany  @BranchEmail='{Emailid}',@BranchPassword='{Password}',@CName='{CName}',@CAddress='{CAddress}',@LocationAutoID='{locatinid}'");
-            return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+            if (Id == null)
+            {
+                var ds = _db.Fill($"exec udp_AddCompany  @BranchEmail='{Emailid}',@BranchPassword='{Password}',@CName='{CName}',@CAddress='{CAddress}',@LocationAutoID='{locatinid}'");
+                return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+            }
+            else
+            {
+                var ds = _db.Fill($"exec udp_UpdateCompany  @BranchEmail='{Emailid}',@BranchPassword='{Password}',@CmpName='{CName}',@CmpAddress='{CAddress}',@CmpAutoID='{locatinid}',@CmpId='{Id}'");
+                return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+            }
         }
 
         public JsonResult DeleteCompany(string Id)
@@ -127,8 +142,9 @@ namespace IFM360.Controllers
           return View();
         }
 
-        public IActionResult CreateReception(string Id) {
+        public IActionResult CreateReception(string Id,string? RecpId) {
             ViewBag.locationId = Id;
+            ViewBag.RecpId = RecpId;
             return View(); }
         public IActionResult CreateReceptionList(string Id) {
             ViewBag.locationId = Id;
@@ -140,6 +156,12 @@ namespace IFM360.Controllers
         public JsonResult GetReceptionlist(string Id)
         {
             var ds = _db.Fill($"exec udp_GetReceptionLogins '{Emailid}','{Password}',@LocationID='{Id}'");
+            return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+        }
+
+        public JsonResult GetReceptionSingle(string Id)
+        {
+            var ds = _db.Fill($"exec udp_GetSingleReceptionLogins @Id='{Id}'");
             return Json(JsonConvert.SerializeObject(ds.Tables[0]));
         }
 
@@ -155,15 +177,26 @@ namespace IFM360.Controllers
             string[] numberArray = new string[no.Length];
             int counter = 0;
 
-            for (int i = 0; i < no.Length; i++)
+          
+            
+            if(Id is not null)
             {
-                numberArray[i] = no.Substring(counter, 1);
-                counter++;
+                for (int i = 0; i < no.Length; i++)
+                {
+                    numberArray[i] = no.Substring(counter, 1);
+                    counter++;
+                }
+                string DefaultOTP;
+                DefaultOTP = Convert.ToString(numberArray[0]) + Convert.ToString(numberArray[1]) + Convert.ToString(numberArray[8]) + Convert.ToString(numberArray[9]);
+                var ds = _db.Fill($"exec udp_AddReception  @BranchEmail='{Emailid}',@BranchPassword='{Password}',@AName='{Name}',@AEmail='{RecEmail}',@AMobile='{Mobile}',@APwd='{_db.GetMD5(RecPassword)}',@DefaultOTP='{DefaultOTP}',@LocationAutoID='{locatinid}'");
+                return Json(JsonConvert.SerializeObject(ds.Tables[0]));
             }
-            string DefaultOTP;
-            DefaultOTP = Convert.ToString(numberArray[0]) + Convert.ToString(numberArray[1]) + Convert.ToString(numberArray[8]) + Convert.ToString(numberArray[9]);
-            var ds = _db.Fill($"exec udp_AddReception  @BranchEmail='{Emailid}',@BranchPassword='{Password}',@AName='{Name}',@AEmail='{RecEmail}',@AMobile='{Mobile}',@APwd='{_db.GetMD5(RecPassword)}',@DefaultOTP='{DefaultOTP}',@LocationAutoID='{locatinid}'");
-            return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+            else
+            {
+                var ds = _db.Fill($"exec udp_UpdateReception  @BranchEmail='{Emailid}',@BranchPassword='{Password}',@RecpName='{Name}',@RecpEmail='{RecEmail}',@RecpMobile='{Mobile}',@RecpId='{Id}'");
+                return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+            }
+          
         }
 
         public IActionResult ManageOfficesList()

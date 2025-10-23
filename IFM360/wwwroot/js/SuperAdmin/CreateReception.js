@@ -1,4 +1,37 @@
-﻿const AddReception = () => {
+﻿
+$(document).ready(() => {
+    if ($("#HidId").val() != "")
+        GetRecp();
+});
+
+const GetRecp = () => {
+    $.ajax({
+        url: localStorage.getItem("Url") + "/SuperAdmin/GetReceptionSingle",
+        type: "Get",
+        data: { Id: $("#HidId").val() },
+        success: (resp) => {
+            var result = JSON.parse(resp);
+
+            var name = result[0].admin_name.split(" ");
+            $("#RedEmailId").val(result[0].admin_email)
+            $("#mobnumber").val(result[0].admin_mobile)
+            $("#firstname").val(name[0])
+            $("#lastname").val(name[1])
+     
+
+            $("#btnsave").text("Update Compnay  Login")
+        },
+        error: (error) => {
+            console.log(error)
+        }
+
+
+    });
+}
+
+
+
+const AddReception = () => {
     let EmailId = $("#RedEmailId").val();
     let locationId = $("#locationId").val();
     let mobnumber = $("#mobnumber").val();
@@ -40,4 +73,12 @@
 
 
     });
+}
+
+var onlynuber = (e) => {
+    const regex = /^\d+$/;
+    if (!regex.test(e.value)) {
+        e.value = '';
+    }
+
 }

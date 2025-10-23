@@ -219,7 +219,7 @@ function CreateTableFromArray2(arrItems, divid) {
 
 }
 
-const onlynuber = (e) => {
+var onlynuber = (e) => {
     const regex = /^\d+$/;
     if (!regex.test(e.value)) {
         e.value = '';

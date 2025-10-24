@@ -1,15 +1,12 @@
 ﻿using IFM360.AuthFilter;
 using IFM360.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using Newtonsoft.Json;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 namespace IFM360.Controllers
@@ -25,6 +22,8 @@ namespace IFM360.Controllers
             Emailid = httpContextAccessor.HttpContext.Session.GetString("EmailId");
             Password = _db.GetMD5(httpContextAccessor.HttpContext.Session.GetString("Password"));
         }
+
+        #region Dashboard
         public IActionResult Home()
         {
 
@@ -35,6 +34,14 @@ namespace IFM360.Controllers
         {
             var ds = _db.Fill($"udp_GetAdminDashboard '{Emailid}','{Password}'");
             return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+        }
+
+        #endregion
+
+        #region Manage Offices
+        public IActionResult ManageOffices()
+        {
+            return View();
         }
         [HttpPost]
         public JsonResult addOffice(string Id,string OfficeName,string State,string Address, string IsShared)
@@ -48,13 +55,11 @@ namespace IFM360.Controllers
             var ds = _db.Fill($"exec udp_DeleteOffice @BranchEmail='{Emailid}',@BranchPassword='{Password}',@OfficeId='{Id}'");
             return Json(JsonConvert.SerializeObject(ds.Tables[0]));
         }
-            
-        public IActionResult ManageOffices()
-        {
-            return View();
-        }
 
 
+        #endregion
+
+        #region Manage Company
         public IActionResult Company(string Id,string? ComId)
         {
             ViewBag.locationId = Id;
@@ -99,7 +104,9 @@ namespace IFM360.Controllers
             return Json(JsonConvert.SerializeObject(ds.Tables[0]));
         }
 
+        #endregion
 
+        #region Manage Admin
         public IActionResult CreateAdmin(string Id)
         {
             ViewBag.locationId = Id;
@@ -115,7 +122,6 @@ namespace IFM360.Controllers
             var ds = _db.Fill($"exec udp_DeleteAdmin '{Emailid}','{Password}',@BranchId='{Id}'");
             return Json(JsonConvert.SerializeObject(ds.Tables[0]));
         }
-
 
 
         [HttpPost]
@@ -142,6 +148,9 @@ namespace IFM360.Controllers
           return View();
         }
 
+        #endregion
+
+        #region Manage Reception
         public IActionResult CreateReception(string Id,string? RecpId) {
             ViewBag.locationId = Id;
             ViewBag.RecpId = RecpId;
@@ -198,6 +207,9 @@ namespace IFM360.Controllers
           
         }
 
+        #endregion
+
+        #region Manage office
         public IActionResult ManageOfficesList()
         {
             var ds = _db.Fill($"exec udp_GetLoginCounter '{Emailid}','{Password}'");
@@ -211,13 +223,18 @@ namespace IFM360.Controllers
          return  Json(JsonConvert.SerializeObject(ds.Tables[0]));
         }
 
-      
+        #endregion
 
+        #region Manage Visitor Type
         public IActionResult ManageVisitorType()
         {
             return View();
         }
-
+        public JsonResult DeleteVisitorType(string Id)
+        {
+            var ds = _db.Fill($"exec udp_DeleteVisitorType @AutoId='{Id}'");
+            return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+        }
         public JsonResult GetManageVisitorType()
         {
             var ds = _db.Fill($"exec udp_GetVisitorTypeSA '{Emailid}','{Password}'");
@@ -229,12 +246,13 @@ namespace IFM360.Controllers
             var ds = _db.Fill($"exec udp_InsertVisitorType '{Emailid}','{Password}','{Name}'");
             return Json(JsonConvert.SerializeObject(ds.Tables[0]));
         }
+        #endregion
+
+        #region Manage Notifications
         public IActionResult ManageNotifications()
         {
             return View();
         }
-
-
         public JsonResult GetManageNotifications()
         {
             var ds = _db.Fill($"exec udp_GetNotificationsSA '{Emailid}','{Password}'");
@@ -264,6 +282,7 @@ namespace IFM360.Controllers
           
         }
 
+        #endregion
         public IActionResult PrintPass(string Id)
         {
 
@@ -306,11 +325,36 @@ namespace IFM360.Controllers
             var ds = _db.Fill($"udp_UpdateFlags @BranchEmail='{Emailid}',@BranchPassword='{Password}',@Flag='{Flag}',@Value='{Value}'");
             return Json(JsonConvert.SerializeObject(ds.Tables[0]));
         }
-        public IActionResult Department()
-        {
+     
+        
 
+        #region Employee 
+        public IActionResult EmployeeList()=> View();
+      
+      
+        public IActionResult EmployeeBulkUpload()
+        {
+            ViewBag.office = _db.PopulateDropDown(@$"exec udp_GetOffices '{Emailid}','{Password}'");
             return View();
         }
+        [HttpPost]
+        public JsonResult DeleteEmployee(string Id)
+        {
+            var ds = _db.Fill($"exec udp_DeleteEmployee @BranchEmail='{Emailid}',@BranchPassword='{Password}',@EmpId='{Id}'");
+            return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+
+        }
+        public JsonResult GetEmployeeList()
+        {
+            var ds = _db.Fill($"udp_GetEmployeeListSA '{Emailid}','{Password}'");
+            return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+        }
+        public JsonResult GetEmployeesingle(string Id)
+        {
+            var ds = _db.Fill($"udp_GetSingleEmployee '{Id}'");
+            return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+        }
+
         public IActionResult Employee(string? Id)
         {
             ViewBag.Department = _db.PopulateDropDown($"exec udp_Department  @BranchEmail='{Emailid}',@BranchPassword='{Password}'");
@@ -332,36 +376,13 @@ namespace IFM360.Controllers
             }
 
         }
-        [HttpPost]
-        public JsonResult DeleteEmployee(string Id)
-        {
-            var ds = _db.Fill($"exec udp_DeleteEmployee @BranchEmail='{Emailid}',@BranchPassword='{Password}',@EmpId='{Id}'");
-            return Json(JsonConvert.SerializeObject(ds.Tables[0]));
 
-        }
 
-        public IActionResult EmployeeList()
-        {
+        #endregion
 
-            return View();
-        }
-      
-        public IActionResult EmployeeBulkUpload()
-        {
-            ViewBag.office = _db.PopulateDropDown(@$"exec udp_GetOffices '{Emailid}','{Password}'");
-            return View();
-        }
-        public JsonResult GetEmployeeList()
-        {
-            var ds = _db.Fill($"udp_GetEmployeeListSA '{Emailid}','{Password}'");
-            return Json(JsonConvert.SerializeObject(ds.Tables[0]));
-        }
-        public JsonResult GetEmployeesingle(string Id)
-        {
-            var ds = _db.Fill($"udp_GetSingleEmployee '{Id}'");
-            return Json(JsonConvert.SerializeObject(ds.Tables[0]));
-        }
-
+        #region DepartMent
+        public IActionResult Department()=> View();
+     
         public JsonResult GetDepartmentList()
         {
             var ds = _db.Fill($"exec udp_GetDepartmentListSA @BranchEmail='{Emailid}',@BranchPassword='{Password}'");
@@ -390,6 +411,10 @@ namespace IFM360.Controllers
             return Json(JsonConvert.SerializeObject(ds.Tables[0]));
 
         }
+
+        #endregion
+
+        #region Visitor History
         public IActionResult AdminVisitorHistory()
         {
             return View();
@@ -401,6 +426,9 @@ namespace IFM360.Controllers
             return Json(JsonConvert.SerializeObject(ds.Tables[0]));
 
         }
+
+        #endregion
+
         #region PreInvite Visitor
         public IActionResult PreInviteVisitor()
         {
@@ -480,10 +508,10 @@ namespace IFM360.Controllers
             var ds = _db.Fill($"exec [udp_CheckOutDashboard] @BranchEmail='{Emailid}',@BranchPassword='{Password}',@Visitorid='{Id.Trim()}'");
             return Json(JsonConvert.SerializeObject(ds.Tables[0]));
         }
-        public IActionResult Setting()
-        {
-            return View();
-        }
+        public IActionResult Setting()=> View();
+       
+
+        #region Change Password
 
         [HttpPost]
         public JsonResult ChangePassword(string oldPassword, string NewPassword)
@@ -493,6 +521,7 @@ namespace IFM360.Controllers
             return Json(JsonConvert.SerializeObject(ds.Tables[0]));
         }
 
+        #endregion
 
         [HttpPost]
         public ActionResult ImportExcel()

@@ -21,7 +21,7 @@ const offocelist = () => {
                 <td>${result[i].admin_email}</td>
                 <td>${result[i].admin_mobile}</td>
                 <td>${result[i].created_date}</td>        
-                <td> <a class="btn btn-success" href="/SuperAdmin/CreateReception?Id=${id}&&RecpId=${result[i].branch_id}"  >Edit</a>
+                <td> <a class="btn btn-success" href="${localStorage.getItem("Url")}/SuperAdmin/CreateReception?Id=${id}&&RecpId=${result[i].branch_id}"  >Edit</a>
                 <button class="btn btn-danger" onclick="DeleteAdmin(${result[i].branch_id})">Delete</button></td>
              
              </tr>

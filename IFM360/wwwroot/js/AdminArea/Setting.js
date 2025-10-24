@@ -6,7 +6,7 @@ $(document).ready(() => {
 
 const listOfFlags = () => {
     $.ajax({
-        url: "/AdminArea/GetAppSettingBranchFlags",
+        url: localStorage.getItem("Url") + "/AdminArea/GetAppSettingBranchFlags",
         type: "Get",
         data: {},
         success: (res) => {
@@ -67,7 +67,7 @@ const ChangePassword = () => {
        
     
     $.ajax({
-        url: "/AdminArea/ChangePassword",
+        url: localStorage.getItem("Url") + "/AdminArea/ChangePassword",
         type: "post",
         data: {
             oldPassword: $("#CurrentPassword").val(),
@@ -92,7 +92,7 @@ const ChangePassword = () => {
 const UpdateFlags = (Flag, val) => {
     let value = val.checked == true ? 1 : 0; 
     $.ajax({
-        url: "/AdminArea/UpdateFlags",
+        url: localStorage.getItem("Url") + "/AdminArea/UpdateFlags",
         type: "post",
         data: {
             Flag: Flag,

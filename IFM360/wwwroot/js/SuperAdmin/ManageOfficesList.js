@@ -23,9 +23,9 @@ const offocelist = () => {
                 <td>${result[i].TotalAdmin || 0}</td>
                 <td>${result[i].totalReception || 0}</td>
                 <td>${result[i].creationdate}</td>
-                <td><a href="/SuperAdmin/CreateAdminList/${result[i].location_id}"  class="btn btn-success">Click Here</a></td>
-                <td><a href="/SuperAdmin/CreateReceptionList/${result[i].location_id}"  class="btn btn-success">Click Here</a></td>
-                <td><a href="/SuperAdmin/CompanyList?Id=${result[i].location_id}"  class="btn btn-success">Click Here</a></td>         
+                <td><a href="${localStorage.getItem("Url")}/SuperAdmin/CreateAdminList/${result[i].location_id}"  class="btn btn-success">Click Here</a></td>
+                <td><a href="${localStorage.getItem("Url")}/SuperAdmin/CreateReceptionList/${result[i].location_id}"  class="btn btn-success">Click Here</a></td>
+                <td><a href="${localStorage.getItem("Url")}/SuperAdmin/CompanyList?Id=${result[i].location_id}"  class="btn btn-success">Click Here</a></td>         
           
                 <td> <button class="btn btn-success" onclick="Edit('${result[i].location_id}','${result[i].department_name}')">Edit</button>
                 <button class="btn btn-danger" onclick="DeleteOffice(${result[i].location_id})">Delete</button></td>

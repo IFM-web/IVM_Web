@@ -194,18 +194,18 @@ const addNewVisitorfinaly = async () => {
 
     formData.append("VisitorMobile", $("#phoneno").val());
     formData.append("VisitorName", $("#txtname").val());
-    formData.append("VisitorCompany", $("#txtcompany").val());
-    formData.append("HostEmpID", $("#txtWhomeMeet").val());
-    formData.append("HostName", $("#employeeSearch").val());
-    formData.append("VisitorCardNo", $("#txtCardNumber").val() == undefined ? null : $("#txtCardNumber").val());
-    formData.append("Remarks", $("#txtremark").val());
+    formData.append("VisitorCompany", $("#txtcompany").val() == undefined ? '' : $("#txtcompany").val());
+    formData.append("HostEmpID", $("#txtWhomeMeet").val() == undefined ? '' : $("#txtWhomeMeet").val());
+    formData.append("HostName", $("#employeeSearch").val() == undefined ? '' : $("#employeeSearch").val());
+    formData.append("VisitorCardNo", $("#txtCardNumber").val() == undefined ? '' : $("#txtCardNumber").val());
+    formData.append("Remarks", $("#txtremark").val() == undefined ? '' : $("#txtremark").val());
     formData.append("PurposeOfVisit", $("#Purposetovisit").val());
-    formData.append("VisitorIDImageBase64", $("#idimage").val() == undefined ? null : $("#idimage").val().replace("data:image/png;base64,", ''));
-    formData.append("VisitorPhotoImageBase64", $("#photoimage").val() == undefined ? null : $("#photoimage").val().replace("data:image/png;base64,",''));
+    formData.append("VisitorIDImageBase64", $("#idimage").val() == undefined ? '' : $("#idimage").val().replace("data:image/png;base64,", ''));
+    formData.append("VisitorPhotoImageBase64", $("#photoimage").val() == undefined ? '' : $("#photoimage").val().replace("data:image/png;base64,",''));
     formData.append("VisitorType", $("#typeofvisitor").val());
     formData.append("Temperature", $("#txttemperature").val());
-    formData.append("LaptopSNo", $("#txtLaptopNumber").val() == undefined ? null : $("#txtLaptopNumber").val());
-    formData.append("VehicleNo", $("#Vechicle").val());
+    formData.append("LaptopSNo", $("#txtLaptopNumber").val() == undefined ? '' : $("#txtLaptopNumber").val());
+    formData.append("VehicleNo", $("#Vechicle").val() == undefined ? '' : $("#Vechicle").val());
     formData.append("EmailId", $("#EmailId").val());
     formData.append("Password", $("#Password").val());
 
@@ -248,13 +248,13 @@ const addNewVisitorfinaly = async () => {
 }
 
 
-const onlynuber = (e) => {
-    const regex = /^\d+$/;
-    if (!regex.test(e.value)) {
-        e.value = '';
-    }
+//const onlynuber = (e) => {
+//    const regex = /^\d+$/;
+//    if (!regex.test(e.value)) {
+//        e.value = '';
+//    }
 
-}
+//}
 
 const typeofvisitor = async () => {
     let EmailId = $("#EmailId").val();

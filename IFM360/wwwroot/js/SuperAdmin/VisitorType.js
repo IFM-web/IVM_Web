@@ -1,8 +1,8 @@
 ﻿$(document).ready(() => {
-    VisitorType();
+    GetVisitorType();
 })
 
-const VisitorType = () => {
+const GetVisitorType = () => {
     $.ajax({
         url: localStorage.getItem("Url") + "/SuperAdmin/GetManageVisitorType",
         type: "Get",
@@ -16,6 +16,7 @@ const VisitorType = () => {
                 tr += `<tr>
                 <td>${Number(i)+1}</td>           
                 <td>${result[i].TypeOfVisitor}</td>
+                <td><button onclick="DeleteType('${result[i].AutoId}')" class="btn btn-danger">Delete</button></td>
             
              
              </tr>
@@ -46,7 +47,7 @@ const AddVisitorType = () => {
             var result = JSON.parse(resp);        
             alert(result[0].MessageString);
             $("#VisitorType").val('')
-            VisitorType();
+            GetVisitorType();
         },
         error: (error) => {
             console.log(error)
@@ -56,39 +57,27 @@ const AddVisitorType = () => {
     });
 }
 
-//const DeleteDepartment = (Id) => {
-//    clear();
-//    let val = confirm("Are you sure you want to delete this record?");
-//    if (!val) {
-//        return;
-//    }
-//    $.ajax({
-//        url: localStorage.getItem("Url") + "/SuperAdmin/DeleteDepartment",
-//        type: "Post",
-//        data: { Id: Id },
-//        success: (resp) => {
-//            var result = JSON.parse(resp);
-//            console.log(result);
-//            alert(result[0].MessageString);
-//            DepartmentList();
-//        },
-//        error: (error) => {
-//            console.log(error)
-//        }
+const DeleteType = (Id) => {
+
+    let val = confirm("Are you sure you want to delete this record?");
+    if (!val) {
+        return;
+    }
+    $.ajax({
+        url: localStorage.getItem("Url") + "/SuperAdmin/DeleteVisitorType",
+        type: "Get",
+        data: { Id: Id },
+        success: (resp) => {
+            var result = JSON.parse(resp);
+            console.log(result);
+            alert(result[0].MessageString);
+            GetVisitorType();
+        },
+        error: (error) => {
+            console.log(error)
+        }
 
 
-//    });
-//}
+    });
+}
 
-//const Edit = (Id,Name) => {
-//    $("#HidId").val(Id);
-//    $("#txtDepartment").val(Name)
-//    $("#btnname").text('Update Department')
-//}
-
-
-//const clear = () => {
-//    $("#HidId").val(0);
-//    $("#txtDepartment").val('')
-//    $("#btnname").text('Add New Department')
-//}

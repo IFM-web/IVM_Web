@@ -12,6 +12,7 @@
     <div class="body mb-3">
 
         <input hidden value="@ViewBag.locationId" id="locationId" />
+        <input hidden value="@ViewBag.ComId" id="ComId" />
         <div class="form">
             <div class="row mt-4">
                 <div class="col-md-6 mb-3">
@@ -30,7 +31,7 @@
 
                     <a href="~/SuperAdmin/CompanyList/@ViewBag.locationId" id="btnname" class="btn btn-myColor">Show All Compnay  Logins</a>
 
-                    <button onclick="AddCompnay()" id="btnname" class="btn btn-myColor">Create Compnay  Login</button>
+                    <button onclick="AddCompnay()" id="btnsave" class="btn btn-myColor">Create Compnay  Login</button>
 
                 </div>
             </div>
@@ -45,6 +46,6 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 <script src="~/js/SuperAdmin/Company.js" asp-append-version="true"></script>
-<script src="~/js/site.js"></script>
+
 
 

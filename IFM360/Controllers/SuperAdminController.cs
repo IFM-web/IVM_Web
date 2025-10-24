@@ -1,5 +1,6 @@
 ﻿using IFM360.AuthFilter;
 using IFM360.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using Newtonsoft.Json;
@@ -54,9 +55,10 @@ namespace IFM360.Controllers
         }
 
 
-        public IActionResult Company(string Id)
+        public IActionResult Company(string Id,string? ComId)
         {
             ViewBag.locationId = Id;
+            ViewBag.ComId = ComId;
             return View();
         }
         public IActionResult CompanyList(string Id)
@@ -71,10 +73,24 @@ namespace IFM360.Controllers
             return Json(JsonConvert.SerializeObject(ds.Tables[0]));
         }
 
+        public JsonResult GetCompanysingle(string Id)
+        {
+            var ds = _db.Fill($"exec udp_GetSingleCompanyLogins @Id='{Id}'");
+            return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+        }
+
         public JsonResult AddCompany(string Id, int locatinid, string CName, string CAddress)
         {
-            var ds = _db.Fill($"exec udp_AddCompany  @BranchEmail='{Emailid}',@BranchPassword='{Password}',@CName='{CName}',@CAddress='{CAddress}',@LocationAutoID='{locatinid}'");
-            return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+            if (Id == null)
+            {
+                var ds = _db.Fill($"exec udp_AddCompany  @BranchEmail='{Emailid}',@BranchPassword='{Password}',@CName='{CName}',@CAddress='{CAddress}',@LocationAutoID='{locatinid}'");
+                return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+            }
+            else
+            {
+                var ds = _db.Fill($"exec udp_UpdateCompany  @BranchEmail='{Emailid}',@BranchPassword='{Password}',@CmpName='{CName}',@CmpAddress='{CAddress}',@CmpAutoID='{locatinid}',@CmpId='{Id}'");
+                return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+            }
         }
 
         public JsonResult DeleteCompany(string Id)
@@ -126,8 +142,9 @@ namespace IFM360.Controllers
           return View();
         }
 
-        public IActionResult CreateReception(string Id) {
+        public IActionResult CreateReception(string Id,string? RecpId) {
             ViewBag.locationId = Id;
+            ViewBag.RecpId = RecpId;
             return View(); }
         public IActionResult CreateReceptionList(string Id) {
             ViewBag.locationId = Id;
@@ -142,6 +159,12 @@ namespace IFM360.Controllers
             return Json(JsonConvert.SerializeObject(ds.Tables[0]));
         }
 
+        public JsonResult GetReceptionSingle(string Id)
+        {
+            var ds = _db.Fill($"exec udp_GetSingleReceptionLogins @Id='{Id}'");
+            return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+        }
+
         public JsonResult DeleteReception(string Id)
         {
             var ds = _db.Fill($"exec udp_DeleteRecption '{Emailid}','{Password}',@BranchId='{Id}'");
@@ -150,19 +173,29 @@ namespace IFM360.Controllers
 
         public JsonResult AddReception(string Id, int locatinid, string Mobile, string Name, string RecEmail, string RecPassword)
         {
-            string no = Mobile;
-            string[] numberArray = new string[no.Length];
-            int counter = 0;
-
-            for (int i = 0; i < no.Length; i++)
+         
+            
+            if(Id is null)
             {
-                numberArray[i] = no.Substring(counter, 1);
-                counter++;
+                string no = Mobile;
+                string[] numberArray = new string[no.Length];
+                int counter = 0;
+                for (int i = 0; i < no.Length; i++)
+                {
+                    numberArray[i] = no.Substring(counter, 1);
+                    counter++;
+                }
+                string DefaultOTP;
+                DefaultOTP = Convert.ToString(numberArray[0]) + Convert.ToString(numberArray[1]) + Convert.ToString(numberArray[8]) + Convert.ToString(numberArray[9]);
+                var ds = _db.Fill($"exec udp_AddReception  @BranchEmail='{Emailid}',@BranchPassword='{Password}',@AName='{Name}',@AEmail='{RecEmail}',@AMobile='{Mobile}',@APwd='{_db.GetMD5(RecPassword)}',@DefaultOTP='{DefaultOTP}',@LocationAutoID='{locatinid}'");
+                return Json(JsonConvert.SerializeObject(ds.Tables[0]));
             }
-            string DefaultOTP;
-            DefaultOTP = Convert.ToString(numberArray[0]) + Convert.ToString(numberArray[1]) + Convert.ToString(numberArray[8]) + Convert.ToString(numberArray[9]);
-            var ds = _db.Fill($"exec udp_AddReception  @BranchEmail='{Emailid}',@BranchPassword='{Password}',@AName='{Name}',@AEmail='{RecEmail}',@AMobile='{Mobile}',@APwd='{_db.GetMD5(RecPassword)}',@DefaultOTP='{DefaultOTP}',@LocationAutoID='{locatinid}'");
-            return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+            else
+            {
+                var ds = _db.Fill($"exec udp_UpdateReception  @BranchEmail='{Emailid}',@BranchPassword='{Password}',@RecpName='{Name}',@RecpEmail='{RecEmail}',@RecpMobile='{Mobile}',@RecpId='{Id}'");
+                return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+            }
+          
         }
 
         public IActionResult ManageOfficesList()
@@ -312,13 +345,15 @@ namespace IFM360.Controllers
 
             return View();
         }
+      
         public IActionResult EmployeeBulkUpload()
         {
+            ViewBag.office = _db.PopulateDropDown(@$"exec udp_GetOffices '{Emailid}','{Password}'");
             return View();
         }
         public JsonResult GetEmployeeList()
         {
-            var ds = _db.Fill($"udp_GetEmployeeListAdmin '{Emailid}','{Password}'");
+            var ds = _db.Fill($"udp_GetEmployeeListSA '{Emailid}','{Password}'");
             return Json(JsonConvert.SerializeObject(ds.Tables[0]));
         }
         public JsonResult GetEmployeesingle(string Id)
@@ -362,7 +397,7 @@ namespace IFM360.Controllers
 
         public JsonResult GetVisitorHistoryList(string Sdate, string Edate)
         {
-            var ds = _db.Fill($"exec udp_GetVisitorHistoryAdmin @BranchEmail='{Emailid}',@BranchPassword='{Password}',@FromDate='{Sdate}',@ToDate='{Edate}'");
+            var ds = _db.Fill($"exec udp_GetVisitorHistory @BranchEmail='{Emailid}',@BranchPassword='{Password}',@FromDate='{Sdate}',@ToDate='{Edate}'");
             return Json(JsonConvert.SerializeObject(ds.Tables[0]));
 
         }
@@ -373,7 +408,7 @@ namespace IFM360.Controllers
         }
         public JsonResult GetPreInviteVisitor(string Sdate, string Edate)
         {
-            var ds = _db.Fill($"exec udp_GetPreInviteVisitorsAdmin @BranchEmail='{Emailid}',@BranchPassword='{Password}',@FromDate='{Sdate}',@ToDate='{Edate}'");
+            var ds = _db.Fill($"exec udp_GetPreInviteV2VisitorsAdmin @BranchEmail='{Emailid}',@BranchPassword='{Password}',@FromDate='{Sdate}',@ToDate='{Edate}'");
             return Json(JsonConvert.SerializeObject(ds.Tables[0]));
 
         }
@@ -412,7 +447,7 @@ namespace IFM360.Controllers
         #region Report
         public IActionResult Report()
         {
-            var ds = _db.Fill($"udp_GetReportValuesAdmin '{Emailid}','{Password}'");
+            var ds = _db.Fill($"udp_GetReportValues '{Emailid}','{Password}'");
             ViewBag.CheckIn = ds.Tables[0].Rows[0]["CheckIN"];
             ViewBag.CheckOut = ds.Tables[0].Rows[0]["CheckOut"];
             ViewBag.Accepted = ds.Tables[0].Rows[0]["Accepted"];
@@ -424,19 +459,19 @@ namespace IFM360.Controllers
 
         public JsonResult GetAllVisitorDataAdmin()
         {
-            var ds = _db.Fill($"udp_GetAllVisitorDataAdmin '{Emailid}','{Password}'");
+            var ds = _db.Fill($"udp_GetAllVisitorData '{Emailid}','{Password}'");
             return Json(JsonConvert.SerializeObject(ds.Tables[0]));
         }
 
         public JsonResult GetDateRangeVisitorListAdmin(string Sdate, string Edate)
         {
-            var ds = _db.Fill($"udp_GetDateRangeVisitorListAdmin @BranchEmail='{Emailid}',@BranchPassword='{Password}',@FromDate='{Sdate}',@ToDate='{Edate}'");
+            var ds = _db.Fill($"udp_GetDateRangeVisitorList @BranchEmail='{Emailid}',@BranchPassword='{Password}',@FromDate='{Sdate}',@ToDate='{Edate}'");
             return Json(JsonConvert.SerializeObject(ds.Tables[0]));
         }
 
         public JsonResult GetReportDetailsAdmin(string Sdate, string Edate, int Flag)
         {
-            var ds = _db.Fill($"udp_GetReportDetailsAdmin @BranchEmail='{Emailid}',@BranchPassword='{Password}',@FromDate='{Sdate}',@ToDate='{Edate}',@Flag='{Flag}'");
+            var ds = _db.Fill($"udp_GetReportDetails @BranchEmail='{Emailid}',@BranchPassword='{Password}',@FromDate='{Sdate}',@ToDate='{Edate}',@Flag='{Flag}'");
             return Json(JsonConvert.SerializeObject(ds.Tables[0]));
         }
         #endregion
@@ -466,7 +501,7 @@ namespace IFM360.Controllers
             {
                 string sqlQuery = string.Empty;
                 IFormFile file = Request.Form.Files[0];
-                string Type = Request.Form["Type"].ToString();
+                string Office = Request.Form["office"].ToString();
                 string folderName = "wwwroot";
                 string extension = Path.GetExtension(file.FileName);
                 string filename = Path.GetFileNameWithoutExtension(file.FileName);
@@ -548,7 +583,7 @@ namespace IFM360.Controllers
 
                             cmd.Parameters.AddWithValue("@BranchEmail", Emailid);
                             cmd.Parameters.AddWithValue("@BranchPassword", Password);
-                            cmd.Parameters.AddWithValue("@Office", HttpContext.Session.GetString("locationid"));
+                            cmd.Parameters.AddWithValue("@Office", Office);
                             filename = file.FileName;
                             if (System.IO.File.Exists(fullPath))
                             {

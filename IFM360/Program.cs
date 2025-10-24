@@ -9,7 +9,6 @@ DbConnect.ConnectionString = builder.Configuration.GetConnectionString("connect"
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(op =>
 {
-
     op.IdleTimeout = TimeSpan.FromDays(30);  
     op.Cookie.HttpOnly = true;
     op.Cookie.IsEssential = true;

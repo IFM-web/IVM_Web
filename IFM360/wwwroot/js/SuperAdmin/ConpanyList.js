@@ -3,10 +3,11 @@
 })
 
 const GetCompanylist = () => {
+    var id = $("#locationId").val();
     $.ajax({
         url: localStorage.getItem("Url") + "/SuperAdmin/GetCompanylist",
         type: "Get",
-        data: { Id: $("#locationId").val()},
+        data: { Id: id },
         success: (resp) => {
             var result = JSON.parse(resp);
             console.log(result);
@@ -21,7 +22,7 @@ const GetCompanylist = () => {
                 <td>${result[i].SubCompanyAddress}</td>
          
                 <td>${result[i].Creationdate}</td>        
-                <td> <button class="btn btn-success" onclick="Edit('${result[i].SubCompanyId}',`${JSON.stringify({ ...result[i] })}`)">Edit</button>
+                <td> <a class="btn btn-success" href="/SuperAdmin/Company?Id=${id}&&ComId=${result[i].SubCompanyId}" >Edit</a>
                 <button class="btn btn-danger" onclick="DeleteCompany(${result[i].SubCompanyId})">Delete</button></td>
              
              </tr>

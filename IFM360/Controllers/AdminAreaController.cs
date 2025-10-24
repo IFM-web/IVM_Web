@@ -29,7 +29,11 @@ namespace IFM360.Controllers
         }
         public IActionResult Home()
         {
-           
+            var dataTable = _db.Fill($"exec udp_GetNotificationsSA '{Emailid}','{Password}'").Tables[0];
+
+            ViewBag.combinedMessage = string.Join("  ", dataTable.AsEnumerable()
+                                          .Select(r => r["Notification"].ToString()));
+
             return View();
         }
 

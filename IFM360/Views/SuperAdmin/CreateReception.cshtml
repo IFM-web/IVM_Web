@@ -35,17 +35,22 @@
                     <label>Reception Last Name</label>
                     <input type="text" id="lastname" name="Reception Last Name" class="form-control mandatory">
                 </div>
-
+                @if (ViewBag.RecpId == null)
+                {
+                    
                 <div class="col-md-6 mb-3">
                     <label>Reception Password</label>
                     <input type="password" id="RecPassword" name="Password" class="form-control mandatory">
                 </div>
+                }
+                   @if (ViewBag.RecpId == null)
+                {
 
-                <div class="col-md-6 mb-3">
-                    <label>Confirm Password</label>
-                    <input type="text" id="ConfirmPassword" name="Confirm Password" class="form-control mandatory">
-                </div>
-
+                    <div class="col-md-6 mb-3">
+                        <label>Confirm Password</label>
+                        <input type="text" id="ConfirmPassword" name="Confirm Password" class="form-control mandatory">
+                    </div>
+                }
 
                 <div class="col-md-12 mt-4">
 

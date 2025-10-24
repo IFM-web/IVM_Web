@@ -173,14 +173,13 @@ namespace IFM360.Controllers
 
         public JsonResult AddReception(string Id, int locatinid, string Mobile, string Name, string RecEmail, string RecPassword)
         {
-            string no = Mobile;
-            string[] numberArray = new string[no.Length];
-            int counter = 0;
-
-          
+         
             
-            if(Id is not null)
+            if(Id is null)
             {
+                string no = Mobile;
+                string[] numberArray = new string[no.Length];
+                int counter = 0;
                 for (int i = 0; i < no.Length; i++)
                 {
                     numberArray[i] = no.Substring(counter, 1);

@@ -20,7 +20,7 @@ const offocelist = () => {
                 <td>${result[i].admin_email}</td>
                 <td>${result[i].admin_mobile}</td>
                 <td>${result[i].created_date}</td>        
-                <td> <button class="btn btn-success" onclick="Edit('${result[i].location_id}','${result[i].department_name}')">Edit</button>
+                <td> <a class="btn btn-success" href="/SuperAdmin/CreateAdmin?id=${$("#locationId").val()}&&branch_id=${result[i].branch_id}">Edit</a>
                 <button class="btn btn-danger" onclick="DeleteAdmin(${result[i].branch_id})">Delete</button></td>
              
              </tr>
@@ -59,3 +59,9 @@ const DeleteAdmin = (Id) => {
 
     });
 }
+
+//const Edit = (branch_id) => {
+//    alert("yes");
+//    var locationId=$('#')
+//    window.location.href = '/SuperAdmin/CreateAdmin/' + branch_id;
+//}

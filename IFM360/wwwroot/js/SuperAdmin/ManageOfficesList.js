@@ -67,3 +67,7 @@ const DeleteOffice = (Id) => {
 
     });
 }
+
+const Edit = (id) => {
+    window.location.href = '/SuperAdmin/ManageOffices/' + id;
+}

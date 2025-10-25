@@ -46,8 +46,17 @@ namespace IFM360.Controllers
         [HttpPost]
         public JsonResult addOffice(string Id,string OfficeName,string State,string Address, string IsShared)
         {
-            var ds = _db.Fill($"exec udp_Createbranch @BranchEmail='{Emailid}',@BranchPassword='{Password}',@BName='{OfficeName}',@BState='{State}',@BAddress='{Address}',@IsShared='{IsShared}'");
-            return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+            if (Id == "0")
+            {
+                var ds = _db.Fill($"exec udp_Createbranch @BranchEmail='{Emailid}',@BranchPassword='{Password}',@BName='{OfficeName}',@BState='{State}',@BAddress='{Address}',@IsShared='{IsShared}'");
+                return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+            }
+            else
+            {
+                var ds = _db.Fill($"exec udp_UpdateOffice @BranchEmail='{Emailid}',@BranchPassword='{Password}',@OfficeName='{OfficeName}',@OfficeState='{State}',@OfficeAddress='{Address}',@OfficeShared='{IsShared}',@OfficeId='{Id}'");
+                return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+
+            }
         }
         [HttpPost]
         public JsonResult DeleteOffice(string Id)
@@ -55,15 +64,33 @@ namespace IFM360.Controllers
             var ds = _db.Fill($"exec udp_DeleteOffice @BranchEmail='{Emailid}',@BranchPassword='{Password}',@OfficeId='{Id}'");
             return Json(JsonConvert.SerializeObject(ds.Tables[0]));
         }
+            
+        public IActionResult ManageOffices(string? id)
+        {
+            if (id != "0")
+            {
+                var ds = _db.Fill($"exec [udp_GetSingleLocation] @Id='{id}'");
+                var row = ds.Tables[0].Rows[0];
+                ViewBag.location_id= row["location_id"];
+                ViewBag.location_name = row["location_name"].ToString();
+                ViewBag.address= row["address"].ToString();
+                ViewBag.state_city = row["state_city"].ToString();
+                ViewBag.IsSharedSpace =Convert.ToBoolean(row["IsSharedSpace"]);
+                return View();
+            }
+            ViewBag.location_id = "0";
+            ViewBag.location_name = "";
+            ViewBag.address = "";
+            ViewBag.state_city = "";
+            ViewBag.IsSharedSpace = false;
+            return View();
+        }
 
 
-        #endregion
-
-        #region Manage Company
-        public IActionResult Company(string Id,string? ComId)
+        public IActionResult Company(string Id)
         {
             ViewBag.locationId = Id;
-            ViewBag.ComId = ComId;
+           
             return View();
         }
         public IActionResult CompanyList(string Id)
@@ -106,10 +133,36 @@ namespace IFM360.Controllers
 
         #endregion
 
-        #region Manage Admin
-        public IActionResult CreateAdmin(string Id)
+        public IActionResult CreateAdmin(string Id, string? branch_id)
         {
             ViewBag.locationId = Id;
+            if (branch_id != null)
+            {
+                var ds = _db.Fill($"exec udp_GetSingleAdmin @BranchId='{branch_id}'");
+                var row = ds.Tables[0].Rows[0];
+                ViewBag.admin_email = row["admin_email"].ToString();
+                ViewBag.admin_mobile = row["admin_mobile"].ToString();
+                ViewBag.admin_password = row["admin_password"].ToString();
+                ViewBag.branch_id = row["branch_id"].ToString();
+
+                string fullName = row["admin_name"].ToString();               
+                string[] nameParts = fullName.Split(' ');
+                string firstName = "";
+                string lastName = "";
+                if (nameParts.Length > 0)
+                    firstName = nameParts[0];
+                if (nameParts.Length > 1)
+                    lastName = string.Join(" ", nameParts.Skip(1));
+                ViewBag.FirstName = firstName;
+                ViewBag.LastName = lastName;
+                return View();
+            }
+            ViewBag.admin_email = "";
+            ViewBag.admin_mobile = "";
+            ViewBag.admin_password = "";
+            ViewBag.FirstName = "";
+            ViewBag.LastName = "";
+            ViewBag.branch_id ="0";
             return View();
         }
        public JsonResult GetAdminlist(string Id)
@@ -127,19 +180,30 @@ namespace IFM360.Controllers
         [HttpPost]
        public JsonResult AddAdmin(string Id, int locatinid, string Mobile,string AdminName,string AdminEmail,string AdminPassword)
         {
-            string no = Mobile;
-            string[] numberArray = new string[no.Length];
-            int counter = 0;
-
-            for (int i = 0; i < no.Length; i++)
+            if (Id == "0")
             {
-                numberArray[i] = no.Substring(counter, 1);
-                counter++;
+                string no = Mobile;
+                string[] numberArray = new string[no.Length];
+                int counter = 0;
+
+                for (int i = 0; i < no.Length; i++)
+                {
+                    numberArray[i] = no.Substring(counter, 1);
+                    counter++;
+                }
+                string DefaultOTP;
+                DefaultOTP = Convert.ToString(numberArray[0]) + Convert.ToString(numberArray[1]) + Convert.ToString(numberArray[8]) + Convert.ToString(numberArray[9]);
+            
+                var ds = _db.Fill($"exec udp_AddAdmin  @BranchEmail='{Emailid}',@BranchPassword='{Password}',@AName='{AdminName}',@AEmail='{AdminEmail}',@AMobile='{Mobile}',@APwd='{_db.GetMD5(AdminPassword)}',@DefaultOTP='{DefaultOTP}',@LocationAutoID='{locatinid}'");
+                return Json(JsonConvert.SerializeObject(ds.Tables[0]));
             }
-            string DefaultOTP;
-            DefaultOTP = Convert.ToString(numberArray[0]) + Convert.ToString(numberArray[1]) + Convert.ToString(numberArray[8]) + Convert.ToString(numberArray[9]);
-            var ds = _db.Fill($"exec udp_AddAdmin  @BranchEmail='{Emailid}',@BranchPassword='{Password}',@AName='{AdminName}',@AEmail='{AdminEmail}',@AMobile='{Mobile}',@APwd='{_db.GetMD5(AdminPassword)}',@DefaultOTP='{DefaultOTP}',@LocationAutoID='{locatinid}'");
-            return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+            else
+            {
+                var ds = _db.Fill($"exec udp_UpdateAdmin  @BranchEmail='{Emailid}',@BranchPassword='{Password}',@AdminName='{AdminName}',@AdminEmail='{AdminEmail}',@AdminMobile='{Mobile}',@AdminId='{Id}'");
+                return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+            }
+
+            
         }
 
     

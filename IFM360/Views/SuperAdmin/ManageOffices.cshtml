@@ -12,33 +12,48 @@
 
 
         <div class="form">
+            
+            <input type="hidden" value="@ViewBag.location_id" id="HidId" />
             <div class="row mt-4">
                 <div class="col-md-6 mb-3">
-                    <input hidden id="HidId" value="0" />
+                   
                     <label>Office Name</label>
-                    <input type="text" id="txtofficename" name="office Name" class="form-control mandatory">
+                    <input type="text" id="txtofficename" name="office Name" class="form-control mandatory" value="@ViewBag.location_name">
                 </div>
 
                 <div class="col-md-6 mb-3">                 
                     <label>Office Address</label>
-                    <input type="text" id="txtofficeAddress" name="office Address" class="form-control mandatory">
+                    <input type="text" id="txtofficeAddress" name="office Address" class="form-control mandatory" value="@ViewBag.address">
                 </div>
 
                 <div class="col-md-6 mb-3">              
                     <label>Office State</label>
-                    <input type="text" id="txtofficState" name="office State" class="form-control mandatory">
+                    <input type="text" id="txtofficState" name="office State" class="form-control mandatory" value="@ViewBag.state_city">
                 </div>
 
                 <div class="col-md-6 mb-3">              
                     <label>Is Shared Space</label>
-                    <select id="isSpace" name="Is Shared Space" class="form-control ">
-                        <option value="1">Yes</option>
+                   @*  <select id="isSpace" name="Is Shared Space" class="form-control " >
+                        <option value="1" >Yes</option>
                         <option value="0">No</option>
+                    </select> *@
+                    <select id="isSpace" name="IsSharedSpace" class="form-control">
+                        @if (ViewBag.IsSharedSpace != null && (bool)ViewBag.IsSharedSpace)
+                        {
+                            <option value="1" selected>Yes</option>
+                            <option value="0">No</option>
+                        }
+                        else
+                        {
+                            <option value="1">Yes</option>
+                            <option value="0" selected>No</option>
+                        }
                     </select>
+
                   
                 </div>
                 <div class="col-md-4 mt-4">
-                    <button onclick="addOffice()" id="btnname" class="btn btn-myColor">Add New Office</button>
+                    <button onclick="addOffice()" id="btnname" class="btn btn-myColor"> @((ViewBag.location_id==0) ? "Add New Office":"Update")</button>
                     <a href="~/SuperAdmin/ManageOfficesList" id="btnname" class="btn btn-myColor">Show All Office</a>
                 </div>
             </div>

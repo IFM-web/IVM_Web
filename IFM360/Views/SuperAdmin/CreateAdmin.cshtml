@@ -10,47 +10,49 @@
         <h3 class="text-center">Manage Admin</h3>
     </div>
     <div class="body mb-3">
-
+         
         <input hidden value="@ViewBag.locationId" id="locationId" />
+        <input hidden value="@ViewBag.branch_id" id="HidId" />
         <div class="form">
             <div class="row mt-4">
                 <div class="col-md-6 mb-3">
-                    <input hidden id="HidId" value="0" />
+                    
                     <label>Admin Email Id</label>
-                    <input type="text" id="AdminEmailId" name="Admin Email Id" class="form-control mandatory">
+                    <input type="text" id="AdminEmailId" name="Admin Email Id" class="form-control mandatory" value="@ViewBag.admin_email">
                 </div>
 
                 <div class="col-md-6 mb-3">
                     <label>Admin Mobile Number</label>
-                    <input type="text" id="adminmobnumber" oninput="onlynuber(this)" name="Admin Mobile Number" class="form-control mandatory">
+                    <input type="text" id="adminmobnumber" oninput="onlynuber(this)" name="Admin Mobile Number" class="form-control mandatory" value="@ViewBag.admin_mobile">
                 </div>
 
                 <div class="col-md-6 mb-3">
                     <label>Admin First Name</label>
-                    <input type="text" id="adminfirstname" name="Admin First Name" class="form-control mandatory">
+                    <input type="text" id="adminfirstname" name="Admin First Name" class="form-control mandatory" value="@ViewBag.FirstName">
                 </div>
 
                 <div class="col-md-6 mb-3">
                     <label>Admin Last Name</label>
-                    <input type="text" id="adminlastname" name="Admin Last Name" class="form-control mandatory">
+                    <input type="text" id="adminlastname" name="Admin Last Name" class="form-control mandatory" value="@ViewBag.LastName">
                 </div>
+                @if (ViewBag.admin_password == "")
+                {
+                    <div class="col-md-6 mb-3">
+                        <label>Admin Password</label>
+                        <input type="text" id="adminPassword" name="Admin Password" class="form-control mandatory" >
+                    </div>
 
-                <div class="col-md-6 mb-3">
-                    <label>Admin Password</label>
-                    <input type="text" id="adminPassword" name="Admin Password" class="form-control mandatory">
-                </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Confirm Password</label>
+                        <input type="text" id="ConfirmPassword" name="Confirm Password" class="form-control mandatory" >
+                    </div>
+                }
 
-                <div class="col-md-6 mb-3">
-                    <label>Confirm Password</label>
-                    <input type="text" id="ConfirmPassword" name="Confirm Password" class="form-control mandatory">
-                </div>
-
-               
                 <div class="col-md-12 mt-4">
 
                     <a href="~/SuperAdmin/CreateAdminList/@ViewBag.locationId" id="btnname" class="btn btn-myColor">Show All Admin Logins</a>
 
-                    <button onclick="addAdmin()" id="btnname" class="btn btn-myColor">Create Admin Login</button>
+                    <button onclick="addAdmin()" id="btnname" class="btn btn-myColor">@((ViewBag.branch_id == "0") ?  "Create Admin Login" : "Update Admin Login")</button>
                
                 </div>
             </div>

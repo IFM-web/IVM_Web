@@ -22,7 +22,7 @@ const GetCompanylist = () => {
                 <td>${result[i].SubCompanyAddress}</td>
          
                 <td>${result[i].Creationdate}</td>        
-                <td> <a class="btn btn-success" href="/SuperAdmin/Company?Id=${id}&&ComId=${result[i].SubCompanyId}" >Edit</a>
+                <td> <a class="btn btn-success" href="${localStorage.getItem("Url")}/SuperAdmin/Company?Id=${id}&&ComId=${result[i].SubCompanyId}" >Edit</a>
                 <button class="btn btn-danger" onclick="DeleteCompany(${result[i].SubCompanyId})">Delete</button></td>
              
              </tr>

@@ -1,7 +1,7 @@
 ﻿$(document).ready(() => {
     $('#startDate').val(new Date(Date.now()).toISOString().split('T')[0])
     $('#endDate').val(new Date(Date.now()).toISOString().split('T')[0])
-    //GetDataist();
+   // GetAllData();
 })
 
 

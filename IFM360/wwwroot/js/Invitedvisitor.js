@@ -207,18 +207,18 @@ const addNewVisitorfinaly = async () => {
     const CardNO = $("#txtCardNumber").val();
     formData.append("VisitorMobile", phoneno);
     formData.append("VisitorName", $("#txtname").val());
-    formData.append("VisitorCompany", $("#txtcompany").val());
-    formData.append("HostEmpID", $("#txtWhomeMeet").val());
-    formData.append("HostName", $("#employeeSearch").val());
+    formData.append("VisitorCompany", $("#txtcompany").val() == undefined ? '' : $("#txtcompany").val());
+    formData.append("HostEmpID", $("#txtWhomeMeet").val() == undefined ? '' : $("#txtWhomeMeet").val());
+    formData.append("HostName", $("#employeeSearch").val() == undefined ? '' : $("#employeeSearch").val());
     formData.append("VisitorCardNo", $("#txtCardNumber").val() == undefined ? '' : $("#txtCardNumber").val());
-    formData.append("Remarks", $("#txtremark").val());
-    formData.append("PurposeOfVisit", $("#Purposetovisit").val());
+    formData.append("Remarks", $("#txtremark").val() == undefined ? '' : $("#txtremark").val());
+    formData.append("PurposeOfVisit", $("#Purposetovisit").val() == undefined ? '' : $("#Purposetovisit").val());
     formData.append("VisitorIDImageBase64", $("#IdImage").val() == undefined ? '' : $("#IdImage").val().replace("data:image/png;base64,", ""));
     formData.append("VisitorPhotoImageBase64", $("#PhotoImage").val() == undefined ? '' : $("#PhotoImage").val().replace("data:image/png;base64,", ""));
-    formData.append("VisitorType", $("#typeofvisitor").val());
-    formData.append("Temperature", $("#txttemperature").val());
+    formData.append("VisitorType", $("#typeofvisitor").val() == undefined ? '' : $("#typeofvisitor").val());
+    formData.append("Temperature", $("#txttemperature").val() == undefined ? '' : $("#txttemperature").val());
     formData.append("LaptopSNo", $("#txtLaptopNumber").val() == undefined ? '' : $("#txtLaptopNumber").val());
-    formData.append("VehicleNo", $("#Vechicle").val());
+    formData.append("VehicleNo", $("#Vechicle").val() == undefined ? '' : $("#Vechicle").val());
     formData.append("EmailId", $("#EmailId").val());
     formData.append("Password", $("#Password").val());
 

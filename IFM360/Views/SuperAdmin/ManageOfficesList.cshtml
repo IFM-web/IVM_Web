@@ -85,14 +85,17 @@
             <div class="row mt-4">
 
 
-                <div class="col-md-4 mt-4">
+                <div class="col-md-12 mt-4">
                     <a href="~/SuperAdmin/ManageOffices" id="btnname" class="btn btn-myColor">Add New Office</a>
-                    <p>Total No. of Reception Logins : @ViewBag.Total</p>
+             
+                    <div class="alert alert-success text-center mt-2" role="alert">
+                        <strong> Total No. of Reception Logins : @ViewBag.Total</strong>
+                    </div>
                 </div>
             </div>
             @* <p>Below is the list of Department-</p>
             <hr /> *@
-            <div class="table-responsive shadow-sm rounded mt-4">
+            <div class="table-responsive shadow-sm rounded mt-1">
                 <table class="table table-striped align-middle text-center">
                     <thead class="table-dark">
                         <tr>

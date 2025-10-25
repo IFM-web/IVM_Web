@@ -1,6 +1,7 @@
 ﻿using IFM360.AuthFilter;
 using IFM360.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using System.Data;
 
 namespace IFM360.Controllers
@@ -9,8 +10,13 @@ namespace IFM360.Controllers
     public class EmployeeController : Controller
     {
         CommanClass comman = new CommanClass();
+        db_Utility _db = new db_Utility();
         public async Task<IActionResult> Upcoming()
         {
+            //var dataTable = _db.Fill($"exec udp_GetNotificationsSA '{HttpContext.Session.GetString("EmpEmailId")}','{HttpContext.Session.GetString("Password")}'");
+
+            //ViewBag.combinedMessage = string.Join("  ", dataTable.Tables[0].AsEnumerable()
+            //                              .Select(r => r["Notification"].ToString()));
             return View();
         }
         public async Task<IActionResult> InviteVisitors()

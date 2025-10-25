@@ -74,14 +74,7 @@
 
 
 <script type="text/javascript">
-    const onlynuber = (e) => {
-        const regex = /^\d+$/;
-        if (!regex.test(e.value)) {
-            e.value = '';
-        }
 
-
-    }
 
     function handleInput(element) {
         element.value = element.value.replace(/[^0-9]/g, '');

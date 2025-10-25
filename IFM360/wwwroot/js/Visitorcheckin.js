@@ -180,17 +180,20 @@ const addNewVisitorfinaly = async () => {
         alert(val);
         return;
     }
-    if (!$("#terms").is(":checked")) {
+    var chekbox = $("#terms").val();
+    if (chekbox != undefined) {
+        if (!$("#terms").is(":checked")) {
 
-        alert("You must agree to the terms before submitting.");
-        return;
+            alert("You must agree to the terms before submitting.");
+            return;
+        }
     }
     document.getElementById("loader").style.display = "flex";
     let formData = new FormData();
 
     formData.append("VisitorMobile", sessionStorage.getItem("mob"));
-    formData.append("VisitorName", $("#txtname").val());
-    formData.append("VisitorCompany", $("#txtcompany").val());
+    formData.append("VisitorName", $("#txtname").val() == undefined ? '' : $("#txtname").val());
+    formData.append("VisitorCompany", $("#txtcompany").val() == undefined ? '' : $("#txtcompany").val());
     formData.append("HostEmpID", $("#txtWhomeMeet").val() == undefined ? '' : $("#txtWhomeMeet").val());
     formData.append("HostName", $("#employeeSearch").val() == undefined ? '' : $("#employeeSearch").val());
     formData.append("VisitorCardNo", $("#txtCardNumber").val() == undefined ? '' : $("#txtCardNumber").val());
@@ -236,13 +239,13 @@ const addNewVisitorfinaly = async () => {
 }
 
 
-const onlynuber = (e) => {
-    const regex = /^\d+$/;
-    if (!regex.test(e.value)) {
-        e.value = '';
-    }
+//const onlynuber = (e) => {
+//    const regex = /^\d+$/;
+//    if (!regex.test(e.value)) {
+//        e.value = '';
+//    }
    
-}
+//}
 
 const typeofvisitor = async () => {
     let EmailId = $("#EmailId").val();

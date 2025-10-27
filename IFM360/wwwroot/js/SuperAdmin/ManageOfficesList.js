@@ -69,5 +69,5 @@ const DeleteOffice = (Id) => {
 }
 
 const Edit = (id) => {
-    window.location.href = '/SuperAdmin/ManageOffices/' + id;
+    window.location.href = localStorage.getItem("Url")+'/SuperAdmin/ManageOffices/' + id;
 }

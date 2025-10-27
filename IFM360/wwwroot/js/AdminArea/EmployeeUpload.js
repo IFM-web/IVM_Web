@@ -28,7 +28,8 @@
         processData: false,
         success: function (response) {
             var resp = JSON.parse(response);
-            alert("Data Upload Successfully !!")
+            alert("Data Upload Successfully !!");
+            $("#list").empty();
             if (resp.length > 0) {
                 $("#list").prepend(`<div>
              <span class="mt-4">Below is the list of Employee's whose data is not uploaded due to Department Mismatch-</span>       

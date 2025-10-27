@@ -9,6 +9,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 namespace IFM360.Controllers
 {
     [AuthenticationAdmin]
@@ -39,10 +40,20 @@ namespace IFM360.Controllers
         #endregion
 
         #region Manage Offices
-        public IActionResult ManageOffices()
+
+        public IActionResult ManageOfficesList()
         {
+            var ds = _db.Fill($"exec udp_GetLoginCounter '{Emailid}','{Password}'");
+            ViewBag.Total = ds.Tables[0].Rows[0]["Total"];
             return View();
         }
+
+        public JsonResult GetManageOffices()
+        {
+            var ds = _db.Fill($"exec udp_GetLocations '{Emailid}','{Password}'");
+            return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+        }
+        
         [HttpPost]
         public JsonResult addOffice(string Id,string OfficeName,string State,string Address, string IsShared)
         {
@@ -67,7 +78,7 @@ namespace IFM360.Controllers
             
         public IActionResult ManageOffices(string? id)
         {
-            if (id != "0")
+            if (id != null)
             {
                 var ds = _db.Fill($"exec [udp_GetSingleLocation] @Id='{id}'");
                 var row = ds.Tables[0].Rows[0];
@@ -75,21 +86,25 @@ namespace IFM360.Controllers
                 ViewBag.location_name = row["location_name"].ToString();
                 ViewBag.address= row["address"].ToString();
                 ViewBag.state_city = row["state_city"].ToString();
-                ViewBag.IsSharedSpace =Convert.ToBoolean(row["IsSharedSpace"]);
+                ViewBag.IsSharedSpace =row["IsSharedSpace"].ToString();
                 return View();
             }
-            ViewBag.location_id = "0";
+           
+             ViewBag.location_id = 0;
             ViewBag.location_name = "";
             ViewBag.address = "";
             ViewBag.state_city = "";
-            ViewBag.IsSharedSpace = false;
+            ViewBag.IsSharedSpace = "";
             return View();
         }
 
+        #endregion
 
-        public IActionResult Company(string Id)
+        #region Manage Company
+        public IActionResult Company(string Id,string? ComId)
         {
             ViewBag.locationId = Id;
+            ViewBag.ComId = ComId;
            
             return View();
         }
@@ -133,6 +148,7 @@ namespace IFM360.Controllers
 
         #endregion
 
+        #region Manage Admin
         public IActionResult CreateAdmin(string Id, string? branch_id)
         {
             ViewBag.locationId = Id;
@@ -273,21 +289,6 @@ namespace IFM360.Controllers
 
         #endregion
 
-        #region Manage office
-        public IActionResult ManageOfficesList()
-        {
-            var ds = _db.Fill($"exec udp_GetLoginCounter '{Emailid}','{Password}'");
-            ViewBag.Total = ds.Tables[0].Rows[0]["Total"];
-            return View();
-        }
-
-        public JsonResult GetManageOffices()
-        {
-            var ds = _db.Fill($"exec udp_GetLocations '{Emailid}','{Password}'");
-         return  Json(JsonConvert.SerializeObject(ds.Tables[0]));
-        }
-
-        #endregion
 
         #region Manage Visitor Type
         public IActionResult ManageVisitorType()
@@ -587,6 +588,27 @@ namespace IFM360.Controllers
 
         #endregion
 
+
+        #region Update Company
+
+        [HttpPost]
+        public JsonResult UpdateCompany(string CompanyName,string Base64Data)
+        {
+            var base64Data1 = Regex.Replace(Base64Data, @"^data:image\/[a-zA-Z]+;base64,", "");
+           // if(base64Data1 != "") { }
+            var ds = _db.Fill($"udp_UpdateCompanyLogo @BranchEmail='{Emailid}',@BranchPassword='{Password}',@Name='{CompanyName}',@Logo='{base64Data1}'");
+            return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+
+            //var ds1 = _db.Fill($"udp_UpdateCompanyName @BranchEmail='{Emailid}',@BranchPassword='{Password}',@Name='{CompanyName}',@Logo='{base64Data1}'");
+            //return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+
+        }
+
+        #endregion
+
+
+
+        #region Import Excel
         [HttpPost]
         public ActionResult ImportExcel()
         {
@@ -709,7 +731,7 @@ namespace IFM360.Controllers
             }
 
         }
-
+        #endregion
 
     }
 }

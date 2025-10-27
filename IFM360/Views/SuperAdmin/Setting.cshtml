@@ -1,0 +1,136 @@
+﻿
+@{
+    ViewData["Title"] = "Super Setting";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Visitor Management Settings</title>
+    <link rel="stylesheet" href="styles.css">
+
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background-color: #f9f9f9;
+        }
+
+      
+
+
+     
+     
+
+       
+
+    
+</style>
+</head>
+<body>
+
+
+    <h2 class="mt-4 text-center">Manage Setting</h2>
+
+    <h3 class="mt-4" >Update Company Information</h3>
+
+
+
+        <div class="mt-3">
+            <label>Company Logo</label>
+        <input type="file" class="form-control mandatory" id="fileInput" name="Company Logo" placeholder="Current Password" value="" />
+        </div>
+
+        <div class="mt-3">
+            <label>Company Name</label>
+            <input type="text" class="form-control mandatory" id="CompanyName" name="Company Name" placeholder="Company Name" value="" />
+        </div>
+        <div class="mt-3">
+        <button class="btn btn-danger" id="uploadBtn">Update</button>
+        </div>
+      
+        
+     
+
+     
+
+        
+      
+        <div id="message" class="mt-3"></div>
+
+        <h3>Change Password</h3>
+        <div class="mt-3">
+            <input type="password" class="form-control mandatory" id="CurrentPassword" name="Current Password" placeholder="Current Password" value="" />
+        </div>
+        <div class="mt-3">
+            <input type="password" class="form-control mandatory" id="NewPassword" name="Password" placeholder="Password" value="" />
+        </div>
+        <div class="mt-3">
+            <input type="password" class="form-control mandatory" id="ConfirmPassword" name="Confirm Password" placeholder="Confirm Password" value="" />
+        </div>
+        @* <p class="mt-2" style="color:#dc3545">Password must contain atleast 1 Capital Alphabet, 1 Number, 1 Special Char and Minimum 8 Char long.</p> *@
+        <div class="mt-3">
+            <button class="btn btn-danger" onclick="ChangePassword()">Change Password</button>
+        </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    @section Scripts{
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $('#uploadBtn').click(function () {
+        const file = $('#fileInput')[0].files[0];
+                const Companyname = $('#CompanyName').val();
+        if (!file) {
+            alert("Please select a file");
+            return;
+        }  
+        if (!file.type.startsWith('image/')) {
+                    alert("Only image files are allowed!");
+                    return;
+        }
+                if(!Companyname){
+                              alert("Compnay Name Required!");
+                            return;
+                }
+
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const base64String = e.target.result;
+
+            $.ajax({
+                        url: '@Url.Action("UpdateCompany", "SuperAdmin")',
+                type: 'POST',
+                
+                data: {
+                           CompanyName:Companyname,
+                    Base64Data: base64String
+                },
+                success: function (res) {
+                    var data=JSON.parse(res);
+                    console.log(data);
+                            if(data[0].MessageId ==1){
+                                        $('#fileInput').val('');
+                         $('#CompanyName').val('');
+                            }
+                            alert(data[0].MessageString);
+                    
+                },
+                error: function (err) {
+                    console.error(err);
+                    $('#result').text("Upload failed");
+                }
+            });
+        };
+
+        reader.readAsDataURL(file);
+    });
+    </script>}
+    <script src="~/js/AdminArea/Setting.js" asp-append-version="true"></script>
+</body>
+</html>
+
+

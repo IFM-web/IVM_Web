@@ -38,7 +38,7 @@
                         <option value="0">No</option>
                     </select> *@
                     <select id="isSpace" name="IsSharedSpace" class="form-control">
-                        @if (ViewBag.IsSharedSpace != null && (bool)ViewBag.IsSharedSpace)
+                        @if (ViewBag.IsSharedSpace == "True")
                         {
                             <option value="1" selected>Yes</option>
                             <option value="0">No</option>
@@ -48,17 +48,17 @@
                             <option value="1">Yes</option>
                             <option value="0" selected>No</option>
                         }
+
                     </select>
 
                   
                 </div>
                 <div class="col-md-4 mt-4">
-                    <button onclick="addOffice()" id="btnname" class="btn btn-myColor"> @((ViewBag.location_id==0) ? "Add New Office":"Update")</button>
+                    <button onclick="addOffice()" id="btnname" class="btn btn-myColor"> @((ViewBag.location_id == 0) ? "Add New Office" : "Update Office")</button>
                     <a href="~/SuperAdmin/ManageOfficesList" id="btnname" class="btn btn-myColor">Show All Office</a>
                 </div>
             </div>
-            @* <p>Below is the list of Department-</p>
-            <hr /> *@
+          
             
         </div>
     </div>

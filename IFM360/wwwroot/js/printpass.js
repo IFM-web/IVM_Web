@@ -48,8 +48,10 @@ console.log(data);
 
 
 $("#txtname").text(data.VisitorName);
+$("#txtname1").text(masknameany(data.VisitorName));
 $("#txtcompany").text(data.VisitorCompany);
 $("#txtphone").text(sessionStorage.getItem("mob") == undefined ? data.Phone : sessionStorage.getItem("mob"));
+$("#txtphone1").text(sessionStorage.getItem("mob") == undefined ? masknameany(data.Phone) : masknameany(sessionStorage.getItem("mob")));
 $("#txtmeet").text(data.HostName);
 //$("#txttemp").text(data.Temperature);
 $("#txtlaptop").text(data.LaptopSNo);

@@ -25,7 +25,17 @@
             <input type="hidden" name="" id="otp_verification_flag" value="@ViewBag.otp_verification_flag" />
            
             <label for="txtphoneno">Enter Mobile Number </label>
-            <input type="text" oninput="onlynuber(this)" maxlength="10" id="txtphoneno" class="form-control">
+            @if (ViewBag.Masking_Flag == "1")
+            {
+                <input type="text" maxlength="10" autocomplete="off" oninput="maskname(this)" id="txtphoneno1" class="form-control">
+                <input type="hidden"  maxlength="10" id="txtphoneno" class="form-control">
+            }
+            else
+            {
+                <input type="text" oninput="onlynuber(this)" maxlength="10" id="txtphoneno" class="form-control">
+                
+            }
+           
             <button class="btn form-control my-5" onclick="SendOTP()"
                     style="background-color: #1E3A5F;  color: white;">
                 Continue
@@ -68,10 +78,11 @@
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 
 <script type="text/javascript">
-  
+        
 
     function handleInput(element) {
         element.value = element.value.replace(/[^0-9]/g, '');
@@ -99,8 +110,9 @@
             }
         }
     }
+   
 </script>
-<script src="~/js/otpsend.js"></script>
+<script src="~/js/otpsend.js" asp-append-version="true"></script>
 
 
 

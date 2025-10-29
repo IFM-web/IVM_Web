@@ -2,9 +2,11 @@
 @{
     ViewData["Title"] = "PreInvite Visitor";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor httpContextAccessor
 }
 
 <div class="row px-5">
+    <input hidden id="Masking_Flag" value="@httpContextAccessor.HttpContext.Session.GetString("Masking_Flag")" />
     <div class="header my-3">
 
         <h3 class="text-center">Pre Invite History</h3>

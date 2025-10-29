@@ -6,6 +6,7 @@ function PreInvitedDashboardVisitor() {
     document.getElementById("loader").style.display = "flex";
     let EmailId = $("#EmailId").val();
     let Password = $("#Password").val();
+    let Masking_Flag = $("#Masking_Flag").val();
     const tbody = document.getElementById("PrintDiv");
     tbody.innerHTML = "";
 
@@ -25,8 +26,9 @@ function PreInvitedDashboardVisitor() {
                 const rowcontent = `
                 <td>${index + 1}</td>
                 <td>${visitor.Invite_Code}</span></td>
-                <td class="fw-semibold">${visitor.Visitor_Name}</td>
-                <td>${visitor.Visitor_Phone}</td>
+                <td class="fw-semibold">${Masking_Flag == '1' ? masknameany(visitor.Visitor_Name): visitor.Visitor_Name
+            }</td >
+                <td>${Masking_Flag == '1' ? masknameany(visitor.Visitor_Phone) : visitor.Visitor_Phone}</td>
                 <td>${visitor.Visitor_Company || '-'}</td>
                 
                

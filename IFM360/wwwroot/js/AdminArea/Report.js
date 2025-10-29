@@ -30,9 +30,9 @@ const GetAllData = async () => {
             //["Visitor ID"]: `<img width="50px"  height="50px" src="data:image/png;base64,${e.VisitorId}">`,
             //["Picture"]: `<img width="50px" height="50px" src="data:image/png;base64,${e.VisitorPhoto}">`,
 
-            ...(flgs.name_flag == 1 && { ["Guest Name"]: e.visitor_name }),
+            ...(flgs.name_flag == 1 && { ["Guest Name"]: flgs.Masking_Flag == 1 ? masknameany(e.visitor_name):e.visitor_name }),
 
-            ...(flgs.mobile_no_flag == 1 && { ["Guest Phone"]: e.visitor_phone }),
+            ...(flgs.mobile_no_flag == 1 && { ["Guest Phone"]: flgs.Masking_Flag == 1 ? masknameany(e.visitor_phone) : e.visitor_phone }),
             ...(flgs.isCompanyAllowed == 1 && {
                 ["Guest Company"]: e.visitor_company
             }),
@@ -117,9 +117,9 @@ const GetDataist = async () => {
             //["Visitor ID"]: `<img width="50px"  height="50px" src="data:image/png;base64,${e.VisitorId}">`,
             //["Picture"]: `<img width="50px" height="50px" src="data:image/png;base64,${e.VisitorPhoto}">`,
 
-            ...(flgs.name_flag == 1 && { ["Guest Name"]: e.visitor_name }),
+            ...(flgs.name_flag == 1 && { ["Guest Name"]: flgs.Masking_Flag == 1 ? masknameany(e.visitor_name) : e.visitor_name }),
 
-            ...(flgs.mobile_no_flag == 1 && { ["Guest Phone"]: e.visitor_phone }),
+            ...(flgs.mobile_no_flag == 1 && { ["Guest Phone"]: flgs.Masking_Flag == 1 ? masknameany(e.visitor_phone) : e.visitor_phone }),
             ...(flgs.isCompanyAllowed == 1 && {
                 ["Guest Company"]: e.visitor_company
             }),

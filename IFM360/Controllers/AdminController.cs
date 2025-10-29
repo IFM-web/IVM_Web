@@ -38,6 +38,7 @@ namespace IFM360.Controllers
             ViewBag.Emailid = HttpContext.Session.GetString("EmailId");
             ViewBag.Password = HttpContext.Session.GetString("Password");
             ViewBag.otp_verification_flag = HttpContext.Session.GetString("otp_verification_flag");
+            ViewBag.Masking_Flag = HttpContext.Session.GetString("Masking_Flag");
             return View();
         }
             
@@ -62,6 +63,7 @@ namespace IFM360.Controllers
             ViewBag.temperature_flag = HttpContext.Session.GetString("temperature_flag");
             ViewBag.vehicle_flag = HttpContext.Session.GetString("vehicle_flag");
             ViewBag.laptop_flag = HttpContext.Session.GetString("laptop_flag");
+            ViewBag.Masking_Flag = HttpContext.Session.GetString("Masking_Flag");
                   
 
             var employees = new List<Employee>();
@@ -120,8 +122,13 @@ namespace IFM360.Controllers
             var dt = await comman.PostFill(apiurl,obj);
             return Json(JsonConvert.SerializeObject(dt));
         }
-    
-        public IActionResult CheckOut() => View();      
+
+        public IActionResult CheckOut()
+        {
+            
+           return View();
+        }
+        
     
         public async Task<IActionResult> VisitorDashboard() => View();
 
@@ -140,7 +147,7 @@ namespace IFM360.Controllers
                 TempData["Message"] = "This  Feature is Disabled";
                 return RedirectToAction("Index");
             }
-         
+            ViewBag.Masking_Flag = HttpContext.Session.GetString("Masking_Flag");
             return View();
         }
 
@@ -183,6 +190,7 @@ namespace IFM360.Controllers
             ViewBag.temperature_flag = HttpContext.Session.GetString("temperature_flag");
             ViewBag.vehicle_flag = HttpContext.Session.GetString("vehicle_flag");
             ViewBag.laptop_flag = HttpContext.Session.GetString("laptop_flag");
+            ViewBag.Masking_Flag = HttpContext.Session.GetString("Masking_Flag");
             ViewBag.EmailId = EmailId;
             ViewBag.Password = Password;
 
@@ -226,6 +234,8 @@ namespace IFM360.Controllers
             ViewBag.temperature_flag = HttpContext.Session.GetString("temperature_flag");
             ViewBag.vehicle_flag = HttpContext.Session.GetString("vehicle_flag");
             ViewBag.laptop_flag = HttpContext.Session.GetString("laptop_flag");
+            ViewBag.Masking_Flag = HttpContext.Session.GetString("Masking_Flag");
+            
             
 
             var employees = new List<Employee>();

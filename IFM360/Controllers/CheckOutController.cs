@@ -7,9 +7,21 @@ namespace IFM360.Controllers
     {
         public IActionResult Index() => View();
 
-        public IActionResult CheckOutByPhone()=>View();
+        public IActionResult CheckOutByPhone() {
+
+
+            ViewBag.Masking_Flag = HttpContext.Session.GetString("Masking_Flag");
+
+            return View(); }
        
-        public IActionResult CheckOutByCard()=>View();
-   
+        public IActionResult CheckOutByCard()
+        {
+
+
+            ViewBag.Masking_Flag = HttpContext.Session.GetString("Masking_Flag");
+
+            return View();
+        }
+
     }
 }

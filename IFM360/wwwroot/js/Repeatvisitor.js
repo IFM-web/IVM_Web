@@ -1,12 +1,16 @@
 ﻿
 $(document).ready(() => {
+    let Masking_Flag = $("#Masking_Flag").val();
     typeofvisitor();
     Purposeofvisitor();
     let details = JSON.parse(sessionStorage.getItem("UserDetails"));
-    $("#txtNameHeader").text(details.visitor_name);
+    $("#txtNameHeader").text(Masking_Flag == '1' ? masknameany(details.visitor_name) : details.visitor_name);
+    $("#txtname1").val(masknameany(details.visitor_name));
     $("#txtname").val(details.visitor_name);
     $("#txtphone").text(details.visitor_phone);
+    $("#txtphone1").text(Masking_Flag == '1' ? masknameany(details.visitor_phone) : details.visitor_phone);
     $("#phoneno").val(details.visitor_phone);
+    $("#phoneno1").val(masknameany( details.visitor_phone));
     $("#txtLastVIsist").text(details.visitor_checkIn);
     $("#VisitorID").attr("src", "data:image/png;base64," + details.VisitorId);
     $("#VisitorPhoto").attr("src", "data:image/png;base64," +details.VisitorPhoto);
@@ -21,6 +25,21 @@ let currentPreviewId = null;
 let SetImageId = null;
 let currentFacingMode = "environment";
 
+
+const maskname = e => {
+    const val = e.value;
+    const real = $("#txtname").val() || "";  
+    const updated = val.length > real.length
+        ? real + val.slice(-1) 
+        : real.slice(0, -1);   
+    $("#txtname").val(updated);  
+    e.value = updated.replace(/\S+/g, w =>
+        w.length > 2 ? w[0] + "#".repeat(w.length - 2) + w.slice(-1) : w
+    );
+};
+
+
+    //  console.log($("#txtname").val());
 
 
 function openCameraModal(previewId, fileid) {

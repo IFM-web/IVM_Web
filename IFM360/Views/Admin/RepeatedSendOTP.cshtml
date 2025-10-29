@@ -24,7 +24,19 @@
          
 
             <label for="txtphoneno">Enter Mobile Number </label>
-            <input type="text" oninput="onlynuber(this)" maxlength="10" id="txtphoneno" class="form-control">
+
+            @if (ViewBag.Masking_Flag == "1")
+            {
+                <input type="text" maxlength="10" autocomplete="off" oninput="maskname(this)" id="txtphoneno1" class="form-control">
+                <input type="hidden" maxlength="10" id="txtphoneno" class="form-control">
+            }
+            else
+            {
+                <input type="text" oninput="onlynuber(this)" maxlength="10" id="txtphoneno" class="form-control">
+
+            }
+
+
             <input type="hidden" id="otp_varify" value="@httpContextAccessor.HttpContext.Session.GetString("otp_verification_flag")">
             <button class="btn form-control my-5" onclick="SendOTP()"
                     style="background-color: #1E3A5F;  color: white;">
@@ -103,7 +115,7 @@
         }
     }
 </script>
-<script src="~/js/repeatotpsend.js"></script>
+<script src="~/js/repeatotpsend.js" asp-append-version="true"></script>
 
 
 

@@ -8,8 +8,10 @@ $(document).ready(() => {
  
     setTimeout(function () {
         $("#txtname").val(userdata.GuestName)
+        $("#txtname1").val(masknameany(userdata.GuestName))
         $("#txtcompany").val(userdata.GuestCompany)
         $("#txtphone").val(userdata.GuestPhone)
+        $("#txtphone1").val(masknameany(userdata.GuestPhone))
         $("#typeofvisitor").val(userdata.GuestType)
         $("#Purposetovisit").val(userdata.GuestPurpose)
         $("#txtWhomeMeet").val(userdata.employeeId)
@@ -262,13 +264,15 @@ const addNewVisitorfinaly = async () => {
 }
 
 
-const onlynuber = (e) => {
-    const regex = /^\d+$/;
-    if (!regex.test(e.value)) {
-        e.value = '';
-    }
+//const onlynuber = (e) => {
+//    const regex = /^\d+$/;
+//    if (!regex.test(e.value)) {
+//        e.value = '';
+//    }
 
-}
+//}
+
+
 
 const typeofvisitor = async () => {
     let EmailId = $("#EmailId").val();

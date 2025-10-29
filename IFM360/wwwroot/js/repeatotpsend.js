@@ -126,3 +126,17 @@ async function Resend() {
     alert(data);
 
 }
+
+
+const maskname = e => {
+
+    const val = e.value;
+    const real = $("#txtphoneno").val() || "";
+    const updated = val.length > real.length
+        ? real + val.slice(-1)
+        : real.slice(0, -1);
+    $("#txtphoneno").val(updated);
+    e.value = updated.replace(/\S+/g, w =>
+        w.length > 2 ? w[0] + "#".repeat(w.length - 2) + w.slice(-1) : w
+    );
+};

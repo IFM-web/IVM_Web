@@ -4,7 +4,7 @@
        @inject Microsoft.AspNetCore.Http.IHttpContextAccessor httpContextAccessor
 }
 <div class="row px-5">
-   
+    <input type="hidden" name="name" id="Masking_Flag" value="@ViewBag.Masking_Flag" />
     <div class="top-header text-center mt-3">
         <div class="top-header text-center my-4">
        <img src="data:image/png;base64,@httpContextAccessor.HttpContext.Session.GetString("Companylogo")" alt="head-logo" class="img-fluid" width="20%" >

@@ -82,18 +82,47 @@
 
                      if (ViewBag.name_flag == "1")
                     {
-                        <div class="col-md-6 mb-3">
-                            <label for="txtname" class="form-label">Full Name</label>
-                            <input type="text" id="txtname" name="Full Name" class="form-control text-uppercase mandatory">
-                        </div>
+                       
+                        if (ViewBag.Masking_Flag == "1")
+                        {
+                            <div class="col-md-6 mb-3">
+                                <label for="txtname" class="form-label">Full Name</label>
+                                <input type="text" id="txtname1" autocomplete="off" oninput="maskname(this)" name="Full Name" class="form-control text-uppercase mandatory">
+                                <input hidden id="txtname"  name="Full Name" class="form-control text-uppercase mandatory">
+                            </div>
+
+                        }
+                        else
+                        {
+                            <div class="col-md-6 mb-3">
+                                <label for="txtname" class="form-label">Full Name</label>
+                                <input type="text" id="txtname" name="Full Name" class="form-control text-uppercase mandatory">
+                            </div>
+                        }
                     }
                     if (ViewBag.mobile_no_flag == "1")
                     {
+        if (ViewBag.Masking_Flag == "1")
+        {
                         <div class="col-md-6 mb-3">
                             <label for="txtname" class="form-label">Phone Number</label>
-                        <input type="text" disabled id="txtPhone" name="Phone Nuber" class="form-control text-uppercase mandatory">
-                    </div>}
-                    if (ViewBag.company_name_flag == "1")
+
+                                <input type="text" disabled id="txtPhonehid" name="Phone Nuber" class="form-control text-uppercase mandatory">
+                                <input type="text" hidden id="txtPhone" name="Phone Nuber" class="form-control text-uppercase mandatory">
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-6 mb-3">
+                                <label for="txtname" class="form-label">Phone Number</label>
+
+                                <input type="text" disabled id="txtPhone" name="Phone Nuber" class="form-control text-uppercase mandatory">
+                               
+                            </div>
+                        
+                            
+                        }
+                    }  if (ViewBag.company_name_flag == "1")
                     {
                         <div class="col-md-6 mb-3">
                             <label for="txtCompaby" class="form-label">From Company</label>
@@ -312,4 +341,5 @@
         }
     });
 </script>
+ <script src="~/js/site.js" asp-append-version="true"></script>
  <script src="~/js/VisitorCheckin.js" asp-append-version="true"></script>

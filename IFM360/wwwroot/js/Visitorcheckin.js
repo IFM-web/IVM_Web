@@ -5,7 +5,9 @@ $(document).ready(() => {
     
     if ($("#Purposetovisit").val() != undefined)  
         Purposeofvisitor();
-    $("#txtPhone").val(sessionStorage.getItem("mob"));
+    let PHone = sessionStorage.getItem("mob")
+    $("#txtPhonehid").val(masknameany(PHone));
+    $("#txtPhone").val(PHone);
 });
 
 
@@ -117,57 +119,28 @@ function switchCamera() {
         });
 }
 
-//SendOTP = async ()=> {
-//    VisitorMobile = $("#txtMobileNumber").val();    
-//    EmailId = $("#EmailId").val()
-//    Password = $("#Password").val()
 
-//    if (VisitorMobile != "" && VisitorMobile != undefined) {
+const maskname = e => {
+    const val = e.value;
+    const real = $("#txtname").val() || "";
+    const updated = val.length > real.length
+        ? real + val.slice(-1)
+        : real.slice(0, -1);
+    $("#txtname").val(updated);
+    e.value = updated.replace(/\S+/g, w =>
+        w.length > 2 ? w[0] + "#".repeat(w.length - 2) + w.slice(-1) : w
+    );
+};
 
-//        const response = await fetch(`https://ifm360.in/ivmapi/api/FirstTimeVisitor/SendOTP?emailID=${EmailId}&password=${Password}&MobileNo=${VisitorMobile}`);
-
-//        const data = await response.json();
-//        if (data == "OTP Send Sucessfully !!") {
-//            VarifyModal();
-//        }
-//        console.log(data);
-
-//    }
-//    else {
-//        addNewVisitorfinaly();
-//    }
+//const masknameany = e => {
+//   return  value = e.replace(/\S+/g, w =>
+//        w.length > 2
+//            ? w[0] + "#".repeat(w.length - 2) + w[w.length - 1]
+//            : w
+//    );
+  //  console.log($("#txtname").val());
    
-    
-//}
-
-
-//const varifyopt = async () => {
-//    let EmailId = $("#EmailId").val();
-//    let Password = $("#Password").val();
-//    let VisitorMobile = $("#txtMobileNumber").val();
-//    let opt = $("#otp1").val().trim() + $("#otp2").val().trim() + $("#otp3").val().trim() + $("#otp4").val().trim()
-   
-//    const response = await fetch(`https://ifm360.in/ivmapi/api/FirstTimeVisitor/VerifyOTP?emailID=${EmailId}&password=${Password}&MobileNo=${VisitorMobile}&OTP=${opt.trim()}`);
-//    let data = await response.json();
-
-//    if (opt.length != 4) {
-//        alert("Enter Four Digits OTP !!");
-//        return;
-//    }
-
-//    if (data[0].status == "success") {
-//        alert(data[0].message)
-//        VarifyModalClose();
-//        addNewVisitorfinaly();
-//    }
-//    else {
-//        alert(data[0].message)
-//    }
-
-    
-//    console.log(data);
-
-//}
+//};
 
 
 const addNewVisitorfinaly = async () => {
@@ -192,7 +165,7 @@ const addNewVisitorfinaly = async () => {
     let formData = new FormData();
 
     formData.append("VisitorMobile", sessionStorage.getItem("mob"));
-    formData.append("VisitorName", $("#txtname").val() == undefined ? '' : $("#txtname").val());
+    formData.append("VisitorName", $("#txtname").val() == undefined ? '' : $("#txtname").val().toUpperCase());
     formData.append("VisitorCompany", $("#txtcompany").val() == undefined ? '' : $("#txtcompany").val());
     formData.append("HostEmpID", $("#txtWhomeMeet").val() == undefined ? '' : $("#txtWhomeMeet").val());
     formData.append("HostName", $("#employeeSearch").val() == undefined ? '' : $("#employeeSearch").val());

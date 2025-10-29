@@ -228,6 +228,16 @@ var onlynuber = (e) => {
 }
 
 
+var masknameany = e => {
+    return value = e.replace(/\S+/g, w =>
+        w.length > 2
+            ? w[0] + "#".repeat(w.length - 2) + w[w.length - 1]
+            : w
+    );
+    //  console.log($("#txtname").val());
+
+};
+
 $('#filterInput').on('keyup', function () {
     let filter = $(this).val().toUpperCase();
 

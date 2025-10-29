@@ -73,7 +73,7 @@
         <h5 class="text-center">Visitor Details</h5>
     </div>
     <div class="body mb-3">
-
+        <input type="hidden" name="name" id="Masking_Flag" value="@ViewBag.Masking_Flag" />
         <div class="card shadow-sm border-1 rounded-3 p-3 mb-4 text-center" id="detailcard">
             <div class="row align-items-center">
                 @if (httpContextAccessor.HttpContext.Session.GetString("visitor_photo_flag")=="1")
@@ -90,7 +90,7 @@
                 </div>}
                 <div class="col-md-6 text-md-start text-center">
                     <h5 class="fw-bold mb-1 text-uppercase" id="txtNameHeader"></h5>
-                    <p class="mb-0 text-muted">Mobile Number: <span id="txtphone"></span></p>
+                    <p class="mb-0 text-muted">Mobile Number: <span id="txtphone1"></span></p>
                     <p class="mb-2"><small>Last Visit: <span id="txtLastVIsist"></span></small></p>
                     <button class="btn btn-primary btn-sm" onclick="EditDetails()">Edit Details</button>
                 </div>
@@ -102,17 +102,36 @@
             <div class="row">
                 
                 @{
-
+                    
                     <div class="col-md-6 mb-3 d-none" id="phonefiled">
                         <label for="txtname" class="form-label">Phone Number</label>
-                        <input type="text" id="phoneno" class="form-control text-uppercase" readonly>
+                        @if (ViewBag.Masking_Flag == "1")
+                        {
+                            <input type="text" id="phoneno1" class="form-control text-uppercase" readonly>
+                            <input hidden id="phoneno" class="form-control text-uppercase" readonly>
+                        }
+                        else
+                        {
+                            <input type="text" id="phoneno" class="form-control text-uppercase" readonly>
+                        }
+                       
+                     
                     </div>
 
                     if (ViewBag.name_flag == "1")
                     {
                         <div class="col-md-6 mb-3 d-none" id="namefield">
                             <label for="txtname" class="form-label">Full Name</label>
-                            <input type="text"  id="txtname" name="Full Name" class="mandatory form-control text-uppercase">
+                            @if (ViewBag.Masking_Flag == "1")
+                            {
+                                <input type="text" id="txtname1" oninput="maskname(this)" name="Full Name" class="mandatory form-control text-uppercase">
+                                <input  hidden id="txtname" name="Full Name" class="mandatory form-control text-uppercase">
+                            }
+                            else
+                            {
+                                <input  id="txtname" name="Full Name" class="mandatory form-control text-uppercase">
+                            }
+
                         </div>
                     }
                     if (ViewBag.company_name_flag == "1")
@@ -277,8 +296,8 @@
         </div>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
 
     const employees = @Html.Raw(employeeJson);

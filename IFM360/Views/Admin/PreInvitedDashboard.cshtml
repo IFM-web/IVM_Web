@@ -6,7 +6,7 @@
 }
 
 <div class="row px-5">
-   
+    <input hidden id="Masking_Flag" value="@httpContextAccessor.HttpContext.Session.GetString("Masking_Flag")" />
     <div class="top-header text-center">
         <img src="data:image/png;base64,@httpContextAccessor.HttpContext.Session.GetString("Companylogo")" alt="head-logo" class="img-fluid" width="20%">
     </div>

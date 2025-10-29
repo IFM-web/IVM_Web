@@ -3,6 +3,7 @@ const SearchPhone = async () => {
     const EmailId = $("#EmailId").val();
     const Password = $("#Password").val();
     const PhoneNo = $("#txtphoneno").val();
+  
     if (PhoneNo == "") {
         alert("Please Enter Phone Number");
         return;
@@ -17,11 +18,11 @@ const SearchPhone = async () => {
         .then(data => {
             //console.log(data);
             if (data[0].status == "fail") {
-                alert(data[0].message)
+                alert(data[0].message);
             }
             else if (data[0].status == "success") {
                 $(".ShowSection").addClass("d-none");
-                showdetails(data[0], "mobileNo", PhoneNo)
+                showdetails(data[0], "mobileNo", PhoneNo);
                 
             }
         })
@@ -29,9 +30,6 @@ const SearchPhone = async () => {
 
 
 }
-
-
-
 
 const SearchCard = async () => {
     const EmailId = $("#EmailId").val();
@@ -51,24 +49,30 @@ const SearchCard = async () => {
         .then(data => {
             //console.log(data);
             if (data[0].status == "fail") {
-                alert(data[0].message)
+                alert(data[0].message);
             }
             else if (data[0].status == "success") {
                 $(".ShowSection").addClass("d-none");
                 showdetails(data[0], "cardNo", CardNo)
-            
-              
             }
         })
         .catch(error => console.error("Error:", error));
 
-
 }
 
-
-
+const maskname = e => {
+    const val = e.value;
+    const real = $("#txtphoneno").val() || "";
+    const updated = val.length > real.length
+        ? real + val.slice(-1)
+        : real.slice(0, -1);
+    $("#txtphoneno").val(updated);
+    e.value = updated.replace(/\S+/g, w =>
+        w.length > 2 ? w[0] + "#".repeat(w.length - 2) + w.slice(-1) : w
+    );
+};
 function showdetails(data, type, phone) {
-  
+    const Masking_Flag = $("#Masking_Flag").val();
     console.log(data);
     let details = ` <div class="card shadow-sm border-1 rounded-3 p-3 mb-4 text-center" id="detailcard">
         <div class="row align-items-center">
@@ -81,8 +85,9 @@ function showdetails(data, type, phone) {
                     <small class="text-muted d-block mt-1">Visitor ID</small>
             </div>
             <div class="col-md-6 text-md-start text-center">
-                <h5 class="fw-bold mb-1 text-uppercase">${data.visitor_name}</h5>
-                <p class="mb-0 text-muted">Mobile Number: ${data.visitor_phone}</p>
+                <h5 class="fw-bold mb-1 text-uppercase">${Masking_Flag =='1'?masknameany(data.visitor_name
+    ) : data.visitor_name}</h5 >
+                <p class="mb-0 text-muted">Mobile Number: ${Masking_Flag == '1' ? masknameany(data.visitor_phone) : data.visitor_phone}</p>
                 <p class="mb-2"><small>Last Visit: ${data.visitor_checkIn}</small></p>
                
 
@@ -108,7 +113,7 @@ const CheckOut = async (type, CardNo) => {
     let typeName;
 
     if (type == "cardNo") {
-        typeName = "CheckOutByCardNo"
+        typeName = "CheckOutByCardNo";
     }
     else {
         typeName = "CheckOutByPhoneNo";

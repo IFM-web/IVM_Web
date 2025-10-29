@@ -13,6 +13,7 @@ const PreInviteHistory = async () => {
     let EmailId = $("#EmailId").val();
    let todate= $("#txttodate").val();
     let fromdate = $("#txtfromdate").val();
+    let Masking_Flag = $("#Masking_Flag").val();
     await fetch(`https://ifm360.in/ivmapi/api/EmployeeModule/PreInviteHistory?EmployeeEmailID=${EmailId}&fromDate=${fromdate}&toDate=${todate}`).then(response => response.json())
         .then(data => {
             document.getElementById("loader").style.display = "none";
@@ -26,8 +27,9 @@ const PreInviteHistory = async () => {
                         <td>${i++}</td>
                         
                         <td class="">${e.InvitationID}</td>
-                        <td class="fw-semibold text-uppercase">${e.GuestName}</td>
-                        <td>${e.visitor_phone == 'null' ? '' : e.GuestPhone}</td>
+                        <td class="fw-semibold text-uppercase">${ Masking_Flag == '1' ? masknameany(e.GuestName) : e.GuestName}</td>
+                        <td>${Masking_Flag == '1' ? masknameany(e.GuestPhone) : e.GuestPhone
+            }</td >
                         <td>${e.GuestEmail}</td>
                         <td class="text-uppercase">${e.Address}</td>
                         <td><span class="">${e.Date}</span></td>

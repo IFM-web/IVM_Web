@@ -44,6 +44,7 @@ namespace IFM360.AuthFilter
                     context.HttpContext.Session.SetString("temperature_flag", dt.Rows[0]["temperature_flag"].ToString());
                     context.HttpContext.Session.SetString("vehicle_flag", dt.Rows[0]["vehicle_flag"].ToString());
                     context.HttpContext.Session.SetString("laptop_flag", dt.Rows[0]["laptop_flag"].ToString());
+                    context.HttpContext.Session.SetString("Masking_Flag", dt.Rows[0]["Masking_Flag"].ToString());
 
                 }
 

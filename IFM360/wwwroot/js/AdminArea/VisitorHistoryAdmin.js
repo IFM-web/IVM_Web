@@ -15,11 +15,11 @@ const VisitorHistoryList = async () => {
         const response = await fetch(localStorage.getItem("Url") + `/AdminArea/GetAppSettingAdmin`);
         const data1 = await response.json();
         const data = JSON.parse(data1);
-        console.log(data);
+        //console.log(data);
         const response2 = await fetch(localStorage.getItem("Url") + `/AdminArea/GetVisitorHistoryList?Sdate=${startDate}&&Edate=${endDate}`);
         const data22 = await response2.json();
         const data2 = JSON.parse(data22);
-        console.log(data2)
+        //console.log(data2)
         if (data2.length == 0) {
             document.getElementById("loader").style.display = "none";
             alert("Data Not Found !!");
@@ -34,10 +34,10 @@ const VisitorHistoryList = async () => {
             SrNo: i + 1,
             ["Visitor ID"]: `<img width="50px"  height="50px" src="data:image/png;base64,${e.VisitorId}" onclick="showImageModal('data:image/png;base64,${e.VisitorId}')">`,
             ["Picture"]: `<img width="50px" height="50px" src="data:image/png;base64,${e.VisitorPhoto}" onclick="showImageModal('data:image/png;base64,${e.VisitorPhoto}')" >`,
-                  
-            ...(flgs.name_flag == 1 && { ["Guest Name"]: e.visitor_name }),
 
-            ...(flgs.mobile_no_flag == 1 && { ["Guest Phone"]: e.visitor_phone }),
+            ...(flgs.name_flag == 1 && { ["Guest Name"]: flgs.Masking_Flag == 1 ? masknameany( e.visitor_name) : e.visitor_name }),
+
+            ...(flgs.mobile_no_flag == 1 && { ["Guest Phone"]: flgs.Masking_Flag == 1 ? masknameany(e.visitor_phone) : e.visitor_phone }),
             ...(flgs.isCompanyAllowed == 1 && {
                 ["Guest Company"]: e.visitor_company
             }),
@@ -62,8 +62,6 @@ const VisitorHistoryList = async () => {
 
             ...(flgs.laptop_flag == 1 && { ["Laptop Serial No"]: e.LaptopSerialNo }),
 
-
-           
         }))
         //console.log(newArr)
 
@@ -301,7 +299,7 @@ $('#filterInput').on('keyup', function () {
 function Refresh() {
     DashboardList();
 }
-//setInterval(DashboardList, 10000)
+setInterval(DashboardList, 10000)
 
 
 function showImageModal(imageUrl) {

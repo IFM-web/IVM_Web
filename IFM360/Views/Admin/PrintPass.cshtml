@@ -37,9 +37,28 @@
 
             <div class="row">
                 <div class="col-8 text-uppercase pe-0">
-                    <p class="m-0"><span class="fw-bold">Name :- </span><span id="txtname"></span></p>
+                    <p class="m-0"><span class="fw-bold">Name :- </span>
+                         @if (httpContextAccessor.HttpContext.Session.GetString("Masking_Flag") == "1")
+                        {
+                            <span id="txtname1"></span>
+                        }
+                        else
+                        {
+                            <span id="txtname"></span>
+                        }
+                    </p>
                     <p class="m-0"><span class="fw-bold">Company :- </span><span id="txtcompany"></span></p>
-                    <p class="m-0"><span class="fw-bold">Mobile No :- </span> <span id="txtphone"></span></p>
+                    <p class="m-0">
+                        <span class="fw-bold">Mobile No :- </span>
+                        @if (httpContextAccessor.HttpContext.Session.GetString("Masking_Flag") == "1")
+                        {
+                            <span id="txtphone1"></span>
+                        }
+                        else
+                        {
+                            <span id="txtphone"></span>
+                        }
+                    </p>
                     <p class="m-0"><span class="fw-bold">Whom to meet :- </span> <span id="txtmeet"></span></p>
 
                    @*  <p class="m-0"><span class="fw-bold">Temprature :- </span> <span id="txttemp"></span></p> *@

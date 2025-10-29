@@ -573,7 +573,7 @@ namespace IFM360.Controllers
             var ds = _db.Fill($"exec [udp_CheckOutDashboard] @BranchEmail='{Emailid}',@BranchPassword='{Password}',@Visitorid='{Id.Trim()}'");
             return Json(JsonConvert.SerializeObject(ds.Tables[0]));
         }
-        public IActionResult Setting()=> View();
+        public IActionResult ManageSetting()=> View();
        
 
         #region Change Password
@@ -595,13 +595,16 @@ namespace IFM360.Controllers
         public JsonResult UpdateCompany(string CompanyName,string Base64Data)
         {
             var base64Data1 = Regex.Replace(Base64Data, @"^data:image\/[a-zA-Z]+;base64,", "");
-           // if(base64Data1 != "") { }
-            var ds = _db.Fill($"udp_UpdateCompanyLogo @BranchEmail='{Emailid}',@BranchPassword='{Password}',@Name='{CompanyName}',@Logo='{base64Data1}'");
-            return Json(JsonConvert.SerializeObject(ds.Tables[0]));
-
-            //var ds1 = _db.Fill($"udp_UpdateCompanyName @BranchEmail='{Emailid}',@BranchPassword='{Password}',@Name='{CompanyName}',@Logo='{base64Data1}'");
-            //return Json(JsonConvert.SerializeObject(ds.Tables[0]));
-
+            if (base64Data1 != "")
+            {
+                var ds = _db.Fill($"udp_UpdateCompanyLogo @BranchEmail='{Emailid}',@BranchPassword='{Password}',@Name='{CompanyName}',@Logo='{base64Data1}'");
+                return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+            }
+            else
+            {
+                var ds = _db.Fill($"udp_UpdateCompanyName @BranchEmail='{Emailid}',@BranchPassword='{Password}',@Name='{CompanyName}'");
+                return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+            }
         }
 
         #endregion

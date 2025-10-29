@@ -12,6 +12,7 @@
     <div class="top-header text-center mt-2">
      <img src="data:image/png;base64,@httpContextAccessor.HttpContext.Session.GetString("Companylogo")" alt="head-logo" class="img-fluid" width="20%" >
     </div>
+    <input type="hidden" name="name" id="Masking_Flag" value="@ViewBag.Masking_Flag" />
     <div id="checkDetails">
     </div>
 
@@ -24,7 +25,18 @@
         <div class="col-md-6 mx-auto my-md-4
                         ">
             <label for="txtphoneno">Enter Mobile Number </label>
-            <input type="text" id="txtphoneno" class="form-control">
+                @if (ViewBag.Masking_Flag == "1")
+                {
+                    <input type="tel" id="txtphoneno1" maxlength="10" oninput="maskname(this)" class="form-control">
+                    <input type="hidden" id="txtphoneno"  class="form-control">
+                }
+                else
+                {
+                    <input type="tel" id="txtphoneno" pattern="\d*"
+                           maxlength="10" class="form-control" inputmode="numeric" title="Please enter a 10-digit phone number">
+
+                }
+
             <button onclick="SearchPhone()" class="btn form-control my-5"
                     style="background-color: #1E3A5F;  color: white;">
                 Continue

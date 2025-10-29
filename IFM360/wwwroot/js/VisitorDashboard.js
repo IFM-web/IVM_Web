@@ -13,10 +13,10 @@ const DashboardList = async () => {
     try {
         const response = await fetch(`https://ifm360.in/ivmapi/api/VisitorDashboard/GetDashboardDetails?emailID=${EmailId}&password=${Password}`);
         const data = await response.json();
-        console.log(data);
+       // console.log(data);
         const response2 = await fetch(`https://ifm360.in/ivmapi/api/FirstTimeVisitor/AppSetupflags?emailID=${EmailId}&password=${Password}`);
         const data2 = await response2.json();
-        //console.log(data2[0])
+       // console.log(data2[0])
         if (data2.length == 0) {
             alert("Data Not Found !!");
             return;
@@ -27,9 +27,10 @@ const DashboardList = async () => {
 
 
             SrNo: i + 1,
-            ...(flgs.name_flag == 1 && { ["Visitor Name"]: e.Name }),
+            ...(flgs.name_flag == 1 && { ["Visitor Name"]: flgs.Masking_Flag==1? masknameany(e.Name)
+                : e.Name}),
 
-            ...(flgs.mobile_no_flag == 1 && { ["Visitor Phone"]: e.Phone }),
+            ...(flgs.mobile_no_flag == 1 && { ["Visitor Phone"]: flgs.Masking_Flag == 1 ? masknameany(e.Phone) : e.Phone }),
             ...(flgs.company_name_flag == 1 && {
                 ["Visitor Company"]: e.Company
             }),

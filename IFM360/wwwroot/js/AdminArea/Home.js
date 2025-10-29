@@ -25,9 +25,9 @@ const DashboardList = async () => {
 
 
             SrNo: i + 1,
-            ...(flgs.name_flag == 1 && { ["Visitor Name"]: e.Name }),
+            ...(flgs.name_flag == 1 && { ["Visitor Name"]: flgs.Masking_Flag == 1 ? masknameany(e.Name) : e.Name }),
 
-            ...(flgs.mobile_no_flag == 1 && { ["Visitor Phone"]: e.Phone }),
+            ...(flgs.mobile_no_flag == 1 && { ["Visitor Phone"]: flgs.Masking_Flag == 1 ? masknameany(e.Phone) : e.Phone }),
             ...(flgs.isCompanyAllowed == 1 && {
                 ["Visitor Company"]: e.Company
             }),

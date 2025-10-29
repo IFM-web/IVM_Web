@@ -43,6 +43,7 @@ namespace IFM360.AuthFilter
                         context.HttpContext.Session.SetString("laptop_Flag", dt1.Rows[0]["laptop_Flag"].ToString());
                         context.HttpContext.Session.SetString("Vehicle_Flag", dt1.Rows[0]["Vehicle_Flag"].ToString());
                         context.HttpContext.Session.SetString("company_id", dt1.Rows[0]["company_id"].ToString());
+                        context.HttpContext.Session.SetString("Masking_Flag", dt1.Rows[0]["Masking_Flag"].ToString());
                     }
                 }
 

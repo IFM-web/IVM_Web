@@ -1,5 +1,6 @@
 using IFM360.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Data;
 using System.Diagnostics;
 using VMS_Web.Models;
@@ -10,6 +11,7 @@ namespace IFM360.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         CommanClass comman = new CommanClass();
+        db_Utility _Utility = new db_Utility();
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -104,9 +106,30 @@ namespace IFM360.Controllers
             return View();
         }
 
+        #region Register
         public IActionResult Register() => View();
+        [HttpPost]
+        public JsonResult SendRegisterOTP(string EmailId,string MobileNo)
+        {
+        
+            int opt = new Random().Next(1000, 9999);
+            var ds = _Utility.Fill($"udp_InsertRegistrationOTP @Email='{EmailId}',@Mobile='{MobileNo}',@OTP='{opt}'");
 
 
+            return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+        }
+        [HttpPost]
+        public JsonResult ReSendRegisterOTP(string EmailId,string MobileNo)
+        {
+        
+            int opt = new Random().Next(1000, 9999);
+            var ds = _Utility.Fill($"udp_ResendRegistrationOTP @Email='{EmailId}',@Mobile='{MobileNo}',@OTP='{opt}'");
+
+
+            return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+        }
+
+        #endregion
 
         public async Task<IActionResult> Logout()
         {
@@ -120,7 +143,15 @@ namespace IFM360.Controllers
             return RedirectToAction("EmployeeLogin");
         }
 
+
+
+
         public IActionResult CreatePin() => View();
+
+
+
+
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

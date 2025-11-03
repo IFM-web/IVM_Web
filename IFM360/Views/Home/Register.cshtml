@@ -15,15 +15,37 @@
     <link rel="icon" href="~/Images/logo.png" type="image/x-icon">
     <!-- Vendor: Bootstrap Stylesheets http://getbootstrap.com -->
     <!-- Our Website CSS Styles -->
-    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    @* <link href="~/css/bootstrap.min.css" rel="stylesheet" /> *@
     <link href="~/css/icons.css" rel="stylesheet" />
     <link href="~/css/sass.css" rel="stylesheet" />
     <link href="~/css/main.css" rel="stylesheet" />
     <link href="~/css/responsive.css" rel="stylesheet" />
     <link rel="icon" type="image/png" href="~/upload/logo/logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .account-form input[type="text"], .account-form input[type="password"] {
+    border: 1px solid #e6eaea;
+    
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    -ms-border-radius: 30px;
+    -o-border-radius: 30px;
+    border-radius: 30px;
 
+    float: left;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+    padding: 13px 30px;
+    /*width: 71%;*/
+    width: 100%;
+}
+a{
+    text-decoration:none;
+}
+    </style>
 </head>
 
 <body>
@@ -61,35 +83,30 @@
                                         </div>
                                         <!-- Widget title -->
                                         <div class="account-form">
-                                            <form method="post" action="./register.aspx" id="ctl00" class="ng-pristine ng-valid">
-                                                <div class="aspNetHidden">
-                                                    <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="X1L/yVrfba/PjvJLCfp684QOtMCqj9uNarlRpC1IQKqXceqmLcnPtKoxi6yX78kQnxXXGFd4OmbzDjFndOnjx0nPKa3JnXIdnjhbbYFBVNqVo48YJ4qC0nSt+6o842twhR/Nyzei2HR0EzpnYVkWzQ==">
-                                                </div>
+                                            <div  id="ctl00" class="ng-pristine ng-valid">
+                                                
 
-                                                <div class="aspNetHidden">
-
-                                                    <input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="CBA42DF4">
-                                                </div>
+                                                
                                                 <div id="reg1" class="row">
                                                     <div class="col-md-6 feild" style="top:0px;left:0px;">
-                                                        <input name="email" type="text" id="email" class="input-style" placeholder="Work Email ID" maxlength="50" required="">
+                                                        <input name="Email Id" type="text" id="email" class="input-style mandatory" placeholder="Work Email ID" maxlength="50" required="">
                                                         <span id="messageEmail"></span>
                                                     </div>
                                                     <div class="col-md-6 feild" style="top:0px;left:0px;">
-                                                        <input name="mobile" type="text" id="mobile" placeholder="Mobile Number" maxlength="10" minlength="10" onkeypress="return isNumberKey(event)" required="">
+                                                        <input name="Mobile" class="mandatory" type="text" id="mobile" placeholder="Mobile Number" maxlength="10" oninput=onlynuber(this) minlength="10" required="">
                                                         <span id="messageMobile"></span>
                                                     </div>
                                                     <div class="col-md-6 feild" style="top:0px;left:0px;">
-                                                        <input name="fName" type="text" id="fName" placeholder="First Name" maxlength="20" minlength="2" onkeypress="allowAlphaNumeric(event)" required="">
+                                                        <input name="First Name" class="mandatory" type="text" id="fName" placeholder="First Name" maxlength="20" minlength="2" required="">
                                                     </div>
                                                     <div class="col-md-6 feild" style="top:0px;left:0px;">
-                                                        <input name="lName" type="text" id="lName" placeholder="Last Name" maxlength="20" minlength="2" onkeypress="allowAlphaNumeric(event)" required="">
+                                                        <input name="Last Name" class="mandatory" type="text" id="lName" placeholder="Last Name" maxlength="20" minlength="2" required="">
                                                     </div>
                                                     <div class="col-md-6 feild" style="top:0px;left:0px;">
-                                                        <input name="password" type="password" id="password" placeholder="Password" maxlength="20" minlength="8" required="">
+                                                        <input name="Password" class="mandatory" type="password" id="password" placeholder="Password" maxlength="20" minlength="8" >
                                                     </div>
                                                     <div class="col-md-6 feild" style="top:0px;left:0px;">
-                                                        <input name="cPassword" type="password" id="cPassword" placeholder="Confirm Password" required="">
+                                                        <input name="Confirm Password" type="password" id="cPassword" placeholder="Confirm Password" class="mandatory" >
                                                         <span id="messagePassword"></span>
                                                     </div>
                                                     <div class="col-md-12" style="top:0px;left:0px;width:100%">
@@ -98,14 +115,18 @@
                                                         </label>
                                                     </div>
                                                     <div class="feild col-md-6" style="float: right; margin-right: -30%;top:0px;left:0px;width:50%">
-                                                        <input type="submit" name="Regfun1" value="Next" onclick="return regfun1();" id="Regfun1" style="background: darkslateblue;">
+                                                        <input type="submit" name="Regfun1" value="Next" onclick="SendOTP()" id="Regfun1" style="    background: darkslateblue;
+    color: white;
+    padding: 5px 29px;
+    border: none;
+    border-radius: 17px;">
                                                     </div>
                                                 </div>
 
 
 
 
-                                            </form>
+                                            </div>
                                         </div>
                                         <div class="more-option">
                                             <span>OR</span>
@@ -135,37 +156,98 @@
     </div>
 
 
+    <div class="modal fade" id="VarifyModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="ModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <h3>Please Verify OTP Sent To Your Number</h3>
 
-    <script src="https://maps.google.com/maps/api/js?sensor=false"></script>
+                    <div class="otp d-flex justify-content-between gap-2 mt-3 mx-2">
+                        <input type="text" id="otp1" maxlength="1" class="form-control text-center" oninput="handleInput(this)" data-index="1" onkeydown="handleBackspace(this, event)">
+                        <input type="text" id="otp2" maxlength="1" class="form-control text-center" oninput="handleInput(this)" data-index="2" onkeydown="handleBackspace(this, event)">
+                        <input type="text" id="otp3" maxlength="1" class="form-control text-center" oninput="handleInput(this)" data-index="3" onkeydown="handleBackspace(this, event)">
+                        <input type="text" id="otp4" maxlength="1" class="form-control text-center" oninput="handleInput(this)" data-index="4" onkeydown="handleBackspace(this, event)">
+                    </div>
+                    <p class="text-end mt-2">Haven't received OTP?<a href="#" class="text-danger" id="resendBtn" onclick="ReSendOTP()">Resend Code</a></p>
+                    <div class="d-flex">
+                        <button onclick="VarifyModalClose()" class="btn form-control mt-2"
+                                style="background-color: red;  color: white;">
+                            Close
+                        </button>
+                        <button onclick="VarifyModal()" class="btn form-control mt-2"
+                                style="background-color: #1E3A5F;  color: white;">
+                            Continue
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="VarifyModal1" data-bs-backdrop="static" tabindex="-1" aria-labelledby="ModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                  
+                    <div>
+
+                    </div>
+
+                    
+                    <p class="text-end mt-2">Haven't received OTP?<a href="#" class="text-danger" id="resendBtn" onclick="ReSendOTP()">Resend Code</a></p>
+                    <div class="d-flex">
+                        <button onclick="VarifyModalClose()" class="btn form-control mt-2"
+                                style="background-color: red;  color: white;">
+                            Close
+                        </button>
+                        <button onclick="VarifyModal()" class="btn form-control mt-2"
+                                style="background-color: #1E3A5F;  color: white;">
+                            Continue
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
     <script type="text/javascript">
 
-        if(window.location.hostname == "localhost"){
-            localStorage.setItem("Url","")
-        }else{
-             localStorage.setItem("Url","/IvmCore")
-        }
 
+        function handleInput(element) {
+            element.value = element.value.replace(/[^0-9]/g, '');
 
-        function mylogin() {
-
-            if (email.value.length > 0) {
-                var emailValid = ValidateEmail(email.value);
-                if (emailValid == true) {
-                    return true;
-                } else {
-                    document.getElementById("email").focus();
-                    return false;
+            if (element.value.length === 1) {
+                let currentIndex = parseInt(element.getAttribute('data-index'));
+                if (currentIndex < 4) {
+                    let next = element.nextElementSibling;
+                    if (next && next.tagName === "INPUT") {
+                        next.focus();
+                    }
                 }
-            } else {
-                document.getElementById("email").focus();
-                return false;
             }
         }
 
-
+        function handleBackspace(element, event) {
+            if (event.key === "Backspace" && element.value === "") {
+                let currentIndex = parseInt(element.getAttribute('data-index'));
+                if (currentIndex > 1) {
+                    let prevIndex = currentIndex - 1;
+                    let prevInput = document.querySelector(`input[data-index='${prevIndex}']`);
+                    if (prevInput) {
+                        prevInput.focus();
+                    }
+                }
+            }
+        }
 
     </script>
+ <script src="~/js/Home/Register.js" asp-append-version="true"></script>
 
 </body>
 </html>

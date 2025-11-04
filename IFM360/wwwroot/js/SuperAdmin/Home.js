@@ -1,71 +1,68 @@
 ﻿$(document).ready(() => {
-    $('#startDate').val(new Date(Date.now()).toISOString().split('T')[0])
-    $('#endDate').val(new Date(Date.now()).toISOString().split('T')[0])
-    VisitorHistoryList();
+    $('#todate').val(new Date(Date.now()).toISOString().split('T')[0])
+    DashboardList();
 })
 
-const VisitorHistoryList = async () => {
-    const startDate = $('#startDate').val()
-
-    const endDate = $('#endDate').val();
+const DashboardList = async () => {
     document.getElementById("loader").style.display = "flex";
- 
- 
+
+    var date = $('#todate').val();
+    var office = $('#office').val();
+    if (EmailId == "") {
+        alert("Session Expired, Please Login Again !!");
+        window.location.reload();
+    }
     try {
-        const response = await fetch(localStorage.getItem("Url") + `/AdminArea/GetAppSettingAdmin`);
+        const response = await fetch(localStorage.getItem("Url")+`/SuperAdmin/GetAppSettingAdmin`);
         const data1 = await response.json();
         const data = JSON.parse(data1);
-        //console.log(data);
-        const response2 = await fetch(localStorage.getItem("Url") + `/AdminArea/GetVisitorHistoryList?Sdate=${startDate}&&Edate=${endDate}`);
+
+        console.log(data);
+        const response2 = await fetch(localStorage.getItem("Url") + `/SuperAdmin/GetAdminDashboard?Date=${date}&&office=${office}`);
+
         const data22 = await response2.json();
         const data2 = JSON.parse(data22);
-        //console.log(data2)
-        if (data2.length == 0) {
-            document.getElementById("loader").style.display = "none";
-            alert("Data Not Found !!");
-
-            return;
-        }
+        console.log(data2)
         const flgs = data[0];
         document.getElementById("loader").style.display = "none";
         const newArr = data2.map((e, i) => ({
 
-          
+
             SrNo: i + 1,
-            ["Visitor ID"]: `<img width="50px"  height="50px" src="data:image/png;base64,${e.VisitorId}" onclick="showImageModal('data:image/png;base64,${e.VisitorId}')">`,
-            ["Picture"]: `<img width="50px" height="50px" src="data:image/png;base64,${e.VisitorPhoto}" onclick="showImageModal('data:image/png;base64,${e.VisitorPhoto}')" >`,
+            Office: $('#office option:selected').text(),
+            ...(flgs.name_flag == 1 && { ["Visitor Name"]: flgs.Masking_Flag == 1 ? masknameany(e.Name) : e.Name }),
 
-            ...(flgs.name_flag == 1 && { ["Guest Name"]: flgs.Masking_Flag == 1 ? masknameany( e.visitor_name) : e.visitor_name }),
-
-            ...(flgs.mobile_no_flag == 1 && { ["Guest Phone"]: flgs.Masking_Flag == 1 ? masknameany(e.visitor_phone) : e.visitor_phone }),
+            ...(flgs.mobile_no_flag == 1 && { ["Visitor Phone"]: flgs.Masking_Flag == 1 ? masknameany(e.Phone) : e.Phone }),
             ...(flgs.isCompanyAllowed == 1 && {
-                ["Guest Company"]: e.visitor_company
+                ["Visitor Company"]: e.Company
             }),
-            //...(flgs.purpose_flag == 1 && { ["Purpose Of Visit"]: e.Purpose }),
+            ...(flgs.purpose_flag == 1 && { ["Purpose Of Visit"]: e.Purpose }),
             ...(flgs.Type_Of_Visitor_Flag == 1 && { ["Type Of Visitor"]: e.TypeOfVisitor }),
-            ["Host Name"]: e.WhomToMeetName,
-            ["Host Phone"]: e.Mobile,
+            ["Host Name"]: e.HostName,
+            ["Host Phone"]: e.HostPhone,
 
-            ...(flgs.isCardAllowed == 1 && { ["Card No"]: e.card_id, }),
-            ...(flgs.Temperature == 1 && { Temperature: e.Temperature })
+            ...(flgs.isCardAllowed == 1 && { ["Card No"]: e.CardNo, }),
+            ...(flgs.temperature_flag == 1 && { Temperature: e.Temperature })
             ,
-            ["Check In Time"]: e.visitor_checkIn,
-            ["Check Out Time"]: e.visitor_checkOut,
+            ["Check In Time"]: e.CheckIn,
 
             ...(flgs.Vehicle_Flag == 1 && { ["Vehicle No"]: e.VehicleNo }),
-            Invited: e.is_from_reception == 0 ? 'Yes' : 'No',
-            Status: e.visitor_status,
+            Invited: e.Invited == 0 ? 'Yes' : 'No',
+            Status: e.Status,
 
 
 
 
 
-            ...(flgs.laptop_flag == 1 && { ["Laptop Serial No"]: e.LaptopSerialNo }),
-
+            ...(flgs.laptop_Flag == 1 && { ["Laptop Serial No"]: e.LaptopSerialNo }),
+           
+           
+            
+            Action: `<div style="white-space: nowrap; margin:0px; display:flex; text-align:left;" ><button class="btn btn-danger" style="margin-right:10px;" onclick=checkOut(${e.id})>Check Out</button> ${e.Status == 'Accepted' ? `<a style="white-space: nowrap;" class="btn btn-success" href="${localStorage.getItem("Url")}/AdminArea/PrintPass?Id=${e.id}">Print Pass</a>` : ''}</div>`
         }))
         //console.log(newArr)
 
-        CreateTableFromArray2(newArr, "Printdiv")
+        CreateTableFromArray2(newArr, "PrintDiv")
     }
     catch (data) {
         document.getElementById("loader").style.display = "none";
@@ -299,11 +296,4 @@ $('#filterInput').on('keyup', function () {
 function Refresh() {
     DashboardList();
 }
-setInterval(DashboardList, 10000)
-
-
-function showImageModal(imageUrl) {
-    document.getElementById('modalImage').src = imageUrl;
-    var modal = new bootstrap.Modal(document.getElementById('imageModal'));
-    modal.show();
-}
+//setInterval(DashboardList, 10000)

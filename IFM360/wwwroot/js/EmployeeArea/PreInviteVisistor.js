@@ -24,14 +24,14 @@ const addNewVisitor = async () => {
         return;
     }
     document.getElementById("loader").style.display = "flex";
-    let EmailId = $("#EmailId").val();
-    let VName = $("#txtVName").val();
-    let Location = $("#txtLocation").val();
-    let VEmail = $("#txtvemail").val();
+    let EmailId = $("#EmailId").val() == undefined ? '' : $("#EmailId").val();
+    let VName = $("#txtVName").val() == undefined ? '' : $("#txtVName").val();
+    let Location = $("#txtLocation").val() == undefined ? '' : $("#txtLocation").val();
+    let VEmail = $("#txtvemail").val() == undefined ? '' : $("#txtvemail").val();
     let VPhone = $("#txtphone").val() == undefined ? '' : $("#txtphone").val();
-    let VCompany = $("#txtcompany").val();
-    let typeofvisitor = $("#typeofvisitor").val();
-    let Purposetovisit = $("#Purposetovisit").val();
+    let VCompany = $("#txtcompany").val() == undefined ? '' : $("#txtcompany").val();
+    let typeofvisitor = $("#typeofvisitor").val() == undefined ? '' : $("#typeofvisitor").val();
+    let Purposetovisit = $("#Purposetovisit").val() == undefined ? '' : $("#Purposetovisit").val();
     let Vhour = $("#txthour").val();
     let VMin = $("#txtmin").val();   
     

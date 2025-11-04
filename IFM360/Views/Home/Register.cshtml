@@ -175,7 +175,7 @@ a{
                                 style="background-color: red;  color: white;">
                             Close
                         </button>
-                        <button onclick="VarifyModal()" class="btn form-control mt-2"
+                        <button onclick="varifyopt()" class="btn form-control mt-2"
                                 style="background-color: #1E3A5F;  color: white;">
                             Continue
                         </button>
@@ -187,24 +187,43 @@ a{
 
     <div class="modal fade" id="VarifyModal1" data-bs-backdrop="static" tabindex="-1" aria-labelledby="ModalLabel"
          aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-lg modal-dialog">
             <div class="modal-content">
-                <div class="modal-body text-center">
+                <div class="modal-body">
                   
-                    <div>
-
+                    <div class="row">
+                        <div class="col-md-6">
+                        <label>Company Name</label>
+                            <input type="text" id="Cname" name="Company Name" class="form-control mandatory" />
+                        </div>
+                        <div class="col-md-6">
+                        <label>State</label>
+                            <input type="text" id="Cstate" name="State" class="form-control mandatory" />
+                        </div>
+                        <div class="col-md-6">
+                        <label>Location</label>
+                            <input type="text" id="Clocation" name="Location" class="form-control mandatory" />
+                        </div>
+                        <div class="col-md-6">
+                        <label>Address</label>
+                            <input type="text" id="Caddess" name="Address" class="form-control mandatory" />
+                        </div>
+                        <div class="col-md-6">
+                            <label>Upload Company Logo</label>
+                            <input type="file" id="uploadfile" class="form-control" />
+                        </div>
                     </div>
 
                     
-                    <p class="text-end mt-2">Haven't received OTP?<a href="#" class="text-danger" id="resendBtn" onclick="ReSendOTP()">Resend Code</a></p>
-                    <div class="d-flex">
-                        <button onclick="VarifyModalClose()" class="btn form-control mt-2"
+                   
+                    <div class="d-flex mt-4">
+                        <button onclick="VarifyModalClose2()" class="btn form-control mt-2"
                                 style="background-color: red;  color: white;">
                             Close
                         </button>
-                        <button onclick="VarifyModal()" class="btn form-control mt-2"
+                        <button onclick="SaveReg()" class="btn form-control mt-2"
                                 style="background-color: #1E3A5F;  color: white;">
-                            Continue
+                            Sign Up For Free Trial
                         </button>
                     </div>
                 </div>

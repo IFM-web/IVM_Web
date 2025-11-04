@@ -60,9 +60,6 @@ const ChangePassword = () => {
       </ul>
     `;
         return;
-    } else {
-        message.innerHTML = `<span style="color: green;">✅ Password is valid</span>`;
-        return;
     }
        
     

@@ -12,16 +12,23 @@
         <div class="row">
             <div class="col-md-4">
                 <label>Select Office</label>
-                <select class="form-control">
-                    <option>Select Office</option>
+                <select class="form-control" id="office">
+                    <option value="-1">All</option>
+                    @if (ViewBag.office is not null)
+                    {
+                        foreach (var e in ViewBag.office as IList<SelectListItem>)
+                        {
+                            <option value="@e.Value">@e.Text</option>
+                        }
+                    }
                 </select>
             </div>
             <div class="col-md-4">
                 <label>View Pending CheckOuts</label>
-                <input class="form-control" type="date" />
+                <input class="form-control" id="todate" type="date" />
             </div>
             <div class="col-md-4">
-               <button class="btn btn-myColor mt-4">Search</button>
+                <button class="btn btn-myColor mt-4" onclick="DashboardList()">Search</button>
             </div>
         </div>
 
@@ -34,7 +41,7 @@
             </div>
         </div>
         <div class="col-12 overflow-auto mt-2" id="PrintDiv"></div>
-       <div class="table-responsive shadow-sm rounded">
+       @* <div class="table-responsive shadow-sm rounded">
             <table class="table table-striped align-middle text-center">
                 <thead class="table-dark">
                     <tr>
@@ -54,7 +61,7 @@
                 <tbody id="content">
                 </tbody>
             </table>
-        </div> 
+        </div>  *@
     </div>
     <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -70,4 +77,4 @@
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-@* <script src="~/js/AdminArea/Home.js" asp-append-version="true"></script> *@
+ <script src="~/js/SuperAdmin/Home.js" asp-append-version="true"></script> 

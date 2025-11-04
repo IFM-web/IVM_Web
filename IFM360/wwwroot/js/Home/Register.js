@@ -1,18 +1,32 @@
-﻿const SendOTP =  () => {
+﻿const SendOTP = () => {
+    let message = "";
     const EmailId = $("#email").val();
     const mobile = $("#mobile").val();
     const fName = $("#fName").val();
     const lName = $("#lName").val();
     const cPassword = $("#cPassword").val();
     const password = $("#password").val();
+    if (EmailId == "")
+        message += "Email Required !!\n";
+    if (mobile == "")
+        message += "Mobile Required !!\n";
+    if (fName == "")
+        message += "First Name Required !!\n";
+    if (lName == "")
+        message += "Last Name Required !!\n";
+    if (cPassword == "")
+        message += "Confirm Password Required !!\n";
+    if (password == "")
+        message += "Password Required !!\n";
 
-    var Vali = Validation1();
-    if (Vali != "") {
-        alert(Vali);
+
+
+    if (message != "") {
+        alert(message);
         return;
     } else {
         $.ajax({
-            url: "/Home/SendRegisterOTP",
+            url: localStorage.getItem("Url") + "/Home/SendRegisterOTP",
             data: { EmailId: EmailId, MobileNo: mobile },
             type: "Post",
             success: (res) => {
@@ -41,7 +55,7 @@ const ReSendOTP =  () => {
     const mobile = $("#mobile").val();
 
         $.ajax({
-            url: "/Home/ReSendRegisterOTP",
+            url: localStorage.getItem("Url") + "/Home/ReSendRegisterOTP",
             data: { EmailId: EmailId, MobileNo: mobile },
             type: "Post",
             success: (res) => {
@@ -86,6 +100,12 @@ function VarifyModal() {
 
 }
 
+function VarifyModal2() {
+    const modal = new bootstrap.Modal(document.getElementById('VarifyModal1'));
+    modal.show();
+
+}
+
 function VarifyModalClose() {
     const modalElement = document.getElementById('VarifyModal');
     const modal = bootstrap.Modal.getInstance(modalElement);
@@ -98,42 +118,43 @@ function VarifyModalClose() {
     }
 }
 
-//$("#txtphoneno1").on('input', function () {
+function VarifyModalClose2() {
+    const modalElement = document.getElementById('VarifyModal1');
+    const modal = bootstrap.Modal.getInstance(modalElement);
+    if (modal) {
+        modal.hide();
+        
+    }
+}
 
-//    const val = this.value.replace(/\D/g, "");
 
-
-//    this.value = maskname(val);
-//});
 
 
 const varifyopt = async () => {
-    let EmailId = $("#EmailId").val();
-    let Password = $("#Password").val();
+    const EmailId = $("#email").val();
+    const mobile = $("#mobile").val();
     let VisitorMobile = $("#txtphoneno").val();
     let opt = $("#otp1").val().trim() + $("#otp2").val().trim() + $("#otp3").val().trim() + $("#otp4").val().trim()
-  
-    const response = await fetch(`https://ifm360.in/ivmapi/api/FirstTimeVisitor/VerifyOTP?emailID=${EmailId}&password=${Password}&MobileNo=${VisitorMobile}&OTP=${opt.trim()}`);
-    let data = await response.json();
 
     if (opt.length != 4) {
         alert("Enter Four Digits OTP !!");
         return;
     }
 
-    if (data[0].status == "success") {
+    const response = await fetch(localStorage.getItem("Url") +`/Home/VerifyRegistrationOTP?EmailId=${EmailId}&&MobileNo=${mobile}&&otp=${opt.trim()}`);
+    let data = await response.json();
+    var data1 = JSON.parse(data);
+
+    if (data1[0].MessageID == "1") {
 
         VarifyModalClose();
-        sessionStorage.setItem("mob", VisitorMobile);
-        window.location.href = localStorage.getItem("Url") + "/Admin/VisitorCheckin";
+        VarifyModal2();
 
+    } else {
+        alert('something went wrong !!');
     }
-    else {
-        alert(data[0].message)
-    }
+   
 
-
-    console.log(data);
 
 }
 
@@ -155,4 +176,73 @@ async function Resend() {
     console.log(data);
     alert(data);
 
+}
+
+function SaveReg() {
+    const file = $('#uploadfile')[0].files[0];
+
+    const validationMessage = Validation1();
+    if (validationMessage !== "") {
+        alert(validationMessage);
+        return;
+    }
+
+    if (!file) {
+        alert("Select a file!");
+        return;
+    }
+
+    if (!file.type.startsWith('image/')) {
+        alert("Only image files are allowed!");
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        const base64String = e.target.result;
+
+        const EmailId = $("#email").val();
+        const mobile = $("#mobile").val();
+        const Cstate = $("#Cstate").val();
+        const Clocation = $("#Clocation").val();
+        const Caddess = $("#Caddess").val();
+        const Cname = $("#Cname").val();
+        const fName = $("#fName").val();
+        const lName = $("#lName").val();
+        const fullName = fName + " " + lName;
+        const cPassword = $("#cPassword").val();
+
+        $.ajax({
+            url: localStorage.getItem("Url") + "/Home/SaveRegister",
+            type: "POST",
+            data: {
+                EmailId: EmailId,
+                MobileNo: mobile,
+                AName: fullName,
+                APassword: cPassword,
+                CName: Cname,
+                Cstate: Cstate,
+                CLocatoin: Clocation,
+                CAddress: Caddess,
+                Clogo: base64String
+            },
+            success: function (res) {
+                const data = JSON.parse(res);
+                if (data[0].MessageID === "1") {
+                    alert("Created Successfully");
+                  
+                    $('#uploadfile').val('');
+                    window.location.reload();
+                } else {
+                    alert(data[0].MessageString);
+                }
+            },
+            error: function (err) {
+                console.error(err);
+                alert("Error during registration.");
+            }
+        });
+    };
+
+    reader.readAsDataURL(file); 
 }

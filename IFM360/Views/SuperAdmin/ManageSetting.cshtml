@@ -42,18 +42,18 @@
 
         <div class="mt-3">
             <label>Company Logo</label>
-        <img src="data:image/png;base64,@httpContext.HttpContext.Session.GetString("Companylogo")" />
+        <img src="data:image/png;base64,@httpContext.HttpContext.Session.GetString("Companylogo")" style="width:70px;" />
         </div>
 
         <div class="mt-3">
             <label>Company Logo</label>
         <input hidden id="fileInputHid" value="@httpContext.HttpContext.Session.GetString("Companylogo")"/>
-        <input type="file" class="form-control mandatory" id="fileInput" name="Company Logo"  />
+        <input type="file" class="form-control " id="fileInput" name="Company Logo"  />
         </div>
 
         <div class="mt-3">
             <label>Company Name</label>
-        <input type="text" class="form-control mandatory" id="CompanyName" name="Company Name" placeholder="Company Name" value="@httpContext.HttpContext.Session.GetString("CompanyName")" />
+        <input type="text" class="form-control " id="CompanyName" name="Company Name" placeholder="Company Name" value="@httpContext.HttpContext.Session.GetString("CompanyName")" />
         </div>
         <div class="mt-3">
         <button class="btn btn-danger" id="uploadBtn">Update</button>
@@ -87,58 +87,68 @@
 
     @section Scripts{
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <script src="~/js/AdminArea/Setting.js" asp-append-version="true"></script>
     <script>
-    $('#uploadBtn').click(function () {
-        const file = $('#fileInput')[0].files[0];
-                const Companyname = $('#CompanyName').val();
-        if (!file) {
-                                   $("#fileInputHid").val('');
-            return;
-        }
-                if($("#fileInputHid").val() !=""){
-        if (!file.type.startsWith('image/')) {
+            $('#uploadBtn').click(function () {
+                const file = $('#fileInput')[0].files[0];
+                const companyName = $('#CompanyName').val();
+
+                if (!companyName) {
+                    alert("Company Name is required!");
+                    return;
+                }
+
+                if (!file) {
+                    sendData(companyName, null);
+                    return;
+                }
+
+             
+                if (!file.type.startsWith('image/')) {
                     alert("Only image files are allowed!");
                     return;
-        }}
-        if(!Companyname){
-                              alert("Compnay Name Required!");
-                            return;
-        }
-
-
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            const base64String = e.target.result;
-
-            $.ajax({
-                        url: '@Url.Action("UpdateCompany", "SuperAdmin")',
-                type: 'POST',
-                
-                data: {
-                           CompanyName:Companyname,
-                    Base64Data: base64String
-                },
-                success: function (res) {
-                    var data=JSON.parse(res);
-                    console.log(data);
-                            if(data[0].MessageId ==1){
-                                        $('#fileInput').val('');
-                         $('#CompanyName').val('');
-                            }
-                            alert(data[0].MessageString);
-                    
-                },
-                error: function (err) {
-                    console.error(err);
-                    $('#result').text("Upload failed");
                 }
-            });
-        };
 
-        reader.readAsDataURL(file);
-    });
+                // Convert image to Base64
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const base64String = e.target.result;
+                    sendData(companyName, base64String);
+                };
+                reader.readAsDataURL(file);
+            });
+
+            // Separate function for AJAX call
+            function sendData(companyName, base64Data) {
+                $.ajax({
+                    url: '@Url.Action("UpdateCompany", "SuperAdmin")',
+                    type: 'POST',
+                    data: {
+                        CompanyName: companyName,
+                        Base64Data: base64Data
+                    },
+                    success: function (res) {
+                        var data = JSON.parse(res);
+                        console.log(data);
+
+                        if (data[0].MessageId === 1) {
+                            $('#fileInput').val('');
+                            $('#CompanyName').val('');
+                        }
+
+                        alert(data[0].MessageString);
+                    },
+                    error: function (err) {
+                        console.error(err);
+                        alert("Upload failed!");
+                    }
+                });
+            }
+
+
     </script>}
-    @* <script src="~/js/AdminArea/Setting.js" asp-append-version="true"></script> *@
+  
 </body>
 </html>
 

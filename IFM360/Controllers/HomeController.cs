@@ -1,8 +1,10 @@
 using IFM360.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using Newtonsoft.Json;
 using System.Data;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 using VMS_Web.Models;
 
 namespace IFM360.Controllers
@@ -128,6 +130,28 @@ namespace IFM360.Controllers
 
             return Json(JsonConvert.SerializeObject(ds.Tables[0]));
         }
+        
+
+        public JsonResult VerifyRegistrationOTP(string EmailId, string MobileNo,string otp)
+        {
+            var ds = _Utility.Fill($"udp_VerifyRegistrationOTP @Email='{EmailId}',@Mobile='{MobileNo}',@OTP='{otp}'");
+
+
+            return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+        }
+        [HttpPost]
+        public JsonResult SaveRegister(string EmailId, string MobileNo,string AName,string APassword,string CName,string Cstate,string CLocatoin,string CAddress,string Clogo)
+        {
+
+            var otp = MobileNo[0]+ MobileNo[1]+ MobileNo[MobileNo.Length-2]+ MobileNo[MobileNo.Length - 1];
+
+            var base64Data = Regex.Replace(Clogo, @"^data:image\/[a-zA-Z]+;base64,", "");
+            var ds = _Utility.Fill($"udp_UserRegistration @AEmail='{EmailId}',@AMobile='{MobileNo}',@CName='{CName}',@CAddress='{CAddress}',@CLocation='{CLocatoin}',@CState='{Cstate}',@AName='{AName}',@APwd='{APassword}',@DefaultOTP='{otp}',@Logo='{base64Data}'");
+
+
+            return Json(JsonConvert.SerializeObject(ds.Tables[0]));
+        }
+
 
         #endregion
 

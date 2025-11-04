@@ -27,13 +27,13 @@ namespace IFM360.Controllers
         #region Dashboard
         public IActionResult Home()
         {
-
+            ViewBag.office = _db.PopulateDropDown(@$"exec udp_GetOffices '{Emailid}','{Password}'");
             return View();
         }
-
-        public JsonResult GetAdminDashboard()
+        [HttpGet]
+        public JsonResult GetAdminDashboard(string Date,string office)
         {
-            var ds = _db.Fill($"udp_GetAdminDashboard '{Emailid}','{Password}'");
+            var ds = _db.Fill($"udp_GetSuperAdminDashboardSearch '{Emailid}','{Password}',@Date='{Date}',@Office='{office}',@Value=''");
             return Json(JsonConvert.SerializeObject(ds.Tables[0]));
         }
 
@@ -501,7 +501,7 @@ namespace IFM360.Controllers
         }
         public JsonResult GetPreInviteVisitor(string Sdate, string Edate)
         {
-            var ds = _db.Fill($"exec udp_GetPreInviteV2VisitorsAdmin @BranchEmail='{Emailid}',@BranchPassword='{Password}',@FromDate='{Sdate}',@ToDate='{Edate}'");
+            var ds = _db.Fill($"exec udp_GetPreInviteV2VisitorsSAAdmin @BranchEmail='{Emailid}',@BranchPassword='{Password}',@FromDate='{Sdate}',@ToDate='{Edate}'");
             return Json(JsonConvert.SerializeObject(ds.Tables[0]));
 
         }
@@ -594,9 +594,10 @@ namespace IFM360.Controllers
         [HttpPost]
         public JsonResult UpdateCompany(string CompanyName,string Base64Data)
         {
-            var base64Data1 = Regex.Replace(Base64Data, @"^data:image\/[a-zA-Z]+;base64,", "");
-            if (base64Data1 != "")
+          
+            if (Base64Data is not null)
             {
+                var base64Data1 = Regex.Replace(Base64Data, @"^data:image\/[a-zA-Z]+;base64,", "");
                 var ds = _db.Fill($"udp_UpdateCompanyLogo @BranchEmail='{Emailid}',@BranchPassword='{Password}',@Name='{CompanyName}',@Logo='{base64Data1}'");
                 return Json(JsonConvert.SerializeObject(ds.Tables[0]));
             }

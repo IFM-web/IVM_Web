@@ -71,17 +71,17 @@ body {
 
 /* Scrollbar Styling for WebKit Browsers */
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 6px;
     height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: #f1f1f1 !important;
     border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #1E3A5F; /* green */
+    background: #1E3A5F  !important; /* green */
     border-radius: 10px;
 }
 
@@ -92,5 +92,5 @@ body {
 /* Scrollbar Styling for Firefox */
 * {
     scrollbar-width: thin;
-    scrollbar-color: #1E3A5F #f1f1f1;
+    scrollbar-color: #1E3A5F #f1f1f1 !important;
 }
